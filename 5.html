@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>广东高职高考语文默写闯关游戏 (2025-2008)</title>
+    <style>
+        :root { --primary: #2c3e50; --secondary: #3498db; --success: #27ae60; --danger: #e74c3c; --bg: #ecf0f1; }
+        body { font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif; background-color: var(--bg); margin: 0; padding: 20px; display: flex; justify-content: center; }
+        .game-container { width: 100%; max-width: 800px; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: var(--primary); margin-bottom: 30px; border-bottom: 2px solid var(--secondary); padding-bottom: 10px; }
+        .level-indicator { text-align: center; font-size: 1.2em; font-weight: bold; color: var(--secondary); margin-bottom: 20px; }
+        .progress-bar { height: 10px; background: #ddd; border-radius: 5px; margin-bottom: 30px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--success); width: 0%; transition: width 0.5s; }
+        .section { display: none; }
+        .section.active { display: block; }
+        .input-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input[type="text"] { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 16px; }
+        .question-card { background: #f9f9f9; padding: 20px; border-radius: 10px; margin-bottom: 20px; border-left: 5px solid var(--secondary); position: relative; }
+        .btn { padding: 12px 25px; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; transition: 0.3s; margin-right: 10px; margin-top: 10px; }
+        .btn-start { background: var(--secondary); color: white; width: 100%; }
+        .btn-check { background: var(--primary); color: white; }
+        .btn-next { background: var(--success); color: white; display: none; }
+        .btn-redo { background: #95a5a6; color: white; }
+        .btn-wrong { background: #f39c12; color: white; }
+        .feedback { margin-top: 10px; font-weight: bold; }
+        .correct-text { color: var(--success); }
+        .wrong-text { color: var(--danger); }
+        .analysis { background: #eef9f1; padding: 10px; border-radius: 5px; margin-top: 5px; font-size: 14px; display: none; }
+    </style>
+</head>
+<body>
+
+<div class="game-container">
+    <h1>语文默写·历年真题闯关</h1>
+
+    <!-- 1. 登录页面 -->
+    <div id="setup-section" class="section active">
+        <div class="input-group">
+            <label>班级：</label><input type="text" id="className" placeholder="如：22级数媒1班">
+        </div>
+        <div class="input-group">
+            <label>学号：</label><input type="text" id="studentId" placeholder="请输入学号">
+        </div>
+        <div class="input-group">
+            <label>姓名：</label><input type="text" id="studentName" placeholder="请输入姓名">
+        </div>
+        <button class="btn btn-start" onclick="startGame()">进入第一关 (2025年)</button>
+    </div>
+
+    <!-- 2. 闯关页面 -->
+    <div id="game-section" class="section">
+        <div class="level-indicator" id="level-title">加载中...</div>
+        <div class="progress-bar"><div id="progress-fill" class="progress-fill"></div></div>
+        <div id="questions-area"></div>
+        <div id="control-buttons">
+            <button class="btn btn-check" id="check-btn" onclick="checkCurrentLevel()">提交本关答案</button>
+            <button class="btn btn-next" id="next-btn" onclick="goToNextLevel()">开启下一关</button>
+            <button class="btn btn-redo" onclick="redoLevel()">重做本关</button>
+        </div>
+    </div>
+
+    <!-- 3. 结果总结页面 -->
+    <div id="result-section" class="section">
+        <h2 id="final-msg" style="text-align: center;"></h2>
+        <div id="wrong-practice-area"></div>
+        <button class="btn btn-start" onclick="location.reload()">重新开始闯关</button>
+    </div>
+</div>
+
+<script>
+    // 整理自 sources 的 2008-2025 数据,,,,,,,,,,,,,,,,,
+   const questionsDatabase = [
+    // 2008年 [1][19]
+    { year: "2008", text: "1. 问君能有几多愁，________________。", answer: "恰似一江春水向东流", analysis: "出自李煜《虞美人》。" },
+    { year: "2008", text: "2. 去来江口守空船，________________。夜深忽梦少年事，________________。", answer: "绕船月明江水寒，梦啼妆泪红阑干", analysis: "出自白居易《琵琶行》。" },
+    { year: "2008", text: "3. 是故无贵无贱，无长无少，________________，________________。", answer: "道之所存，师之所存也", analysis: "出自韩愈《师说》。" },
+    { year: "2008", text: "4. 千古江山，________________。舞榭歌台，________________。", answer: "英雄无觅孙仲谋处，风流总被雨打风吹去", analysis: "出自辛弃疾《永遇乐·京口北固亭怀古》。" },
+
+    // 2009年 [2][20]
+    { year: "2009", text: "1. 君不见黄河之水天上来，________________。君不见高堂明镜悲白发，________________。", answer: "奔流到海不复回，朝如青丝暮成雪", analysis: "出自李白《将进酒》。" },
+    { year: "2009", text: "2. 六国破灭，________________，________________，弊在赂秦。", answer: "非兵不利，战不善", analysis: "出自苏洵《六国论》。" },
+    { year: "2009", text: "3. 故国神游，________________，早生华发。人生如梦，________________。", answer: "多情应笑我，一尊还酹江月", analysis: "出自苏轼《念奴娇·赤壁怀古》。" },
+    { year: "2009", text: "4. 看万山红遍，________________；漫江碧透，________________。", answer: "层林尽染，百舸争流", analysis: "出自毛泽东《沁园春·长沙》。" },
+
+    // 2010年 [3][21]
+    { year: "2010", text: "1. 关关雎鸠，在河之洲。________________，君子好逑。", answer: "窈窕淑女", analysis: "出自《诗经·关雎》。" },
+    { year: "2010", text: "2. 圣人之所以为圣，________________。皆出于此乎？", answer: "愚人之所以为愚", analysis: "出自韩愈《师说》。" },
+    { year: "2010", text: "3. 乱花渐欲迷人眼，________________。最爱湖东行不足，________________。", answer: "浅草才能没马蹄，绿杨阴里白沙堤", analysis: "出自白居易《钱塘湖春行》。" },
+    { year: "2010", text: "4. ________________，小桥流水人家，________________。夕阳西下，断肠人在天涯。", answer: "枯藤老树昏鸦，古道西风瘦马", analysis: "出自马致远《天净沙·秋思》。" },
+
+    // 2011年 [4][22]
+    { year: "2011", text: "1. 锲而舍之，朽木不折；锲而不舍，________________。", answer: "金石可镂", analysis: "出自《荀子·劝学》。" },
+    { year: "2011", text: "2. 安得广厦千万间，________________！风雨不动安如山。", answer: "大庇天下寒士俱欢颜", analysis: "出自杜甫《茅屋为秋风所破歌》。" },
+    { year: "2011", text: "3. 然则何时而乐耶？其必曰“________________，________________”乎！", answer: "先天下之忧而忧，后天下之乐而乐", analysis: "出自范仲淹《岳阳楼记》。" },
+    { year: "2011", text: "4. 此去经年，________________。便纵有千种风情，更与何人说！", answer: "应是良辰好景虚设", analysis: "出自柳永《雨霖铃》。" },
+
+    // 2012年 [5][23]
+    { year: "2012", text: "1. 以地事秦，________________，薪不尽，________________。", answer: "犹抱薪救火，火不灭", analysis: "出自苏洵《六国论》。" },
+    { year: "2012", text: "2. 大弦嘈嘈如急雨，________________。嘈嘈切切错杂弹，________________。", answer: "小弦切切如私语，大珠小珠落玉盘", analysis: "出自白居易《琵琶行》。" },
+    { year: "2012", text: "3. 登斯楼也，则有去国怀乡，________________，________________，感极而悲者矣。", answer: "忧谗畏讥，满目萧然", analysis: "出自范仲淹《岳阳楼记》。" },
+    { year: "2012", text: "4. 千古江山，英雄无觅孙仲谋处。舞榭歌台，________________。", answer: "风流总被雨打风吹去", analysis: "出自辛弃疾《永遇乐·京口北固亭怀古》。" },
+
+    // 2013年 [6][24]
+    { year: "2013", text: "1. 关关雎鸠，在河之洲。________________，君子好逑。", answer: "窈窕淑女", analysis: "出自《诗经·关雎》。" },
+    { year: "2013", text: "2. 苔痕上阶绿，草色入帘青；________________，谈笑有鸿儒。", answer: "往来无白丁", analysis: "出自刘禹锡《陋室铭》。" },
+    { year: "2013", text: "3. 人生得意须尽欢，莫使金樽空对月。________________，千金散尽还复来。", answer: "天生我材必有用", analysis: "出自李白《将进酒》。" },
+    { year: "2013", text: "4. 枯藤老树昏鸦，小桥流水人家。古道西风瘦马，________________，断肠人在天涯。", answer: "夕阳西下", analysis: "出自马致远《天净沙·秋思》。" },
+
+    // 2014年 [7]
+    { year: "2014", text: "1. 故木受绳则直，金就砺则利，________________，________________。", answer: "君子博学而日参省乎己，则知明而行无过矣", analysis: "出自《荀子·劝学》。" },
+    { year: "2014", text: "2. 布衾多年冷似铁，________________。床头屋漏无干处，________________。", answer: "骄儿恶卧踏里裂，雨脚如麻未断绝", analysis: "出自杜甫《茅屋为秋风所破歌》。" },
+    { year: "2014", text: "3. 冰泉冷涩弦凝绝，________________。别有幽愁暗恨生，________________。", answer: "凝绝不通声渐歇，此时无声胜有声", analysis: "出自白居易《琵琶行》。" },
+    { year: "2014", text: "4. 予谓菊，花之隐逸者也；牡丹，________________；莲，________________。", answer: "花之富贵者也，花之君子者也", analysis: "出自周敦颐《爱莲说》。" },
+
+    // 2015年 [8]
+    { year: "2015", text: "1. 古之圣人，其出人也远矣，犹且从师而问焉；________________，________________。", answer: "今之众人，其下圣人也亦远矣，而耻学于师", analysis: "出自韩愈《师说》。" },
+    { year: "2015", text: "2. 烟笼寒水月笼沙，夜泊秦淮近酒家。商女不知亡国恨，________________。", answer: "隔江犹唱后庭花", analysis: "出自杜牧《泊秦淮》。" },
+    { year: "2015", text: "3. 晓镜但愁云鬓改，________________。蓬山此去无多路，________________。", answer: "夜吟应觉月光寒，青鸟殷勤为探看", analysis: "出自李商隐《无题》。" },
+    { year: "2015", text: "4. 登斯楼也，则有心旷神怡，________________，把酒临风，________________。", answer: "宠辱偕忘，其喜洋洋者矣", analysis: "出自范仲淹《岳阳楼记》。" },
+
+    // 2016年 [9]
+    { year: "2016", text: "1. 城阙辅三秦，________________。与君离别意，同是宦游人。", answer: "风烟望五津", analysis: "出自王勃《送杜少府之任蜀州》。" },
+    { year: "2016", text: "2. 春花秋月何时了，________________？小楼昨夜又东风，________________。", answer: "往事知多少，故国不堪回首月明中", analysis: "出自李煜《虞美人》。" },
+    { year: "2016", text: "3. 予独爱莲之出淤泥而不染，________________，中通外直，不蔓不枝，________________。", answer: "濯清涟而不妖，亭亭净植", analysis: "出自周敦颐《爱莲说》。" },
+    { year: "2016", text: "4. 枯藤老树昏鸦，小桥流水人家。________________，夕阳西下，断肠人在天涯。", answer: "古道西风瘦马", analysis: "出自马致远《天净沙·秋思》。" },
+
+    // 2017年 [10]
+    { year: "2017", text: "1. 国破山河在，城春草木深。________________，________________。", answer: "感时花溅泪，恨别鸟惊心", analysis: "出自杜甫《春望》。" },
+    { year: "2017", text: "2. 闻道有先后，________________，如是而已。", answer: "术业有专攻", analysis: "出自韩愈《师说》。" },
+    { year: "2017", text: "3. 苔痕上阶绿，草色入帘青。________________，________________。", answer: "谈笑有鸿儒，往来无白丁", analysis: "出自刘禹锡《陋室铭》。" },
+    { year: "2017", text: "4. 乱石穿空，________________，卷起千堆雪。", answer: "惊涛拍岸", analysis: "出自苏轼《念奴娇·赤壁怀古》。" },
+
+    // 2018年 [11]
+    { year: "2018", text: "1. 故不积跬步，________________；不积小流，________________。", answer: "无以至千里，无以成江海", analysis: "出自《荀子·劝学》。" },
+    { year: "2018", text: "2. 几处早莺争暖树，谁家新燕啄春泥。乱花渐欲迷人眼，________________。", answer: "浅草才能没马蹄", analysis: "出自白居易《钱塘湖春行》。" },
+    { year: "2018", text: "3. 执手相看泪眼，________________。念去去，千里烟波，________________。", answer: "竟无语凝噎，暮霭沉沉楚天阔", analysis: "出自柳永《雨霖铃》。" },
+    { year: "2018", text: "4. 斜阳草树，寻常巷陌，人道寄奴曾住。想当年，________________。", answer: "金戈铁马，气吞万里如虎", analysis: "出自辛弃疾《永遇乐·京口北固亭怀古》。" },
+
+    // 2019年 [12]
+    { year: "2019", text: "1. 欲渡黄河冰塞川，将登太行雪满山。________________，________________。", answer: "闲来垂钓碧溪上，忽复乘舟梦日边", analysis: "出自李白《行路难》。" },
+    { year: "2019", text: "2. 是故弟子不必不如师，师不必贤于弟子，闻道有先后，________________。", answer: "术业有专攻", analysis: "出自韩愈《师说》。" },
+    { year: "2019", text: "3. ________________，________________，则胜负之数，存亡之理，当与秦相较。", answer: "刺客不行，良将犹在", analysis: "出自苏洵《六国论》。" },
+    { year: "2019", text: "4. 可堪回首，佛狸祠下，________________。", answer: "一片神鸦社鼓", analysis: "出自辛弃疾《永遇乐·京口北固亭怀古》。" },
+
+    // 2020年 [13]
+    { year: "2020", text: "1. 关关雎鸠，在河之洲。________________，君子好逑。", answer: "窈窕淑女", analysis: "出自《诗经·关雎》。" },
+    { year: "2020", text: "2. 凝绝不通声渐歇，________________，此时无声胜有声。", answer: "别有幽愁暗恨生", analysis: "出自白居易《琵琶行》。" },
+    { year: "2020", text: "3. 予谓菊，________________；牡丹，花之富贵者也；莲，花之君子者也。", answer: "花之隐逸者也", analysis: "出自周敦颐《爱莲说》。" },
+    { year: "2020", text: "4. 凭谁问：________________，________________？", answer: "廉颇老矣，尚能饭否", analysis: "出自辛弃疾《永遇乐·京口北固亭怀古》。" },
+
+    // 2021年 [14]
+    { year: "2021", text: "1. 关关雎鸠，在河之洲。________________，君子好逑。", answer: "窈窕淑女", analysis: "出自《诗经·关雎》。" },
+    { year: "2021", text: "2. 乱花渐欲迷人眼，________________。", answer: "浅草才能没马蹄", analysis: "出自白居易《钱塘湖春行》。" },
+    { year: "2021", text: "3. 衔远山，吞长江，________________，横无际涯。", answer: "浩浩汤汤", analysis: "出自范仲淹《岳阳楼记》。" },
+    { year: "2021", text: "4. 人有悲欢离合，月有阴晴圆缺，________________。", answer: "此事古难全", analysis: "出自苏轼《水调歌头》。" },
+
+    // 2022年 [15]
+    { year: "2022", text: "1. 长风破浪会有时，________________。", answer: "直挂云帆济沧海", analysis: "出自李白《行路难》。" },
+    { year: "2022", text: "2. 多情自古伤离别，更那堪冷落清秋节！________________，________________？", answer: "今宵酒醒何处，杨柳岸，晓风残月", analysis: "出自柳永《雨霖铃》。" },
+    { year: "2022", text: "3. 看万山红遍，层林尽染；________________，________________。", answer: "漫江碧透，百舸争流", analysis: "出自毛泽东《沁园春·长沙》。" },
+    { year: "2022", text: "4. 六国破灭，非兵不利，战不善，________________。", answer: "弊在赂秦", analysis: "出自苏洵《六国论》。" },
+
+    // 2023年 [18]
+    { year: "2023", text: "1. 积土成山，风雨兴焉；________________，蛟龙生焉。", answer: "积水成渊", analysis: "出自《荀子·劝学》。" },
+    { year: "2023", text: "2. 山不厌高，________________。", answer: "海不厌深", analysis: "出自曹操《短歌行》。" },
+    { year: "2023", text: "3. 故国神游，多情应笑我，早生华发。________________，________________。", answer: "人生如梦，一尊还酹江月", analysis: "出自苏轼《念奴娇·赤壁怀古》。" },
+    { year: "2023", text: "4. 楼船夜雪瓜洲渡，________________。", answer: "铁马秋风大散关", analysis: "出自陆游《书愤》。" },
+
+    // 2024年 [16]
+    { year: "2024", text: "1. 骐骥一跃，不能十步；________________，功在不舍。", answer: "驽马十驾", analysis: "出自《荀子·劝学》。" },
+    { year: "2024", text: "2. 户庭无尘杂，虚室有余闲。________________，________________。", answer: "久在樊笼里，复得返自然", analysis: "出自陶渊明《归园田居》。" },
+    { year: "2024", text: "3. 我闻琵琶已叹息，又闻此语重唧唧。________________，________________！", answer: "同是天涯沦落人，相逢何必曾相识", analysis: "出自白居易《琵琶行》。" },
+    { year: "2024", text: "4. ________________，一弦一柱思华年。庄生晓梦迷蝴蝶，望帝春心托杜鹃。", answer: "锦瑟无端五十弦", analysis: "出自李商隐《锦瑟》。" },
+
+    // 2025年 [25][17]
+    { year: "2025", text: "1. 冠者五六人，童子六七人，浴乎沂，风乎舞雩，________________。", answer: "咏而归", analysis: "出自《论语》。" },
+    { year: "2025", text: "2. 空山新雨后，天气晚来秋。________________，________________。", answer: "明月松间照，清泉石上流", analysis: "出自王维《山居秋暝》。" },
+    { year: "2025", text: "3. 长安回望绣成堆，山顶千门次第开。________________，________________。", answer: "一骑红尘妃子笑，无人知是荔枝来", analysis: "出自杜牧《过华清宫》。" },
+    { year: "2025", text: "4. 今宵酒醒何处？杨柳岸，晓风残月。________________，________________。", answer: "此去经年，应是良辰好景虚设", analysis: "出自柳永《雨霖铃》。" }
+];
+
+    let currentLevel = 0;
+    let student = {};
+    let wrongPool = [];
+
+    function startGame() {
+        student = {
+            class: document.getElementById('className').value,
+            id: document.getElementById('studentId').value,
+            name: document.getElementById('studentName').value
+        };
+        if(!student.name || !student.class) return alert("请填写完整信息！");
+        
+        document.getElementById('setup-section').classList.remove('active');
+        document.getElementById('game-section').classList.add('active');
+        loadLevel();
+    }
+
+    function loadLevel() {
+        const yearData = fullDatabase[currentLevel];
+        document.getElementById('level-title').innerText = `第 ${currentLevel + 1} 关：${yearData.year} 年真题`;
+        document.getElementById('progress-fill').style.width = `${((currentLevel)/fullDatabase.length)*100}%`;
+        
+        const area = document.getElementById('questions-area');
+        area.innerHTML = "";
+        yearData.qs.forEach((q, i) => {
+            area.innerHTML += `
+                <div class="question-card">
+                    <p>${q.t}</p>
+                    <input type="text" class="q-input" id="q-${i}" autocomplete="off">
+                    <div id="f-${i}" class="feedback"></div>
+                    <div id="a-${i}" class="analysis">解析：${q.p}</div>
+                </div>
+            `;
+        });
+        document.getElementById('next-btn').style.display = "none";
+        document.getElementById('check-btn').disabled = false;
+    }
+
+    function checkCurrentLevel() {
+        const yearData = fullDatabase[currentLevel];
+        let allCorrect = true;
+        const inputs = document.querySelectorAll('.q-input');
+
+        yearData.qs.forEach((q, i) => {
+            const userAns = document.getElementById(`q-${i}`).value.trim();
+            const feedback = document.getElementById(`f-${i}`);
+            const analysis = document.getElementById(`a-${i}`);
+            document.getElementById(`q-${i}`).disabled = true;
+
+            if(userAns === q.a) {
+                feedback.innerHTML = "✓ 完美契合！";
+                feedback.className = "feedback correct-text";
+            } else {
+                feedback.innerHTML = `✗ 错误。正确答案：${q.a}`;
+                feedback.className = "feedback wrong-text";
+                allCorrect = false;
+                wrongPool.push({year: yearData.year, ...q});
+            }
+            analysis.style.display = "block";
+        });
+
+        if(allCorrect) {
+            document.getElementById('next-btn').style.display = "inline-block";
+            document.getElementById('check-btn').disabled = true;
+            if(currentLevel === fullDatabase.length - 1) {
+                document.getElementById('next-btn').innerText = "查看最终战绩";
+            }
+        } else {
+            alert("本关有错题，请阅读解析后点击“重做本关”或“错题练习”！");
+        }
+    }
+
+    function redoLevel() {
+        loadLevel();
+    }
+
+    function goToNextLevel() {
+        if(currentLevel < fullDatabase.length - 1) {
+            currentLevel++;
+            loadLevel();
+        } else {
+            showSummary();
+        }
+    }
+
+    function showSummary() {
+        document.getElementById('game-section').classList.remove('active');
+        document.getElementById('result-section').classList.add('active');
+        const msg = `恭喜 ${student.name} 同学（${student.class}）通关全部历年真题！<br>你的毅力如同精卫填海，终成正果！`;
+        document.getElementById('final-msg').innerHTML = msg;
+
+        if(wrongPool.length > 0) {
+            const area = document.getElementById('wrong-practice-area');
+            area.innerHTML = "<h3>错题库（专项强化）：</h3>";
+            wrongPool.forEach((q, i) => {
+                area.innerHTML += `<div class="question-card">${q.year}年：${q.t} <br><b>正确答案：${q.a}</b></div>`;
+            });
+        }
+    }
+</script>
+
+</body>
+</html>
