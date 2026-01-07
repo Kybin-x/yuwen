@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>广东高职高考语文默写闯关游戏 (2025-2008)</title>
+    <link rel="stylesheet" href="gs.css">
+</head>
+<body>
+
+<div class="game-container">
+    <h1>📚 语文默写·历年真题闯关</h1>
+
+    <!-- 1. 登录页面 -->
+    <div id="setup-section" class="section active">
+        <div class="welcome-card">
+            <p class="welcome-text">欢迎来到语文默写闯关挑战！<br>共18关，涵盖2008-2025年真题</p>
+        </div>
+        <div class="input-group">
+            <label>📖 班级：</label>
+            <input type="text" id="className" placeholder="如：22级数媒1班">
+        </div>
+        <div class="input-group">
+            <label>🎓 学号：</label>
+            <input type="text" id="studentId" placeholder="请输入学号">
+        </div>
+        <div class="input-group">
+            <label>👤 姓名：</label>
+            <input type="text" id="studentName" placeholder="请输入姓名">
+        </div>
+        <button class="btn btn-start" onclick="startGame()">🚀 进入第一关 (2025年)</button>
+    </div>
+
+    <!-- 2. 闯关页面 -->
+    <div id="game-section" class="section">
+        <div class="level-indicator" id="level-title">加载中...</div>
+        <div class="progress-bar">
+            <div id="progress-fill" class="progress-fill"></div>
+            <span id="progress-text" class="progress-text">0%</span>
+        </div>
+        <div id="questions-area"></div>
+        <div id="control-buttons">
+            <button class="btn btn-check" id="check-btn" onclick="checkCurrentLevel()">✅ 提交本关答案</button>
+            <button class="btn btn-next" id="next-btn" onclick="goToNextLevel()">➡️ 开启下一关</button>
+            <button class="btn btn-redo" onclick="redoLevel()">🔄 重做本关</button>
+        </div>
+    </div>
+
+    <!-- 3. 结果总结页面 -->
+    <div id="result-section" class="section">
+        <h2 id="final-msg" style="text-align: center;"></h2>
+        <div class="stats-card">
+            <p id="stats-info"></p>
+        </div>
+        <div id="wrong-practice-area"></div>
+        <button class="btn btn-start" onclick="location.reload()">🔁 重新开始闯关</button>
+    </div>
+</div>
+
+<script src="gs.js"></script>
+
+</body>
+</html>
