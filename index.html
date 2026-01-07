@@ -3,61 +3,672 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>广东高职高考语文默写闯关游戏 (2025-2008)</title>
-    <link rel="stylesheet" href="gs.css">
+    <title>广东高职高考语文默写闯关 (2025-2008)</title>
+    <style>
+        :root {
+            /* 配色：新中式风格 - 竹青/墨黑/纸白 */
+            --primary: #45b787;      /* 竹青 */
+            --primary-dark: #2d8a63; 
+            --accent: #f39c12;       /* 杏黄 */
+            --error: #e74c3c;        /* 胭脂红 */
+            --text-main: #333333;    /* 墨色 */
+            --text-light: #666666;
+            --bg-body: #f0f4f3;      /* 云水蓝灰 */
+            --card-bg: rgba(255, 255, 255, 0.96);
+            --shadow: 0 8px 24px rgba(69, 183, 135, 0.15);
+        }
+
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', 'SimHei', sans-serif;
+            background: linear-gradient(135deg, #f0f4f3 0%, #eefbf5 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255,255,255,0.8);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 装饰背景字 */
+        .container::before {
+            content: "诗";
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 15rem;
+            font-family: 'KaiTi', serif;
+            color: var(--primary);
+            opacity: 0.05;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        h1 { 
+            text-align: center; 
+            color: var(--primary-dark); 
+            margin-bottom: 30px; 
+            font-weight: 800;
+            letter-spacing: 2px;
+            border-bottom: 2px solid rgba(69, 183, 135, 0.2);
+            padding-bottom: 15px;
+        }
+
+        /* 表单区域 */
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: var(--text-main);
+        }
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s;
+            box-sizing: border-box;
+            background: #f9f9f9;
+        }
+        .form-control:focus {
+            border-color: var(--primary);
+            background: #fff;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(69, 183, 135, 0.1);
+        }
+
+        /* 进度条 */
+        .progress-box { margin-bottom: 30px; position: relative; z-index: 1; }
+        .level-info { display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: bold; color: var(--primary-dark); }
+        .progress-bar-bg { height: 12px; background: #e0e0e0; border-radius: 6px; overflow: hidden; }
+        .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--primary), #66dec0); width: 0%; transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
+
+        /* 题目卡片 */
+        .question-card {
+            background: #fff;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 16px;
+            border: 1px solid #eee;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            z-index: 1;
+        }
+        .question-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+        }
+
+        .question-text {
+            font-size: 1.2em;
+            line-height: 2.2;
+            font-family: 'KaiTi', '楷体', serif; /* 使用楷体增加古韵 */
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        /* 填空输入框 */
+        .inline-input {
+            border: none;
+            border-bottom: 2px solid #bbb;
+            background: transparent;
+            text-align: center;
+            font-family: inherit;
+            font-size: 1.05em;
+            color: var(--primary-dark);
+            width: 200px;
+            padding: 0 5px;
+            margin: 0 5px;
+            outline: none;
+            transition: all 0.3s;
+        }
+        .inline-input:focus { border-bottom-color: var(--primary); background: rgba(69, 183, 135, 0.05); }
+        
+        .inline-input.correct { 
+            border-bottom-color: var(--primary); 
+            color: var(--primary); 
+            font-weight: bold;
+        }
+        .inline-input.wrong { 
+            border-bottom-color: var(--error); 
+            color: var(--error); 
+            text-decoration: line-through;
+            background: rgba(231, 76, 60, 0.05);
+        }
+
+        /* 状态图标 */
+        .status-icon {
+            display: inline-block;
+            width: 20px;
+            margin-left: 5px;
+            vertical-align: middle;
+        }
+
+        /* 确认按钮（每题） */
+        .btn-confirm-q {
+            margin-top: 15px;
+            padding: 8px 20px;
+            background-color: var(--text-main);
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.3s;
+            display: inline-block;
+        }
+        .btn-confirm-q:hover { background-color: #000; transform: scale(1.05); }
+        .btn-confirm-q.checked { display: none; } /* 确认后隐藏按钮 */
+
+        /* 解析区域 */
+        .analysis-box {
+            margin-top: 20px;
+            padding: 15px 20px;
+            background: #fdfbf5; /* 淡淡的米黄色 */
+            border-radius: 10px;
+            border-left: 4px solid var(--accent);
+            display: none; /* 默认隐藏 */
+            animation: slideDown 0.4s ease;
+        }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .correct-answer-text {
+            color: var(--primary-dark);
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+            font-family: 'KaiTi', serif;
+        }
+
+        .memory-tip {
+            font-size: 0.95em;
+            color: #666;
+            background: rgba(243, 156, 18, 0.1);
+            padding: 8px 12px;
+            border-radius: 6px;
+            display: inline-block;
+            margin-top: 5px;
+        }
+
+        /* 底部全局按钮 */
+        .action-area { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; }
+        
+        .btn {
+            padding: 14px 40px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            transition: all 0.3s;
+            margin: 10px;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .btn-start { background: var(--primary); color: white; width: 100%; max-width: 400px; }
+        .btn-start:hover { background: var(--primary-dark); box-shadow: 0 6px 20px rgba(69, 183, 135, 0.4); }
+        
+        .btn-submit { background: #34495e; color: white; }
+        .btn-next { background: var(--primary); color: white; display: none; }
+        .btn-redo { background: var(--accent); color: white; display: none; }
+
+        .section { display: none; }
+        .section.active { display: block; animation: fadeIn 0.6s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* 结果弹窗 */
+        .result-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center; align-items: center; z-index: 1000;
+        }
+        .result-modal {
+            background: white; padding: 40px; border-radius: 20px; text-align: center;
+            max-width: 450px; width: 90%; animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+        @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        
+        .score-circle {
+            width: 120px; height: 120px;
+            border-radius: 50%;
+            border: 6px solid var(--primary);
+            display: flex; justify-content: center; align-items: center;
+            font-size: 3em; font-weight: bold; color: var(--primary);
+            margin: 0 auto 20px auto;
+        }
+        .user-info-display { margin-bottom: 20px; color: #888; font-size: 0.9em; border-bottom: 1px dashed #eee; padding-bottom: 10px; }
+
+    </style>
 </head>
 <body>
 
-<div class="game-container">
-    <h1>📚 语文默写·历年真题闯关</h1>
+<div class="container">
+    <h1>✒️ 广东高职高考语文默写闯关</h1>
 
-    <!-- 1. 登录页面 -->
     <div id="setup-section" class="section active">
-        <div class="welcome-card">
-            <p class="welcome-text">欢迎来到语文默写闯关挑战！<br>共18关，涵盖2008-2025年真题</p>
+        <div style="text-align: center; margin-bottom: 30px; color: #666;">
+            <p>收录 2008-2025 年真题库 · 智能解析 · 记忆辅助</p>
+        </div>
+        
+        <div class="input-group">
+            <label>🏫 班级</label>
+            <input type="text" id="className" class="form-control" placeholder="例如：23级数媒2班">
         </div>
         <div class="input-group">
-            <label>📖 班级：</label>
-            <input type="text" id="className" placeholder="如：22级数媒1班">
+            <label>🔢 学号</label>
+            <input type="text" id="studentId" class="form-control" placeholder="请输入学号">
         </div>
         <div class="input-group">
-            <label>🎓 学号：</label>
-            <input type="text" id="studentId" placeholder="请输入学号">
+            <label>👤 姓名</label>
+            <input type="text" id="studentName" class="form-control" placeholder="请输入真实姓名">
         </div>
-        <div class="input-group">
-            <label>👤 姓名：</label>
-            <input type="text" id="studentName" placeholder="请输入姓名">
+        
+        <div style="text-align: center; margin-top: 40px;">
+            <button class="btn btn-start" onclick="startGame()">开始挑战</button>
         </div>
-        <button class="btn btn-start" onclick="startGame()">🚀 进入第一关 (2025年)</button>
     </div>
 
-    <!-- 2. 闯关页面 -->
     <div id="game-section" class="section">
-        <div class="level-indicator" id="level-title">加载中...</div>
-        <div class="progress-bar">
-            <div id="progress-fill" class="progress-fill"></div>
-            <span id="progress-text" class="progress-text">0%</span>
+        <div class="progress-box">
+            <div class="level-info">
+                <span id="level-title">第一关</span>
+                <span id="level-progress">1/18</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div id="progress-fill" class="progress-bar-fill"></div>
+            </div>
         </div>
-        <div id="questions-area"></div>
-        <div id="control-buttons">
-            <button class="btn btn-check" id="check-btn" onclick="checkCurrentLevel()">✅ 提交本关答案</button>
-            <button class="btn btn-next" id="next-btn" onclick="goToNextLevel()">➡️ 开启下一关</button>
-            <button class="btn btn-redo" onclick="redoLevel()">🔄 重做本关</button>
-        </div>
-    </div>
 
-    <!-- 3. 结果总结页面 -->
-    <div id="result-section" class="section">
-        <h2 id="final-msg" style="text-align: center;"></h2>
-        <div class="stats-card">
-            <p id="stats-info"></p>
+        <div id="questions-area">
+            </div>
+
+        <div class="action-area">
+            <button class="btn btn-submit" id="submit-level-btn" onclick="finishLevel()">结算本关成绩</button>
+            <button class="btn btn-next" id="next-btn" onclick="nextLevel()">进入下一关</button>
+            <button class="btn btn-redo" id="redo-btn" onclick="loadLevel()">重做本关</button>
         </div>
-        <div id="wrong-practice-area"></div>
-        <button class="btn btn-start" onclick="location.reload()">🔁 重新开始闯关</button>
     </div>
 </div>
 
-<script src="gs.js"></script>
+<div class="result-overlay" id="result-modal">
+    <div class="result-modal">
+        <div class="user-info-display" id="modal-user-info"></div>
+        <h2>本关成绩</h2>
+        <div class="score-circle" id="score-val">0</div>
+        <p style="font-style: italic; color: #7f8c8d; margin-bottom: 25px;" id="quote-val"></p>
+        <button class="btn btn-start" style="width: auto; padding: 10px 40px;" onclick="closeModal()">确定</button>
+    </div>
+</div>
 
+<script>
+// 数据库 (保持原数据不变)
+const fullDatabase = [
+    {
+        "year": "2025",
+        "qs": [
+            { "t": "1. 冠者五六人，童子六七人，________________，风乎舞雩，________________。", "a": "浴乎沂，咏而归", "m": "【画面联想】一群人洗完澡吹风，唱歌回家。" },
+            { "t": "2. 空山新雨后，________________。明月松间照，________________。", "a": "天气晚来秋，清泉石上流", "m": "【对偶记忆】明月对清泉，松间对石上。" },
+            { "t": "3. 长安回望绣成堆，山顶千门次第开。________________，________________。", "a": "一骑红尘妃子笑，无人知是荔枝来", "m": "【因果逻辑】妃子笑是因为荔枝来了。" },
+            { "t": "4. ________________？杨柳岸，晓风残月。________________，应是良辰好景虚设。", "a": "今宵酒醒何处，此去经年", "m": "【关键词】经年、虚设、晓风残月。" }
+        ]
+    },
+    {
+        "year": "2024",
+        "qs": [
+            { "t": "1. 骐骥一跃，不能十步；________________，功在不舍。锲而舍之，朽木不折；锲而不舍，________________。", "a": "驽马十驾，金石可镂", "m": "【对比法】骐骥vs驽马，朽木vs金石。" },
+            { "t": "2. 户庭无尘杂，虚室有余闲。________________，________________。", "a": "久在樊笼里，复得返自然", "m": "【意象】樊笼=官场，自然=田园。" },
+            { "t": "3. 我闻琵琶已叹息，又闻此语重唧唧。________________，________________！", "a": "同是天涯沦落人，相逢何必曾相识", "m": "【共鸣】沦落人相遇，不需旧识。" },
+            { "t": "4. ________________，一弦一柱思华年。庄生晓梦迷蝴蝶，望帝春心托杜鹃。", "a": "锦瑟无端五十弦", "m": "【首句】五十弦对应一弦一柱。" }
+        ]
+    },
+    {
+        "year": "2023",
+        "qs": [
+            { "t": "1. 积土成山，风雨兴焉；________________，蛟龙生焉。", "a": "积水成渊", "m": "【积累】土->山，水->渊。" },
+            { "t": "2. 山不厌高，________________。周公吐哺，天下归心。", "a": "海不厌深", "m": "【胸怀】山不厌高，海不厌深。" },
+            { "t": "3. 故国神游，多情应笑我，早生华发。________________，________________。", "a": "人生如梦，一尊还酹江月", "m": "【心态】人生如梦，敬江月一杯酒。" },
+            { "t": "4. 早岁那知世事艰，中原北望气如山。________________，________________。", "a": "楼船夜雪瓜洲渡，铁马秋风大散关", "m": "【地名】瓜洲渡对大散关。" }
+        ]
+    },
+    {
+        "year": "2022",
+        "qs": [
+            { "t": "1. 长风破浪会有时，________________。", "a": "直挂云帆济沧海", "m": "【志向】破浪->挂帆->济沧海。" },
+            { "t": "2. 多情自古伤离别，更那堪冷落清秋节！________________，________________？", "a": "今宵酒醒何处，杨柳岸，晓风残月", "m": "【凄景】酒醒所见：杨柳、风、残月。" },
+            { "t": "3. 看万山红遍，层林尽染，________________，________________。", "a": "漫江碧透，百舸争流", "m": "【色彩/动静】红林vs碧水，静山vs动船。" },
+            { "t": "4. 六国破灭，________________，战不善，________________。", "a": "非兵不利，弊在赂秦", "m": "【论点】非兵不利，在于赂秦。" }
+        ]
+    },
+    {
+        "year": "2021",
+        "qs": [
+            { "t": "1. 关关雎鸠，在河之洲。________________，________________。", "a": "窈窕淑女，君子好逑", "m": "【经典】淑女配君子。" },
+            { "t": "2. ________________。最爱湖东行不足，绿杨阴里白沙堤。", "a": "乱花渐欲迷人眼", "m": "【视觉】花让人眼花缭乱。" },
+            { "t": "3. 予观夫巴陵胜状，在洞庭一湖。________________，吞长江，________________，横无际涯。", "a": "衔远山，浩浩汤汤", "m": "【气势】衔山吞江，浩浩汤汤。" },
+            { "t": "4. ________________。此事古难全。", "a": "人有悲欢离合，月有阴晴圆缺", "m": "【规律】人对应月，离合对应圆缺。" }
+        ]
+    },
+    {
+        "year": "2020",
+        "qs": [
+            { "t": "1. ________________，________________。窈窕淑女，君子好逑。", "a": "关关雎鸠，在河之洲", "m": "【起兴】雎鸠鸟在河洲鸣叫。" },
+            { "t": "2. 冰泉冷涩弦凝绝，凝绝不通声渐歇，________________，________________。", "a": "别有幽愁暗恨生，此时无声胜有声", "m": "【无声之美】无声胜有声。" },
+            { "t": "3. 予谓菊，________________；牡丹，花之富贵者也；莲，________________。", "a": "花之隐逸者也，花之君子者也", "m": "【象征】菊=隐逸，莲=君子。" },
+            { "t": "4. 凭谁问，________________，________________。", "a": "廉颇老矣，尚能饭否", "m": "【典故】廉颇还能吃饭打仗吗。" }
+        ]
+    },
+    {
+        "year": "2019",
+        "qs": [
+            { "t": "1. ________________，将登太行雪满山。________________，忽复乘舟梦日边。", "a": "欲渡黄河冰塞川，闲来垂钓碧溪上", "m": "【行路难】冰塞川，雪满山。" },
+            { "t": "2. 是故弟子不必不如师，师不必贤于弟子，闻道有先后，________________，如是而已。", "a": "术业有专攻", "m": "【师道】各有所长。" },
+            { "t": "3. ________________，________________，则胜负之数，存亡之理，当与秦相较，或未易量。", "a": "刺客不行，良将犹在", "m": "【假设】刺客不去，良将还在。" },
+            { "t": "4. 可堪回首，________________，一片神鸦社鼓。", "a": "佛狸祠下", "m": "【场景】佛狸祠下祭祀忙。" }
+        ]
+    },
+    {
+        "year": "2018",
+        "qs": [
+            { "t": "1. 故不积跬步，________________；不积小流，________________。", "a": "无以至千里，无以成江海", "m": "【积累】跬步->千里，小流->江海。" },
+            { "t": "2. ________________，谁家新燕啄春泥。乱花渐欲迷人眼，________________。", "a": "几处早莺争暖树，浅草才能没马蹄", "m": "【早春】早莺争树，浅草没蹄。" },
+            { "t": "3. 执手相看泪眼，________________。念去去，千里烟波，________________。", "a": "竟无语凝噎，暮霭沉沉楚天阔", "m": "【离别】无语凝噎，暮霭沉沉。" },
+            { "t": "4. 斜阳草树，________________，人道寄奴曾住。想当年，________________，气吞万里如虎。", "a": "寻常巷陌，金戈铁马", "m": "【怀古】巷陌曾住帝王，当年金戈铁马。" }
+        ]
+    },
+    {
+        "year": "2017",
+        "qs": [
+            { "t": "1. 国破山河在，城春草木深。________________，________________。", "a": "感时花溅泪，恨别鸟惊心", "m": "【拟人】花溅泪，鸟惊心。" },
+            { "t": "2. 是故弟子不必不如师，________________，闻道有先后，________________，如是而已。", "a": "师不必贤于弟子，术业有专攻", "m": "【辩证】师生关系辩证看。" },
+            { "t": "3. 苔痕上阶绿，草色入帘青。________________，________________。", "a": "谈笑有鸿儒，往来无白丁", "m": "【往来】鸿儒vs白丁。" },
+            { "t": "4. ________________，________________，卷起千堆雪。", "a": "乱石穿空，惊涛拍岸", "m": "【气势】乱石穿空，惊涛拍岸。" }
+        ]
+    },
+    {
+        "year": "2016",
+        "qs": [
+            { "t": "1. ________________，________________。与君离别意，同是宦游人。", "a": "城阙辅三秦，风烟望五津", "m": "【地名】三秦vs五津。" },
+            { "t": "2. 春花秋月何时了，________________？小楼昨夜又东风，________________。", "a": "往事知多少，故国不堪回首月明中", "m": "【伤感】往事知多少，不堪回首。" },
+            { "t": "3. 予独爱莲之出淤泥而不染，________________，中通外直，不蔓不枝，________________，亭亭净植，可远观而不可亵玩焉。", "a": "濯清涟而不妖，香远益清", "m": "【品质】清涟不妖，香远益清。" },
+            { "t": "4. 枯藤老树昏鸦，________________。夕阳西下，断肠人在天涯。", "a": "古道西风瘦马", "m": "【意象】三组名词：古道、西风、瘦马。" }
+        ]
+    },
+    {
+        "year": "2015",
+        "qs": [
+            { "t": "1. 古之圣人，________________，________________。", "a": "其出人也远矣，犹且从师而问焉", "m": "【对比】圣人也从师。" },
+            { "t": "2. ________________，夜泊秦淮近酒家。商女不知亡国恨，________________。", "a": "烟笼寒水月笼沙，隔江犹唱后庭花", "m": "【讽刺】烟月笼罩，犹唱亡国曲。" },
+            { "t": "3. 晓镜但愁云鬓改，________________。蓬山此去无多路，________________。", "a": "夜吟应觉月光寒，青鸟殷勤为探看", "m": "【思念】夜吟月寒，青鸟探看。" },
+            { "t": "4. 登斯楼也，则有心旷神怡，________________，把酒临风，________________。", "a": "宠辱偕忘，其喜洋洋者矣", "m": "【喜悦】宠辱皆忘，喜洋洋。" }
+        ]
+    },
+    {
+        "year": "2014",
+        "qs": [
+            { "t": "1. ________________，________________，君子博学而日参省乎己，则知明而行无过矣。", "a": "故木受绳则直，金就砺则利", "m": "【比喻】木受绳，金就砺。" },
+            { "t": "2. 布衾多年冷似铁，________________。床头屋漏无干处，________________。", "a": "骄儿恶卧踏里裂，雨脚如麻未断绝", "m": "【困苦】踏里裂，雨如麻。" },
+            { "t": "3. 冰泉冷涩弦凝绝，________________。别有幽愁暗恨生，________________。", "a": "凝绝不通声渐歇，此时无声胜有声", "m": "【顿挫】声渐歇，胜有声。" },
+            { "t": "4. 予谓菊，花之隐逸者也；牡丹，________________；莲，________________。", "a": "花之富贵者也，花之君子者也", "m": "【花语】牡丹富贵，莲花君子。" }
+        ]
+    },
+    {
+        "year": "2013",
+        "qs": [
+            { "t": "1. ________________，在河之洲。________________，君子好逑。", "a": "关关雎鸠，窈窕淑女", "m": "【首句】关关雎鸠。" },
+            { "t": "2. 苔痕上阶绿，________________；________________，谈笑有鸿儒。", "a": "草色入帘青，往来无白丁", "m": "【陋室】草入帘，无白丁。" },
+            { "t": "3. ________________，莫使金樽空对月。________________，千金散尽还复来。", "a": "人生得意须尽欢，天生我材必有用", "m": "【豪迈】须尽欢，必有用。" },
+            { "t": "4. 枯藤老树昏鸦，________________。古道西风瘦马，________________，断肠人在天涯。", "a": "小桥流水人家，夕阳西下", "m": "【景色】小桥流水，夕阳西下。" }
+        ]
+    },
+    {
+        "year": "2012",
+        "qs": [
+            { "t": "1. 以地事秦，________________，薪不尽，________________。", "a": "犹抱薪救火，火不灭", "m": "【成语】抱薪救火。" },
+            { "t": "2. 大弦嘈嘈如急雨，________________。嘈嘈切切错杂弹，________________。", "a": "小弦切切如私语，大珠小珠落玉盘", "m": "【音乐】如私语，落玉盘。" },
+            { "t": "3. 登斯楼也，则有去国怀乡，________________，________________，感极而悲者矣。", "a": "忧谗畏讥，满目萧然", "m": "【悲情】忧谗畏讥，满目萧然。" },
+            { "t": "4. 千古江山，________________。舞榭歌台，________________。", "a": "英雄无觅孙仲谋处，风流总被雨打风吹去", "m": "【怀古】英雄无觅，风流被吹去。" }
+        ]
+    },
+    {
+        "year": "2011",
+        "qs": [
+            { "t": "1. 锲而舍之，________________；锲而不舍，________________。", "a": "朽木不折，金石可镂", "m": "【坚持】舍之不折，不舍可镂。" },
+            { "t": "2. 安得广厦千万间，________________！", "a": "大庇天下寒士俱欢颜", "m": "【宏愿】庇护寒士。" },
+            { "t": "3. 然则何时而乐耶？其必曰“________________，________________”乎！", "a": "先天下之忧而忧，后天下之乐而乐", "m": "【名句】先忧后乐。" },
+            { "t": "4. 此去经年，________________。便纵有千种风情，更与何人说！", "a": "应是良辰好景虚设", "m": "【虚设】良辰好景虚设。" }
+        ]
+    },
+    {
+        "year": "2010",
+        "qs": [
+            { "t": "1. 关关雎鸠，________________。", "a": "在河之洲", "m": "【下句】在河之洲。" },
+            { "t": "2. 圣人之所以为圣，________________。皆出于此乎？爱其子，________________；于其身也，则耻躬焉，惑矣。", "a": "愚人之所以为愚，择师而教之", "m": "【愚智】愚人所以愚，择师教之。" },
+            { "t": "3. 乱花渐欲迷人眼，________________。最爱湖东行不足，________________。", "a": "浅草才能没马蹄，绿杨阴里白沙堤", "m": "【春游】浅草没蹄，绿杨沙堤。" },
+            { "t": "4. ________________，小桥流水人家，________________。夕阳西下，断肠人在天涯。", "a": "枯藤老树昏鸦，古道西风瘦马", "m": "【秋思】九个意象。" }
+        ]
+    },
+    {
+        "year": "2009",
+        "qs": [
+            { "t": "1. 君不见黄河之水天上来，________________。君不见高堂明镜悲白发，________________。", "a": "奔流到海不复回，朝如青丝暮成雪", "m": "【夸张】不复回，暮成雪。" },
+            { "t": "2. 六国破灭，________________，________________。弊在赂秦。", "a": "非兵不利，战不善", "m": "【归因】非兵不利，战不善。" },
+            { "t": "3. 故国神游，________________，早生华发。人生如梦，________________。", "a": "多情应笑我，一尊还酹江月", "m": "【自嘲】多情笑我，酹江月。" },
+            { "t": "4. 看万山红遍，________________；漫江碧透，________________。", "a": "层林尽染，百舸争流", "m": "【沁园春】层林尽染，百舸争流。" }
+        ]
+    },
+    {
+        "year": "2008",
+        "qs": [
+            { "t": "1. 雕栏玉砌应犹在，只是朱颜改。问君能有几多愁，________________。", "a": "恰似一江春水向东流", "m": "【愁绪】似春水东流。" },
+            { "t": "2. 去来江口守空船，________________。夜深忽梦少年事，________________。", "a": "绕船月明江水寒，梦啼妆泪红阑干", "m": "【凄清】江水寒，红阑干。" },
+            { "t": "3. 是故无贵无贱，无长无少，________________，________________。", "a": "道之所存，师之所存也", "m": "【择师】道之所存，师之所存。" },
+            { "t": "4. 千古江山，________________。舞榭歌台，________________。", "a": "英雄无觅孙仲谋处，风流总被雨打风吹去", "m": "【消逝】英雄无觅，风流雨打风吹。" }
+        ]
+    }
+];
+
+let currentLevelIndex = 0;
+let userMeta = { name: "", id: "", class: "" };
+
+function startGame() {
+    const classInput = document.getElementById('className').value.trim();
+    const idInput = document.getElementById('studentId').value.trim();
+    const nameInput = document.getElementById('studentName').value.trim();
+
+    if(!classInput || !idInput || !nameInput) {
+        alert("请完整填写班级、学号和姓名，以便记录成绩！");
+        return;
+    }
+
+    userMeta = { class: classInput, id: idInput, name: nameInput };
+    
+    document.getElementById('setup-section').classList.remove('active');
+    document.getElementById('game-section').classList.add('active');
+    loadLevel();
+}
+
+function loadLevel() {
+    const levelData = fullDatabase[currentLevelIndex];
+    document.getElementById('level-title').innerText = `第 ${currentLevelIndex + 1} 关：${levelData.year}年真题`;
+    document.getElementById('level-progress').innerText = `${currentLevelIndex + 1}/${fullDatabase.length}`;
+    document.getElementById('progress-fill').style.width = `${((currentLevelIndex)/fullDatabase.length)*100}%`;
+    
+    const area = document.getElementById('questions-area');
+    area.innerHTML = "";
+
+    levelData.qs.forEach((q, idx) => {
+        let answerParts = q.a.split('，');
+        let partIndex = 0;
+        
+        // 替换下划线为输入框
+        const htmlText = q.t.replace(/_+/g, () => {
+            const currentPartAns = answerParts[partIndex] ? answerParts[partIndex].trim() : "";
+            const inputHtml = `<input type="text" 
+                class="inline-input" 
+                data-group="q-${idx}" 
+                data-ans="${currentPartAns}" 
+                autocomplete="off"
+                onkeydown="if(event.keyCode==13) document.getElementById('btn-confirm-${idx}').click()">`;
+            partIndex++;
+            return inputHtml;
+        });
+
+        // 生成卡片 HTML
+        area.innerHTML += `
+            <div class="question-card" id="card-${idx}">
+                <div class="question-text">${htmlText}</div>
+                
+                <button class="btn-confirm-q" id="btn-confirm-${idx}" onclick="confirmQuestion(${idx})">确认答案</button>
+
+                <div id="analysis-${idx}" class="analysis-box">
+                    <div class="correct-answer-text">✅ 正确答案：${q.a}</div>
+                    <div class="memory-tip">💡 记忆锦囊：${q.m}</div>
+                </div>
+            </div>
+        `;
+    });
+
+    // 按钮状态重置
+    document.getElementById('submit-level-btn').style.display = 'inline-block';
+    document.getElementById('submit-level-btn').innerText = '结算本关成绩';
+    document.getElementById('next-btn').style.display = 'none';
+    document.getElementById('redo-btn').style.display = 'none';
+    window.scrollTo(0,0);
+}
+
+// 核心功能：单题确认逻辑
+function confirmQuestion(idx) {
+    const inputs = document.querySelectorAll(`input[data-group='q-${idx}']`);
+    let isAllCorrect = true;
+    let hasEmpty = false;
+
+    // 先检查空值
+    inputs.forEach(inp => {
+        if(inp.value.trim() === "") hasEmpty = true;
+    });
+
+    if(hasEmpty) {
+        if(!confirm("这道题还有空没填，确定要提交吗？")) return;
+    }
+
+    // 校验逻辑
+    inputs.forEach(inp => {
+        const userVal = inp.value.trim();
+        const correctVal = inp.getAttribute('data-ans');
+        
+        // 宽松匹配：去标点
+        const cleanUser = userVal.replace(/[，。？！,.]/g, '');
+        const cleanAns = correctVal.replace(/[，。？！,.]/g, '');
+
+        inp.disabled = true; // 锁定
+
+        if (cleanUser === cleanAns && cleanUser !== "") {
+            inp.classList.add('correct');
+        } else {
+            inp.classList.add('wrong');
+            isAllCorrect = false;
+        }
+    });
+
+    // 显示解析
+    document.getElementById(`analysis-${idx}`).style.display = 'block';
+    
+    // 隐藏该题确认按钮
+    const btn = document.getElementById(`btn-confirm-${idx}`);
+    btn.classList.add('checked');
+    
+    // 如果全对，卡片可以给个绿色边框反馈
+    if(isAllCorrect) {
+        document.getElementById(`card-${idx}`).style.border = "2px solid var(--primary)";
+    } else {
+        document.getElementById(`card-${idx}`).style.border = "2px solid var(--error)";
+    }
+}
+
+function finishLevel() {
+    // 检查是否所有题都已确认，如果没有，自动触发确认
+    const allConfirmBtns = document.querySelectorAll('.btn-confirm-q');
+    allConfirmBtns.forEach(btn => {
+        if(!btn.classList.contains('checked')) {
+            btn.click(); // 自动点击未点击的确认按钮
+        }
+    });
+
+    // 计算总分
+    const inputs = document.querySelectorAll('.inline-input');
+    let correctCount = 0;
+    let totalCount = inputs.length;
+
+    inputs.forEach(inp => {
+        if(inp.classList.contains('correct')) correctCount++;
+    });
+
+    const score = Math.round((correctCount / totalCount) * 100);
+    showResult(score);
+}
+
+function showResult(score) {
+    const modal = document.getElementById('result-modal');
+    const scoreEl = document.getElementById('score-val');
+    const quoteEl = document.getElementById('quote-val');
+    const userInfoEl = document.getElementById('modal-user-info');
+    
+    userInfoEl.innerText = `${userMeta.class} · ${userMeta.name}`;
+    scoreEl.innerText = score;
+    modal.style.display = 'flex';
+
+    document.getElementById('submit-level-btn').style.display = 'none';
+
+    if (score === 100) {
+        quoteEl.innerText = "🎉 笔落惊风雨，诗成泣鬼神！完美！";
+        document.getElementById('next-btn').style.display = 'inline-block';
+        
+        if(currentLevelIndex === fullDatabase.length -1) {
+             document.getElementById('next-btn').innerText = "🏆 全卷通关！";
+             document.getElementById('next-btn').onclick = () => alert(`恭喜 ${userMeta.name} 同学制霸高职高考语文默写！`);
+        }
+    } else if (score >= 80) {
+        quoteEl.innerText = "👏 成绩不错，继续保持！";
+        document.getElementById('next-btn').style.display = 'inline-block';
+    } else {
+        quoteEl.innerText = "💪 锲而舍之朽木不折，建议重刷本关！";
+        document.getElementById('redo-btn').style.display = 'inline-block';
+    }
+}
+
+function closeModal() {
+    document.getElementById('result-modal').style.display = 'none';
+}
+
+function nextLevel() {
+    if(currentLevelIndex < fullDatabase.length - 1) {
+        currentLevelIndex++;
+        loadLevel();
+    }
+}
+</script>
 </body>
 </html>
