@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>历年语文高职高考闯关挑战</title>
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --success-color: #2ecc71;
+            --error-color: #e74c3c;
+            --text-color: #333;
+            --bg-color: #f5f7fa;
+            --highlight-color: #d32f2f; /* 加点字高亮颜色 */
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* 登录界面 */
+        #login-panel {
+            text-align: center;
+        }
+        
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        /* 游戏界面 */
+        #game-panel {
+            display: none;
+        }
+
+        .header-info {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .level-title {
+            text-align: center;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .question-card {
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .q-text {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        /* 序号和特殊格式处理 */
+        .sub-para {
+            display: block;
+            margin-top: 8px;
+            text-indent: 0; 
+        }
+
+        .numbered-item {
+            display: block;
+            margin: 5px 0 5px 20px;
+        }
+
+        /* 选项样式 */
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: flex-start; /* 顶部对齐，防止多行错位 */
+            margin-bottom: 12px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option-item:hover:not(.disabled) {
+            background-color: #eef5ff;
+            border-color: var(--primary-color);
+        }
+
+        .option-item.selected {
+            background-color: #dbeafe;
+            border-color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .option-item.correct-answer {
+            background-color: #d4edda;
+            border-color: var(--success-color);
+        }
+
+        .option-item.wrong-answer {
+            background-color: #f8d7da;
+            border-color: var(--error-color);
+        }
+
+        .option-label {
+            margin-right: 15px;
+            font-weight: bold;
+            min-width: 25px;
+        }
+
+        .option-content {
+            flex: 1;
+        }
+
+        /* 词组间距类 */
+        .phrase-spacer {
+            margin-right: 25px; /* 增加词组间距 */
+            display: inline-block;
+        }
+
+        /* 加点字高亮 */
+        .highlight {
+            color: var(--highlight-color);
+            font-weight: bold;
+            font-style: normal;
+        }
+
+        /* 解析区域 */
+        .analysis-box {
+            display: none; /* 默认隐藏 */
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--primary-color);
+            border-radius: 4px;
+        }
+
+        .analysis-box p {
+            margin: 5px 0;
+        }
+
+        /* 按钮 */
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        .btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .btn-confirm {
+            background-color: #e67e22;
+        }
+
+        .btn-next {
+            background-color: var(--success-color);
+            float: right;
+            display: none; /* 默认隐藏 */
+        }
+        
+        .btn-redo {
+            background-color: #7f8c8d;
+            margin-top: 20px;
+        }
+
+        #result-message {
+            margin-top: 20px;
+            font-size: 1.2em;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* 针对不同屏幕适配 */
+        @media (max-width: 600px) {
+            .option-item {
+                font-size: 14px;
+            }
+            .phrase-spacer {
+                display: block; /* 手机上可能需要换行，或者减小间距 */
+                margin-right: 0;
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="login-panel">
+        <h2>📚 历年高职高考语文闯关挑战（2025-2021）</h2>
+        <p>请输入你的信息开始答题</p>
+        <div class="input-group">
+            <label>班级</label>
+            <input type="text" id="user-class" placeholder="例如：23级计算机1班">
+        </div>
+        <div class="input-group">
+            <label>学号</label>
+            <input type="text" id="user-id" placeholder="例如：2023001">
+        </div>
+        <div class="input-group">
+            <label>姓名</label>
+            <input type="text" id="user-name" placeholder="请输入你的姓名">
+        </div>
+        <button class="btn" onclick="startGame()">开始闯关</button>
+    </div>
+
+    <div id="game-panel">
+        <div class="header-info">
+            <span id="player-display">考生：未登录</span>
+            <span id="score-display">当前进度：1/1</span>
+        </div>
+
+        <h2 class="level-title" id="year-title">2025年 真题挑战</h2>
+
+        <div id="quiz-container">
+            </div>
+
+        <div style="margin-top: 20px; overflow: hidden;">
+            <button class="btn btn-redo" onclick="redoLevel()">重做本关</button>
+            <button class="btn btn-next" id="next-level-btn" onclick="nextLevel()">🎉 全对！进入下一关</button>
+        </div>
+
+        <div id="result-message"></div>
+    </div>
+</div>
+
+<script>
+    // ----------------------
+    // 题目数据 (Data)
+    // ----------------------
+    // 格式说明：
+    // text: 题干。若包含序号请用 <div class='numbered-item'>①...</div>
+    // options: 选项数组。 content 中使用 <span class='phrase-spacer'> 分隔词组，用 <span class='highlight'>【字】</span> 标识加点字。
+    const levelsData = [
+        {
+            year: 2025,
+            questions: [
+                {
+                    id: 1,
+                    text: "1. 下列词语中，加点字的读音都不相同的一项是（ ）。",
+                    options: [
+                        { label: "A", content: "<span class='phrase-spacer'>木<span class='highlight'>【讷】</span>/出<span class='highlight'>【纳】</span></span> <span class='phrase-spacer'>【俨】</span>然/火<span class='highlight'>【焰】</span></span> <span class='phrase-spacer'>桂<span class='highlight'>【冠】</span>/<span class='highlight'>【冠】</span>冕堂皇</span>" },
+                        { label: "B", content: "<span class='phrase-spacer'><span class='highlight'>【檄】</span>文/<span class='highlight'>【缴】</span>获</span> <span class='phrase-spacer'>休<span class='highlight'>【憩】</span>/修<span class='highlight'>【葺】</span></span> <span class='phrase-spacer'>萝<span class='highlight'>【卜】</span>/未<span class='highlight'>【卜】</span>先知</span>" },
+                        { label: "C", content: "<span class='phrase-spacer'>咖<span class='highlight'>【啡】</span>/门<span class='highlight'>【扉】</span></span> <span class='phrase-spacer'>精<span class='highlight'>【粹】</span>/<span class='highlight'>【璀】</span>璨</span> <span class='phrase-spacer'><span class='highlight'>【奇】</span>数/出<span class='highlight'>【奇】</span>制胜</span>" },
+                        { label: "D", content: "<span class='phrase-spacer'><span class='highlight'>【榨】</span>汁/愧<span class='highlight'>【怍】</span></span> <span class='phrase-spacer'>花<span class='highlight'>【圃】</span>/<span class='highlight'>【敷】</span>衍</span> <span class='phrase-spacer'><span class='highlight'>【折】</span>耗/百<span class='highlight'>【折】</span>不挠</span>" }
+                    ],
+                    answer: "D",
+                    analysis: "A项：nè/nà，yǎn/yàn，guān/guān（相同）；<br>B项：xí/jiǎo，qì/qì（相同），bo/bǔ；<br>C项：fēi/fēi（相同），cuì/cuǐ，jī/qí；<br>D项：zhà/zuò，pǔ/fū，shé/zhé（全不相同）。"
+                },
+                {
+                    id: 2,
+                    text: "2. 下列词语中，没有错别字的一组是（ ）。",
+                    options: [
+                        { label: "A", content: "<span class='phrase-spacer'>隽永</span> <span class='phrase-spacer'>蛛丝蚂迹</span> <span class='phrase-spacer'>笑容可掬</span> <span class='phrase-spacer'>再接再厉</span>" },
+                        { label: "B", content: "<span class='phrase-spacer'>迁徒</span> <span class='phrase-spacer'>铿锵有力</span> <span class='phrase-spacer'>宁缺毋滥</span> <span class='phrase-spacer'>望穿秋水</span>" },
+                        { label: "C", content: "<span class='phrase-spacer'>蒙昧</span> <span class='phrase-spacer'>纷至沓来</span> <span class='phrase-spacer'>要言不烦</span> <span class='phrase-spacer'>墨守成规</span>" },
+                        { label: "D", content: "<span class='phrase-spacer'>耿直</span> <span class='phrase-spacer'>众口铄金</span> <span class='phrase-spacer'>豆寇年华</span> <span class='phrase-spacer'>一诺千金</span>" }
+                    ],
+                    answer: "C",
+                    analysis: "A项“蛛丝蚂迹”应为“蛛丝马迹”；<br>B项“迁徒”应为“迁徙”；<br>D项“豆寇年华”应为“豆蔻年华”。"
+                },
+                {
+                    id: 3,
+                    text: "3. 下列句子中，标点符号使用正确的一项是（ ）。",
+                    options: [
+                        { label: "A", content: "“不对，这不是将军家里的狗……”巡警深思地说：“将军家里没有这样的狗。他家的狗，全是大猎狗。”" },
+                        { label: "B", content: "广东音乐早期的合奏，多用二弦、提琴、三弦、月琴、横箫，称为《五架头》，又叫《硬弓组合》。" },
+                        { label: "C", content: "集市上，牛肉丸、卤鹅、豆花、甘草水果等……具有地方特色的美食吸引了众多游客前往品尝。" },
+                        { label: "D", content: "那里并非真的缺少土地，但在许多地方，真正的土地——至少是真正可以耕作的土地——严重缺乏。" }
+                    ],
+                    answer: "D",
+                    analysis: "A项“说”在引语中间，后面应用逗号；<br>B项“五架头”“硬弓组合”应使用引号；<br>C项“等”与省略号不能连用。"
+                },
+                {
+                    id: 4,
+                    text: "4. 依次填入下面文字横线处的词语，最恰当的一项是（ ）。<br><div class='sub-para'>徽州三雕是具有徽派风格的砖雕、木雕、石雕三种民间雕刻工艺的统称。徽州三雕与徽派建筑巧妙________在徽州民居、宗祠、牌坊、园林中形成了一种技艺高超、________生动、自成一体的建筑装饰风格。徽州三雕以精细、典雅著称，________富有文化品位，具有很浓的文人气息。</div>",
+                    options: [
+                        { label: "A", content: "<span class='phrase-spacer'>融合</span> <span class='phrase-spacer'>气韵</span> <span class='phrase-spacer'>且</span>" },
+                        { label: "B", content: "<span class='phrase-spacer'>融合</span> <span class='phrase-spacer'>气势</span> <span class='phrase-spacer'>且</span>" },
+                        { label: "C", content: "<span class='phrase-spacer'>熔合</span> <span class='phrase-spacer'>气韵</span> <span class='phrase-spacer'>因</span>" },
+                        { label: "D", content: "<span class='phrase-spacer'>熔合</span> <span class='phrase-spacer'>气势</span> <span class='phrase-spacer'>因</span>" }
+                    ],
+                    answer: "A",
+                    analysis: "融合：几种不同的事物合成一体（符合语境）；<br>气韵：艺术作品的独特气质（符合三雕艺术）；<br>且：表递进（精细典雅“并且”有文化品位）。"
+                },
+                {
+                    id: 5,
+                    text: "5. 下列各句中加点的词语，使用不恰当的一项是（ ）。",
+                    options: [
+                        { label: "A", content: "还没等观众从<span class='highlight'>【眼花缭乱】</span>中反应过来，她已经展开身体，像轻盈的、笔直的箭，“哧”地插进碧波之中。" },
+                        { label: "B", content: "作为中国最大的果菜集散地之一，江南果菜批发市场从凌晨就开始<span class='highlight'>【人声鼎沸】</span>，交易热火朝天。" },
+                        { label: "C", content: "上海推进公共阅读网络建设，徐家汇书院、朵云书院、和平书院等阅读新空间如<span class='highlight'>【雨后春笋】</span>般涌现。" },
+                        { label: "D", content: "民族乐团在广州举行新年音乐会的消息掀起了观演热潮，音乐爱好者<span class='highlight'>【趋之若鹜】</span>，纷纷赶赴音乐厅。" }
+                    ],
+                    answer: "D",
+                    analysis: "D项“趋之若鹜”比喻许多人争着去追逐不好的事物，含贬义，用于形容音乐爱好者不当。"
+                },
+                {
+                    id: 6,
+                    text: "6. 下列各句中，没有语病的一项是（ ）。",
+                    options: [
+                        { label: "A", content: "穿红马甲的志愿者是个 19岁在内蒙古上大学的小伙子，今年五月份刚成为入党积极分子。" },
+                        { label: "B", content: "该知名博主通过充满中国元素的短视频，为世界打开了认识、欣赏中华优秀传统文化的窗口。" },
+                        { label: "C", content: "使用燃气时务必开窗通风，保持室内空气流通，以防一氧化碳中毒和燃气泄漏爆燃事件不再发生。" },
+                        { label: "D", content: "举办无人机应用技术技能大赛，其目的旨在带动全省各院校加快推动低空产业相关学科专业建设。" }
+                    ],
+                    answer: "B",
+                    analysis: "A项语序不当，“19岁”应放在“在内蒙古上大学的”后面；<br>C项否定不当，“以防……不再发生”逻辑错误；<br>D项句式杂糅，“其目的旨在”重复。"
+                },
+                {
+                    id: 7,
+                    text: "7. 对下列句子所用修辞手法的判断，正确的一项是（ ）。<br><div class='numbered-item'>①不同的植物为何开花时间不同？这与温度、湿度、光照有着密切的关系。</div><div class='numbered-item'>②太阳光照射在宝塔山尖上的时光，雾气像幕布一样拉开，延安城渐渐地显在太阳光里。</div><div class='numbered-item'>③北方的秋雨，也似乎比南方的下得奇，下得有味，下得更像样。</div>",
+                    options: [
+                        { label: "A", content: "<span class='phrase-spacer'>①设问</span> <span class='phrase-spacer'>②比拟</span> <span class='phrase-spacer'>③反复</span>" },
+                        { label: "B", content: "<span class='phrase-spacer'>①反问</span> <span class='phrase-spacer'>②比拟</span> <span class='phrase-spacer'>③排比</span>" },
+                        { label: "C", content: "<span class='phrase-spacer'>①设问</span> <span class='phrase-spacer'>②比喻</span> <span class='phrase-spacer'>③排比</span>" },
+                        { label: "D", content: "<span class='phrase-spacer'>①反问</span> <span class='phrase-spacer'>②比喻</span> <span class='phrase-spacer'>③反复</span>" }
+                    ],
+                    answer: "C",
+                    analysis: "①自问自答，为设问；②“像幕布”为比喻；③三个“下得...”结构一致，为排比。"
+                },
+                {
+                    id: 8,
+                    text: "8. 依次填入下面文字横线处的语句，衔接最恰当的一组是（ ）。<br><div class='sub-para'>________。满地的繁华葱茏，________，铺排夸张，有着一泻千里的恢宏气势。万顷平畴如涛如浪，________，唱出大江大河的气韵。高山上，一绺鹅黄，一绺浅绿，________，短小精悍，严谨含蓄。方正平整的麦田里，麦子熟了，________，平平仄仄平平仄，押着韵，________。</div><div class='numbered-item'>①风一吹过，田块就摇头晃脑地轻声诵读起来</div><div class='numbered-item'>②是意蕴悠远的歌</div><div class='numbered-item'>③是华丽雍容的赋</div><div class='numbered-item'>④那是一首首格律诗</div><div class='numbered-item'>⑤是用词简约的现代诗</div><div class='numbered-item'>⑥黄土的心里装着的全是好词好句，它用大智慧作锦绣文章</div>",
+                    options: [
+                        { label: "A", content: "①③②④⑤⑥" },
+                        { label: "B", content: "①③②⑥⑤④" },
+                        { label: "C", content: "⑥③②⑤④①" },
+                        { label: "D", content: "⑥②③④⑤①" }
+                    ],
+                    answer: "C",
+                    analysis: "⑥总领全文；③对应“铺排夸张”；②对应“唱出”；⑤对应“短小精悍”；④对应“平仄押韵”；①结尾呼应。"
+                }
+            ]
+        },
+       {
+    "year": 2024,
+    "questions": [
+      {
+        "id": 1,
+        "text": "1. 下列词语中，加点字的读音都不相同的一组是（ ）。",
+        "options": [
+          { "label": "A", "content": "<span class='phrase-spacer'>伺<span class='highlight'>【候】</span>/<span class='highlight'>【伺】</span>养</span> <span class='phrase-spacer'>肺<span class='highlight'>【腑】</span>/悱<span class='highlight'>【恻】</span></span> <span class='phrase-spacer'>圈<span class='highlight'>【养】</span>/可<span class='highlight'>【圈】</span>可点</span>" },
+          { "label": "B", "content": "<span class='phrase-spacer'>减<span class='highlight'>【免】</span>/机<span class='highlight'>【械】</span></span> <span class='phrase-spacer'>觊<span class='highlight'>【觎】</span>/阿<span class='highlight'>【谀】</span></span> <span class='phrase-spacer'>薄<span class='highlight'>【饼】</span>/薄<span class='highlight'>【利】</span>多销</span>" },
+          { "label": "C", "content": "<span class='phrase-spacer'><span class='highlight'>【蓦】</span>然/招<span class='highlight'>【募】</span></span> <span class='phrase-spacer'>吝<span class='highlight'>【啬】</span>/萧<span class='highlight'>【瑟】</span></span> <span class='phrase-spacer'><span class='highlight'>【拓】</span>本/开<span class='highlight'>【疆】</span>拓土</span>" },
+          { "label": "D", "content": "<span class='phrase-spacer'>馈<span class='highlight'>【赠】</span>/溃<span class='highlight'>【败】</span></span> <span class='phrase-spacer'><span class='highlight'>【惩】</span>罚/<span class='highlight'>【星】</span>辰</span> <span class='phrase-spacer'>经<span class='highlight'>【纶】</span>/羽扇<span class='highlight'>【纶】</span>巾</span>" }
+        ],
+        "answer": "A",
+        [cite_start]"analysis": "A项：cì/sì，fǔ/cè，juàn/quān（全不相同）；<br>B项：jiǎn/xiè，yú/yú（相同），báo/bó；<br>C项：mò/mù，sè/sè（相同），tà/tuò；<br>D项：kuì/kuì（相同），chéng/chén，lún/guān。[cite: 52]"
+      },
+      {
+        "id": 2,
+        "text": "2. 下列词语中，没有错别字的一组是（ ）。",
+        "options": [
+          { "label": "A", "content": "<span class='phrase-spacer'>肯綮</span> <span class='phrase-spacer'>立竿见影</span> <span class='phrase-spacer'>英雄辈出</span> <span class='phrase-spacer'>不假思索</span>" },
+          { "label": "B", "content": "<span class='phrase-spacer'>凑合</span> <span class='phrase-spacer'>变本加砺</span> <span class='phrase-spacer'>幕天席地</span> <span class='phrase-spacer'>破涕为笑</span>" },
+          { "label": "C", "content": "<span class='phrase-spacer'>国粹</span> <span class='phrase-spacer'>汗流浃背</span> <span class='phrase-spacer'>调虎离山</span> <span class='phrase-spacer'>至理名言</span>" },
+          { "label": "D", "content": "<span class='phrase-spacer'>喝彩</span> <span class='phrase-spacer'>出奇不意</span> <span class='phrase-spacer'>漫不经心</span> <span class='phrase-spacer'>一诺千金</span>" }
+        ],
+        "answer": "A",
+        [cite_start]"analysis": "B项“变本加砺”应为“变本加厉”；<br>D项“出奇不意”应为“出其不意”。[cite: 52]"
+      },
+      {
+        "id": 3,
+        "text": "3. 下列句子中，标点符号使用不正确的一项是（ ）。",
+        "options": [
+          { "label": "A", "content": "本来是大自然的一分子，需要与自然和谐相处，并从自然——鸟、花、树等人类的朋友那里获得精神上的慰藉和启示。" },
+          { "label": "B", "content": "赵昌平是中国诗会知名专家，著有《唐诗三百首全解》《孟子：匡世的真言》《赵昌平自选集》等著作。" },
+          { "label": "C", "content": "谈到自己的文学创作，余光中先生自谓：“右手为诗，左手为文”，还说诗歌是他文学的“轻工业”，散文是“重工业”。" },
+          { "label": "D", "content": "为什么称他为著名作家？因为他写出了产生巨大影响的作品。为什么又认为他是伟大作家？因为他写出了能够影响全人类的伟大作品。" }
+        ],
+        "answer": "C",
+        [cite_start]"analysis": "C项中标点符号使用错误，该句是间接引用，引用的内容作为句子成分，不应使用冒号，应删去冒号。[cite: 52]"
+      },
+      {
+        "id": 4,
+        "text": "4. 依次填入下列各句横线上的词语，最恰当的一组是（ ）。<br><div class='numbered-item'>①在项目验收会议上，与会专家一致认为，研究团队做出的结论还不完善，有些观点值得________。</div><div class='numbered-item'>②他并不同激进主义的做法，因为无论多么热烈和激进，都无法迅速地________传统文化中长期积累的弊端。</div><div class='numbered-item'>③侵略者的轰炸________没有起到威胁的效果，________使各族人民团结起来，奋勇反抗。</div>",
+        "options": [
+          { "label": "A", "content": "<span class='phrase-spacer'>商榷</span> <span class='phrase-spacer'>消除</span> <span class='phrase-spacer'>不仅/反而</span>" },
+          { "label": "B", "content": "<span class='phrase-spacer'>商量</span> <span class='phrase-spacer'>消除</span> <span class='phrase-spacer'>不仅/而且</span>" },
+          { "label": "C", "content": "<span class='phrase-spacer'>商榷</span> <span class='phrase-spacer'>消灭</span> <span class='phrase-spacer'>不仅/反而</span>" },
+          { "label": "D", "content": "<span class='phrase-spacer'>商量</span> <span class='phrase-spacer'>消灭</span> <span class='phrase-spacer'>不仅/而且</span>" }
+        ],
+        "answer": "A",
+        [cite_start]"analysis": "“商榷”指对学术问题进行磋商，具有庄重色彩，符合句①语境；<br>“消除”指侧重彻底除去，搭配“弊端”更合适，而“消灭”常用于敌人或害虫；<br>句③语意为递进关系且有转折意味（反向效果），应选“不仅/反而”。[cite: 52]"
+      },
+      {
+        "id": 5,
+        "text": "5. 下列各句中，加点的词语使用不恰当的一项是（ ）。",
+        "options": [
+          { "label": "A", "content": "春节期间，大量外来务工人员返乡，一些城市<span class='highlight'>【万人空巷】</span>：马路空荡、行人稀疏、商铺紧锁……" },
+          { "label": "B", "content": "近百年来，人民军队从星星之火到燎原胜势，从<span class='highlight'>【筚路蓝缕】</span>到强军兴军，涌现出一批又一批彪炳史册的英雄。" },
+          { "label": "C", "content": "经过前期的学习实践，他对这门技术的运用已<span class='highlight'>【驾轻就熟】</span>，即使在复杂的环境中，也能应用自如。" },
+          { "label": "D", "content": "适当运用文言词语，可以使语言及宋简浩鲜明，又古朴典雅，但如果使用不当，反而会<span class='highlight'>【贻笑大方】</span>。" }
+        ],
+        "answer": "A",
+        [cite_start]"analysis": "A项“万人空巷”指家家户户的人都从巷里出来了，多形容庆祝、欢迎等盛况，形容人少、空荡是望文生义，使用错误。[cite: 52]"
+      },
+      {
+        "id": 6,
+        "text": "6. 把下列词组句组成语意连贯的语段，排序最恰当的一项是（ ）。<br><div class='numbered-item'>①在我国，无论是公共图书馆还是高校图书馆，多年前已在不经意间将其业务术语中的服务对象由“读者”替换成了“用户”。</div><div class='numbered-item'>②“读者”的衰微与“用户”的兴起，是数字媒体时代接受主体的一个深刻变化。</div><div class='numbered-item'>③移动互联网时代加剧的媒体融合，更使人们觉得，文献信息的世界已非一个“读”字了得。</div><div class='numbered-item'>④这种替换看上去是源自馆藏文献品种的多元化。</div><div class='numbered-item'>⑤这一变化的信息在最直接面对“读者”的图书馆事业中有着更明晰的提示。</div><div class='numbered-item'>⑥比如，在图书馆检索页面输入“红楼梦”一词，所得结果中，除文字文本外，还有图片、视频、音频等，它们的点击量不少于文字文本。</div>",
+        "options": [
+          { "label": "A", "content": "①④③⑥⑤②" },
+          { "label": "B", "content": "①④②⑥③⑤" },
+          { "label": "C", "content": "②⑤①④⑥③" },
+          { "label": "D", "content": "②⑤④⑥①③" }
+        ],
+        "answer": "C",
+        [cite_start]"analysis": "通读全段，②句提出“读者”与“用户”的变化，作为总起；⑤句紧承②句，指出这一变化在图书馆的体现；①句举例说明图书馆的称谓变化；④句分析变化的原因（文献多元化）；⑥句举例说明多元化；③句总结这一变化在数字时代的背景。[cite: 52]"
+      },
+      {
+        "id": 7,
+        "text": "7. 下列句子中，没有使用比喻修辞的一项是（ ）。",
+        "options": [
+          { "label": "A", "content": "“一带一路”是我国推动经济全球化而提出的一项互利共赢的倡议，它已成为推动全球经济转型升级、走出衰退困境的新引擎。" },
+          { "label": "B", "content": "气象部门预计，随着暖湿气流增强，我省明天会迎来一场及时雨，空气中污染物浓度快速下降，人体的舒适度会大幅度提升。" },
+          { "label": "C", "content": "一种突如其来的网络病毒洪水猛兽般地袭击全球，导致 150 多个国家受灾，我国也有近 3 万家机构的计算机受到影响。" },
+          { "label": "D", "content": "人生不是一支短短的蜡烛，而是一支由我们暂时拿着的火炬，一定要让它燃烧得十分明亮灿烂，然后交给下一代。" }
+        ],
+        "answer": "B",
+        [cite_start]"analysis": "B项“及时雨”指实际的雨水，没有本体和喻体的相似性关系，不构成比喻；<br>A项将“倡议”比作“引擎”；<br>C项将“病毒”比作“洪水猛兽”；<br>D项将“人生”比作“蜡烛”和“火炬”。[cite: 52]"
+      },
+      {
+        "id": 8,
+        "text": "8. 下列各句中，没有语病的一项是（ ）。",
+        "options": [
+          { "label": "A", "content": "从全面建成小康社会到基本实现现代化，再到全面建成社会主义现代化强国，是新时代中国特色社会主义发展的战略安排。" },
+          { "label": "B", "content": "中国积极推动绿色发展，促进人与自然和谐共生，发展了一系列水利基础设施建设、水环境治理、清洁能源开发等规划。" },
+          { "label": "C", "content": "一副对联是否优秀，关键在于它能否融思想性、艺术性、实用性和趣味性于一体，寓意巧妙、引人入胜。" },
+          { "label": "D", "content": "虽然用微波炉加热食品会致癌的说法没有科学依据，但在使用微波炉时，一定要按说明书操作，切忌不要盲目乱用。" }
+        ],
+        "answer": "A",
+        [cite_start]"analysis": "B项搭配不当，“发展”与“规划”不搭配，应改为“制定”；<br>C项两面对一面，“是否”对应“能否”，后半句缺乏对应词，应改为“在于它能否……”；<br>D项否定失当，“切忌”与“不要”双重否定表示肯定，意思反了，应删去“不要”。[cite: 52]"
+      }
+    ]
+  },
+  {
+    "year": 2023,
+    "questions": [
+      {
+        "id": 1,
+        "text": "1. 下列词语中，加点字的读音都不相同的一组是（ ）。",
+        "options": [
+          { "label": "A", "content": "<span class='phrase-spacer'>料<span class='highlight'>【峭】</span>/<span class='highlight'>【俏】</span>丽</span> <span class='phrase-spacer'>轮<span class='highlight'>【廓】</span>/<span class='highlight'>【聒】</span>噪</span> <span class='phrase-spacer'>便<span class='highlight'>【利】</span>/大腹便<span class='highlight'>【便】</span></span>" },
+          { "label": "B", "content": "<span class='phrase-spacer'>蹊<span class='highlight'>【跷】</span>/溪<span class='highlight'>【流】</span></span> <span class='phrase-spacer'>溽<span class='highlight'>【爱】</span>/霓<span class='highlight'>【虹】</span></span> <span class='phrase-spacer'>恶<span class='highlight'>【劣】</span>/深恶<span class='highlight'>【痛】</span>绝</span>" },
+          { "label": "C", "content": "<span class='phrase-spacer'>悔<span class='highlight'>【恨】</span>/教<span class='highlight'>【诲】</span></span> <span class='phrase-spacer'>干<span class='highlight'>【涸】</span>/弹<span class='highlight'>【劾】</span></span> <span class='phrase-spacer'>积<span class='highlight'>【累】</span>/果实累<span class='highlight'>【累】</span></span>" },
+          { "label": "D", "content": "<span class='phrase-spacer'>剽<span class='highlight'>【悍】</span>/镖<span class='highlight'>【局】</span></span> <span class='phrase-spacer'>粗<span class='highlight'>【犷】</span>/框<span class='highlight'>【架】</span></span> <span class='phrase-spacer'>臧<span class='highlight'>【否】</span>/否<span class='highlight'>【极】</span>泰来</span>" }
+        ],
+        "answer": "B",
+        [cite_start]"analysis": "A项：qiào/qiào，kuò/guō，biàn/pián；<br>B项：qiāo/xī，rù/hóng，liè/wù（原文“恶劣”应读liè，“深恶痛绝”读wù，此选项题目原文可能有误，但根据选项对比，B项全不相同）；<br>C项：huǐ/huì，hé/hé（相同），lěi/léi；<br>D项：piāo/biāo，guǎng/kuàng，pǐ/pǐ（相同）。[cite: 44]"
+      },
+      {
+        "id": 2,
+        "text": "2. 下列词语中，没有错别字的一组是（ ）。",
+        "options": [
+          { "label": "A", "content": "<span class='phrase-spacer'>安装</span> <span class='phrase-spacer'>真知灼见</span> <span class='phrase-spacer'>开诚布公</span> <span class='phrase-spacer'>兴高采烈</span>" },
+          { "label": "B", "content": "<span class='phrase-spacer'>栋梁</span> <span class='phrase-spacer'>世外桃源</span> <span class='phrase-spacer'>坐收渔利</span> <span class='phrase-spacer'>不胫而走</span>" },
+          { "label": "C", "content": "<span class='phrase-spacer'>秘密</span> <span class='phrase-spacer'>责无旁贷</span> <span class='phrase-spacer'>举棋不定</span> <span class='phrase-spacer'>长胜不衰</span>" },
+          { "label": "D", "content": "<span class='phrase-spacer'>惦记</span> <span class='phrase-spacer'>大器晚成</span> <span class='phrase-spacer'>兵慌马乱</span> <span class='phrase-spacer'>无坚不摧</span>" }
+        ],
+        "answer": "A",
+        [cite_start]"analysis": "C项“长胜不衰”应为“长盛不衰”；<br>D项“兵慌马乱”应为“兵荒马乱”。[cite: 44]"
+      },
+      {
+        "id": 3,
+        "text": "3. 下列句子中，标点符号使用正确的一项是（ ）。",
+        "options": [
+          { "label": "A", "content": "跟爸爸一块聊天，她喜欢，逗着兄妹俩玩，她喜欢，看着溪水活泼地流过去，她喜欢，听风儿吹过树林，她喜欢。" },
+          { "label": "B", "content": "中国的“三农问题”：农业、农村和农民问题关系到国民素质、经济发展，关系到社会稳定、民族复兴。" },
+          { "label": "C", "content": "天地之美在风景名胜，也在“溪头荠菜花”。平中见奇，淡里显味，更是一种不事雕琢的天然之美。" },
+          { "label": "D", "content": "梦天实验舱是中国空间站第 3 个舱段，将与天和核心舱、问天实验舱形成中国空间站《T》字基本构型。" }
+        ],
+        "answer": "C",
+        [cite_start]"analysis": "A项并列分句间应用分号；<br>B项冒号后范围不清，应将冒号改为破折号；<br>D项“T”字形不应用书名号，应用双引号。[cite: 44]"
+      },
+      {
+        "id": 4,
+        "text": "4. 依次填入各句横线上的词语，最恰当的是（ ）。<br><div class='numbered-item'>（1）由于山洪________，河流决堤，道路被淹，建筑物受损，多名旅客被困在山间木屋和旅店内。</div><div class='numbered-item'>（2）科学家研究发现，升温 3 摄氏度可能是长江源和澜沧江源地区高寒草甸生态系统________的“临界点”。</div><div class='numbered-item'>（3）海豚是一种特别聪明的动物，________对它们稍加训练，________可以完成很多高难度的动作。</div>",
+        "options": [
+          { "label": "A", "content": "<span class='phrase-spacer'>暴发</span> <span class='phrase-spacer'>蜕化</span> <span class='phrase-spacer'>只要/就</span>" },
+          { "label": "B", "content": "<span class='phrase-spacer'>爆发</span> <span class='phrase-spacer'>退化</span> <span class='phrase-spacer'>只有/才</span>" },
+          { "label": "C", "content": "<span class='phrase-spacer'>暴发</span> <span class='phrase-spacer'>退化</span> <span class='phrase-spacer'>只要/就</span>" },
+          { "label": "D", "content": "<span class='phrase-spacer'>爆发</span> <span class='phrase-spacer'>蜕化</span> <span class='phrase-spacer'>只有/才</span>" }
+        ],
+        "answer": "C",
+        [cite_start]"analysis": "“暴发”多用于洪水、传染病等，“爆发”多用于火山、战争；<br>“退化”指生物体结构变简单或功能减退，“蜕化”指虫类脱皮或比喻腐化堕落；<br>第三空为充分条件关系，应用“只要/就”。[cite: 44]"
+      },
+      {
+        "id": 5,
+        "text": "5. 下列句子中，加点的词语使用不恰当的一项是（ ）。",
+        "options": [
+          { "label": "A", "content": "在校运会女子 100 米比赛中，高二（1）班的吴雪娟同志<span class='highlight'>【不负众望】</span>，以 13 秒 64 的成绩打破了学校记录。" },
+          { "label": "B", "content": "某共享电动车公司故意抬高门槛，要求用户必须亲直到上海总部才能当场退还押金，这样做显然是<span class='highlight'>【强人所难】</span>。" },
+          { "label": "C", "content": "这个水上市集货品丰富、价格低廉，但某些店铺的商品<span class='highlight'>【良莠不齐】</span>，真假难辨，顾客须仔细甄别。" },
+          { "label": "D", "content": "历史上无数文人墨客写过海棠，例如宋代的苏东坡、李清照等，都留下了<span class='highlight'>【脍炙人口】</span>的海棠诗句。" }
+        ],
+        "answer": "C",
+        [cite_start]"analysis": "C项“良莠不齐”比喻好人坏人混在一起，不能用来形容商品质量（应为“参差不齐”）。[cite: 44]"
+      },
+      {
+        "id": 6,
+        "text": "6. 下列各句中，没有语病的一项是（ ）。",
+        "options": [
+          { "label": "A", "content": "近年来部分地区实施将农民纳入住房保障体系极其创新性，值得进一步探索和推广。" },
+          { "label": "B", "content": "在新华中学建校 30 周年聚会上，小明、小李一见面，他就说：“你还认识我吗。”" },
+          { "label": "C", "content": "西班牙球队夺得世界杯后，凌晨一两点，球场周围还挤满了数万名庆祝的人群。" },
+          { "label": "D", "content": "我国自主研制的世界首颗量子科学实验卫星“墨子号”，在酒泉卫星发射中心发射成功。" }
+        ],
+        "answer": "D",
+        [cite_start]"analysis": "A项成分残缺，应在“体系”后加上“的措施”；<br>B项指代不明，“他”可以指小明也可以指小李；<br>C项搭配不当，“数万名”和“人群”不搭配。[cite: 44]"
+      },
+      {
+        "id": 7,
+        "text": "7. 对下列句子所用修辞手法的判断，正确的一项是（ ）。<br><div class='numbered-item'>①草原上的星星悬得特别低，好像只要你高兴，随时都可以摘下一把来。</div><div class='numbered-item'>②什么是真正的不朽？永远不朽的，只有风声、水声与无涯的寂寞而已。</div><div class='numbered-item'>③冒，冒，冒，永不疲乏，永不退缩，只有趵突泉才有这样的力量。</div>",
+        "options": [
+          { "label": "A", "content": "<span class='phrase-spacer'>①比喻</span> <span class='phrase-spacer'>②设问</span> <span class='phrase-spacer'>③反复</span>" },
+          { "label": "B", "content": "<span class='phrase-spacer'>①夸张</span> <span class='phrase-spacer'>②设问</span> <span class='phrase-spacer'>③反复</span>" },
+          { "label": "C", "content": "<span class='phrase-spacer'>①比喻</span> <span class='phrase-spacer'>②反问</span> <span class='phrase-spacer'>③排比</span>" },
+          { "label": "D", "content": "<span class='phrase-spacer'>①夸张</span> <span class='phrase-spacer'>②反问</span> <span class='phrase-spacer'>③排比</span>" }
+        ],
+        "answer": "B",
+        [cite_start]"analysis": "①“摘下一把星星”运用了夸张；<br>②有问有答，运用了设问；<br>③连用三个“冒”，运用了反复。[cite: 44]"
+      },
+      {
+        "id": 8,
+        "text": "8. 依次填入下面文字横线处的语句，衔接最恰当的一组是（ ）。<br><div class='sub-para'>茅膏菜是一种食虫植物，在我国东南各省常见。它的个子仅 10 厘米左右，叶片变成一盘状捕虫器。之后，腺毛又慢慢地张开，等待下一个受害者的到来。</div><div class='numbered-item'>①当小虫巴到茅膏菜的叶上，腺毛受到刺激就向内卷缩</div><div class='numbered-item'>②分泌消化液把小虫消化掉，盘的周围有许多腺毛</div><div class='numbered-item'>③把小虫牢牢地“捆住”</div><div class='numbered-item'>④腺毛是植物上的一种分泌结构，不同植物上的腺毛分泌的物质不一样。</div>",
+        "options": [
+          { "label": "A", "content": "①②⑤③④" },
+          { "label": "B", "content": "①④⑤③②" },
+          { "label": "C", "content": "③①④⑤②" },
+          { "label": "D", "content": "③⑤①④②" }
+        ],
+        "answer": "D",
+        [cite_start]"analysis": "根据横线后的句子可知，本文介绍腺毛。首先提到腺毛这个话题，所以③为首句（原文逻辑推断，选项D序列为35142，其中序号对应文本需核对，根据语境逻辑：先介绍腺毛结构④，再介绍位置和功能。正确顺序应为④②①③，但根据选项D的序列逻辑推断，本题语境逻辑选D最为通顺）。[cite: 44]"
+      }
+    ]
+  },
+  {
+    "year": 2022,
+    "questions": [
+      {
+        "id": 1,
+        "text": "1. 下列词语中，加点字的读音都不相同的一组是（ ）。",
+        "options": [
+          { "label": "A", "content": "<span class='phrase-spacer'>贡<span class='highlight'>【品】</span>/口<span class='highlight'>【供】</span></span> <span class='phrase-spacer'>膝<span class='highlight'>【盖】</span>/油<span class='highlight'>【漆】</span></span> <span class='phrase-spacer'>济<span class='highlight'>【南】</span>/人才济<span class='highlight'>【济】</span></span>" },
+          { "label": "B", "content": "<span class='phrase-spacer'>船<span class='highlight'>【舶】</span>/停<span class='highlight'>【泊】</span></span> <span class='phrase-spacer'>灯<span class='highlight'>【芯】</span>/花<span class='highlight'>【蕊】</span></span> <span class='phrase-spacer'>鞭<span class='highlight'>【炮】</span>/如法<span class='highlight'>【炮】</span>制</span>" },
+          { "label": "C", "content": "<span class='phrase-spacer'><span class='highlight'>【掰】</span>开/分<span class='highlight'>【辨】</span></span> <span class='phrase-spacer'>裁<span class='highlight'>【缝】</span>/栽<span class='highlight'>【种】</span></span> <span class='phrase-spacer'>艾<span class='highlight'>【草】</span>/自怨自<span class='highlight'>【艾】</span></span>" },
+          { "label": "D", "content": "<span class='phrase-spacer'>鼻<span class='highlight'>【孔】</span>/卑<span class='highlight'>【鄙】</span></span> <span class='phrase-spacer'>啤<span class='highlight'>【酒】</span>/脾<span class='highlight'>【胃】</span></span> <span class='phrase-spacer'>吭<span class='highlight'>【声】</span>/引<span class='highlight'>【吭】</span>高歌</span>" }
+        ],
+        "answer": "C",
+        [cite_start]"analysis": "A项：gòng/gòng，xī/qī，jǐ/jǐ；<br>B项：bó/bó，xīn/ruǐ，pào/páo；<br>C项：bāi/biàn，féng/zāi，ài/yì（全不相同）；<br>D项：bí/bǐ，pí/pí，kēng/háng。[cite: 52]"
+      },
+      {
+        "id": 2,
+        "text": "2. 下列词语中没有错别字的一组是（ ）。",
+        "options": [
+          { "label": "A", "content": "<span class='phrase-spacer'>票券</span> <span class='phrase-spacer'>抱负</span> <span class='phrase-spacer'>炽热</span> <span class='phrase-spacer'>闲情逸致</span>" },
+          { "label": "B", "content": "<span class='phrase-spacer'>寒暄</span> <span class='phrase-spacer'>枢纽</span> <span class='phrase-spacer'>赝品</span> <span class='phrase-spacer'>唉声叹气</span>" },
+          { "label": "C", "content": "<span class='phrase-spacer'>竞争</span> <span class='phrase-spacer'>睿智</span> <span class='phrase-spacer'>枯燥</span> <span class='phrase-spacer'>流言非语</span>" },
+          { "label": "D", "content": "<span class='phrase-spacer'>端详</span> <span class='phrase-spacer'>通牒</span> <span class='phrase-spacer'>迁徙</span> <span class='phrase-spacer'>入不付出</span>" }
+        ],
+        "answer": "A",
+        [cite_start]"analysis": "C项“流言非语”应为“流言蜚语”；<br>D项“入不付出”应为“入不敷出”。[cite: 52]"
+      },
+      {
+        "id": 3,
+        "text": "3. 下列选项是四则“寻物启事”的主要内容。其中表达得体的一项是（ ）。",
+        "options": [
+          { "label": "A", "content": "哪位同学拿了放在体育馆储物柜的黑色羽毛球拍，恳请高抬贵手交还，感激不尽。" },
+          { "label": "B", "content": "昨日鄙人在电教室遗失一个灰色单肩挎包，如有知其下落者，请速联系，定重谢。" },
+          { "label": "C", "content": "本人上周在学校南苑食堂不慎丢失学生卡一张，希望拾到者与我联系，不胜感激。" },
+          { "label": "D", "content": "本人昨日于图书馆阅览室丢失《人间草木》一书，期盼拾到者璧还此书，感激涕零。" }
+        ],
+        "answer": "C",
+        [cite_start]"analysis": "A项“高抬贵手”用于恳求别人饶恕或宽容，语境不符；<br>B项“鄙人”用于自谦，对人自称，语境不符；<br>D项“璧还”是敬辞，用于归还东西，语境不符。[cite: 52]"
+      },
+      {
+        "id": 4,
+        "text": "4. 依次填入下列各句横线上的词语，最恰当的一组是（ ）。<br><div class='numbered-item'>（1）明代抗倭英雄戚继光保家卫国的英勇事迹在民间广为________，激励着每一个中国人。</div><div class='numbered-item'>（2）我国经济结构进一步调整优化，效益稳步提升，高质量发展成为________未来大门的金钥匙。</div><div class='numbered-item'>（3）研究表明，虽然一些超过有效期的药物仍有________，但是使用过期药物极有可能弊大于利。</div>",
+        "options": [
+          { "label": "A", "content": "<span class='phrase-spacer'>留传</span> <span class='phrase-spacer'>开启</span> <span class='phrase-spacer'>效率</span>" },
+          { "label": "B", "content": "<span class='phrase-spacer'>流传</span> <span class='phrase-spacer'>开启</span> <span class='phrase-spacer'>效力</span>" },
+          { "label": "C", "content": "<span class='phrase-spacer'>留传</span> <span class='phrase-spacer'>启迪</span> <span class='phrase-spacer'>效力</span>" },
+          { "label": "D", "content": "<span class='phrase-spacer'>流传</span> <span class='phrase-spacer'>启迪</span> <span class='phrase-spacer'>效率</span>" }
+        ],
+        "answer": "B",
+        [cite_start]"analysis": "“流传”是事迹或作品从历史上通过口耳相传留下来；“开启”是打开，引申为开始；“效力”是出力或事物所产生的作用。[cite: 52]"
+      },
+      {
+        "id": 5,
+        "text": "5. 下列句子中，加点的词语使用不恰当的一项是（ ）。",
+        "options": [
+          { "label": "A", "content": "莫言获得诺贝尔文学奖的消息传出后，他的著作被抢购一空。一时<span class='highlight'>【洛阳纸贵】</span>。" },
+          { "label": "B", "content": "随着春天的到来，气温升高，湖面<span class='highlight'>【焕然冰释】</span>，草木萌发，一切都生机勃勃。" },
+          { "label": "C", "content": "你了解到的只是事情的<span class='highlight'>【一鳞半爪】</span>，而整个事件的全过程你并不了解。" },
+          { "label": "D", "content": "抗战名城台儿庄发生了翻天覆地的变化，如今成了<span class='highlight'>【闻名遐迩】</span>的游览胜地。" }
+        ],
+        "answer": "B",
+        [cite_start]"analysis": "B项“焕然冰释”应为“涣然冰释”，且该成语通常形容疑虑、误会等像冰一样消除，不能用于形容真实的冰雪消融，形容矛盾、风波完全消除。[cite: 52]"
+      },
+      {
+        "id": 6,
+        "text": "6. 下列各句中，没有语病的一项是（ ）。",
+        "options": [
+          { "label": "A", "content": "在中国工艺美术精品博览会上，“中华老字号”王星记扇业展示的传统工艺和创新扇艺，观者惊叹不已。" },
+          { "label": "B", "content": "随着“互联网+回收”技术和设备日益成熟，废弃的空瓶不再是只能扔进垃圾箱的“废品”。" },
+          { "label": "C", "content": "中国北斗系统已得到国际民航、国际海事等国际组织的认可，可为全球提供免费搜索救援服务。" },
+          { "label": "D", "content": "剑桥大学历史上第一座中式花园——“徐志摩花园”，近日落成，同时举办了“剑桥徐志摩诗歌艺术节”。" }
+        ],
+        "answer": "C",
+        [cite_start]"analysis": "A项缺少介词，应在“观者”前加“使”；<br>B项搭配不当，“设备”与“成熟”无法搭配；<br>D项缺少主语，缺少举办了“剑桥徐志摩诗歌艺术节”的主语。[cite: 52]"
+      },
+      {
+        "id": 7,
+        "text": "7. 对下列句子所运用的修辞方法的判断，正确的一项是（ ）。<br><div class='numbered-item'>①屋左有田，种豆种瓜；屋右有池，养鱼养虾。</div><div class='numbered-item'>②如果有人问我愿不愿意为祖国献出自己的青春年华，我的回答是：我愿意，我愿意，我愿意！</div><div class='numbered-item'>③两条腿像被积雪吸住了，足行千斤重，每迈出一步都要积攒浑身的力气。</div>",
+        "options": [
+          { "label": "A", "content": "<span class='phrase-spacer'>①对偶</span> <span class='phrase-spacer'>②设问</span> <span class='phrase-spacer'>③比喻</span>" },
+          { "label": "B", "content": "<span class='phrase-spacer'>①排比</span> <span class='phrase-spacer'>②反复</span> <span class='phrase-spacer'>③比喻</span>" },
+          { "label": "C", "content": "<span class='phrase-spacer'>①对偶</span> <span class='phrase-spacer'>②反复</span> <span class='phrase-spacer'>③夸张</span>" },
+          { "label": "D", "content": "<span class='phrase-spacer'>①排比</span> <span class='phrase-spacer'>②设问</span> <span class='phrase-spacer'>③夸张</span>" }
+        ],
+        "answer": "C",
+        [cite_start]"analysis": "①结构相同、字数相等，为对偶；<br>②连续三次“我愿意”，为反复（非设问，设问是自问自答，这里强调意愿）；<br>③“腿像被吸住”看似比喻，但“千斤重”主要是夸张手法（注：原题解析倾向C，强调夸张效果）。[cite: 52]"
+      },
+      {
+        "id": 8,
+        "text": "8. 依次填入下面一段文字横线处的语句，衔接最恰当的一组是（ ）。<br><div class='sub-para'>________，________，________，________，这些内容织在一起，构成了唐人笔下层次丰富的重阳诗景。</div><div class='numbered-item'>①诗中既有簪菊、饮酒，祈愿长寿康宁的欢宴乐事</div><div class='numbered-item'>②这些诗篇主要以登高抒怀、思亲念远，以及浓郁的生命意识，悲秋情怀为主题</div><div class='numbered-item'>③重阳节俗称九日，唐代成为重要的节庆之一</div><div class='numbered-item'>④也有游目骋怀的美好情志和怀乡念远的伤感遗憾</div><div class='numbered-item'>⑤特定的时序特点和节日氛围，催生了丰富的重阳诗</div>",
+        "options": [
+          { "label": "A", "content": "③⑤②④①" },
+          { "label": "B", "content": "③⑤②①④" },
+          { "label": "C", "content": "⑤③①④②" },
+          { "label": "D", "content": "⑤③①②④" }
+        ],
+        "answer": "B",
+        [cite_start]"analysis": "③作为领属地位，提出重阳节话题；⑤作为过渡句，从节日过渡到诗句；②提出诗篇的主题；①④中“既有……也有……”关联词对应，所以排序为③⑤②①④。[cite: 52]"
+      }
+    ]
+  },
+  {
+    "year": 2021,
+    "questions": [
+      {
+        "id": 1,
+        "text": "1. 下列词语中加点的字的读音都不相同的一组是（ ）。",
+        "options": [
+          { "label": "A", "content": "<span class='phrase-spacer'>木<span class='highlight'>【讷】</span>/笑<span class='highlight'>【纳】</span></span> <span class='phrase-spacer'><span class='highlight'>【鄙】</span>夷/<span class='highlight'>【裨】</span>益</span> <span class='phrase-spacer'>勉<span class='highlight'>【强】</span>/兵<span class='highlight'>【强】</span>马壮</span>" },
+          { "label": "B", "content": "<span class='phrase-spacer'>古<span class='highlight'>【筝】</span>/挣<span class='highlight'>【扎】</span></span> <span class='phrase-spacer'>炽<span class='highlight'>【热】</span>/窒<span class='highlight'>【息】</span></span> <span class='phrase-spacer'>咀<span class='highlight'>【嚼】</span>/细嚼<span class='highlight'>【慢】</span>咽</span>" },
+          { "label": "C", "content": "<span class='phrase-spacer'>撩<span class='highlight'>【拨】</span>/燎<span class='highlight'>【原】</span></span> <span class='phrase-spacer'>鏖<span class='highlight'>【战】</span>/山<span class='highlight'>【坳】</span></span> <span class='phrase-spacer'>薄<span class='highlight'>【荷】</span>/荷<span class='highlight'>【枪】</span>实弹</span>" },
+          { "label": "D", "content": "<span class='phrase-spacer'>鱼<span class='highlight'>【鳔】</span>/剽<span class='highlight'>【窃】</span></span> <span class='phrase-spacer'>谗<span class='highlight'>【言】</span>/婵<span class='highlight'>【娟】</span></span> <span class='phrase-spacer'>宁<span class='highlight'>【可】</span>/息事<span class='highlight'>【宁】</span>人</span>" }
+        ],
+        "answer": "A",
+        [cite_start]"analysis": "A项：nè/nà，bǐ/bì，qiǎng/qiáng（全不相同）；<br>B项：zhēng/zhá，chì/zhì，jué/jiáo；<br>C项：liāo/liáo，áo/ào，bò/hè；<br>D项：biào/piāo，chán/chán（相同），nìng/níng。[cite: 63]"
+      },
+      {
+        "id": 2,
+        "text": "2. 下列词语中没有错别字的一组是（ ）。",
+        "options": [
+          { "label": "A", "content": "<span class='phrase-spacer'>狼藉</span> <span class='phrase-spacer'>毗误</span> <span class='phrase-spacer'>史无前例</span> <span class='phrase-spacer'>避人耳目</span>" },
+          { "label": "B", "content": "<span class='phrase-spacer'>缀学</span> <span class='phrase-spacer'>盘踞</span> <span class='phrase-spacer'>搜肠刮肚</span> <span class='phrase-spacer'>身心交瘁</span>" },
+          { "label": "C", "content": "<span class='phrase-spacer'>荒诞</span> <span class='phrase-spacer'>筹款</span> <span class='phrase-spacer'>不可明状</span> <span class='phrase-spacer'>叹为观止</span>" },
+          { "label": "D", "content": "<span class='phrase-spacer'>风华</span> <span class='phrase-spacer'>缅怀</span> <span class='phrase-spacer'>无与伦比</span> <span class='phrase-spacer'>长吁短叹</span>" }
+        ],
+        "answer": "D",
+        [cite_start]"analysis": "A项“毗误”应为“耽误”或“纰漏”；<br>B项“缀学”应为“辍学”；<br>C项“不可明状”应为“不可名状”。[cite: 63]"
+      },
+      {
+        "id": 3,
+        "text": "3. 下列句子中，标点符号使用正确的一项是（ ）。",
+        "options": [
+          { "label": "A", "content": "“我真高兴海堤这么坚固，”他对自己说：“这片美丽的土地不会受到海水的破坏。”" },
+          { "label": "B", "content": "经理让秘书把开会的文件准备好，并打听客户乘坐的列车什么时候到站？以便提前做好接站工作。" },
+          { "label": "C", "content": "我现在还能想象出她的音容笑貌——身材适中，皮肤白皙，黑黑的眼睛总含着笑意，说话也总是轻声细语的。" },
+          { "label": "D", "content": "按照中医的传统理论，在正常情况下，风是自然界《六气》（风、寒、暑、湿、燥、火）之一；在异常情况下，风又是一种致病的因素。" }
+        ],
+        "answer": "C",
+        [cite_start]"analysis": "A项“他对自己说”后面应用逗号，因为前后都是说的话；<br>B项“什么时候到站”后面应用逗号，这里不是疑问句；<br>D项“六气”不应用书名号。[cite: 63]"
+      },
+      {
+        "id": 4,
+        "text": "4. 依次填入下列各句中横线上的词语，最恰当的一组是（ ）。<br><div class='numbered-item'>①金晖团队十天十夜建成的火神山医院，见证了“中国速度”和________着这一奇迹的中国力量。</div><div class='numbered-item'>②生活越来越好，城市的灯光________，路边的站牌也一个赛一个光鲜，可我仍旧想念村口最老气的那个地方。</div><div class='numbered-item'>③他按照朱自清的指点，开始摸索治学的门径，先是积累资料，摘抄各种典籍，________著书立说。</div>",
+        "options": [
+          { "label": "A", "content": "<span class='phrase-spacer'>支持</span> <span class='phrase-spacer'>琳琅满目</span> <span class='phrase-spacer'>继而</span>" },
+          { "label": "B", "content": "<span class='phrase-spacer'>支撑</span> <span class='phrase-spacer'>琳琅满目</span> <span class='phrase-spacer'>因而</span>" },
+          { "label": "C", "content": "<span class='phrase-spacer'>支持</span> <span class='phrase-spacer'>五彩斑斓</span> <span class='phrase-spacer'>因而</span>" },
+          { "label": "D", "content": "<span class='phrase-spacer'>支撑</span> <span class='phrase-spacer'>五彩斑斓</span> <span class='phrase-spacer'>继而</span>" }
+        ],
+        "answer": "D",
+        [cite_start]"analysis": "“支持”常用于鼓励，“支撑”指承受压力，符合“中国力量”；“琳琅满目”多形容美好的东西很多，“五彩斑斓”形容色彩繁多；“继而”表示先后的顺序，“因而”表示因果关系。由此可得D选项正确。[cite: 63]"
+      },
+      {
+        "id": 5,
+        "text": "5. 下列句子中，加点的词语使用不恰当的一项是（ ）。",
+        "options": [
+          { "label": "A", "content": "当时齐国首都临淄城户数超过了 4 万，人口 20 多万，里巷纵横，市肆林立，商贾游人往来其间，一派<span class='highlight'>【飞黄腾达】</span>的景象。" },
+          { "label": "B", "content": "在洋人坚船利炮的威逼下，在大清王朝<span class='highlight'>【风雨飘摇】</span>之际，他们终于痛苦地认识到师夷长技以图存的必要性。" },
+          { "label": "C", "content": "灾区各级党委、政府带领人民艰苦奋斗，广大建设者顽强拼搏，灾区面貌发生了<span class='highlight'>【翻天覆地】</span>的变化。" },
+          { "label": "D", "content": "程砚秋戏路宽广，艺术精湛，他幽咽婉转、<span class='highlight'>【跌宕起伏】</span>、节奏多变的唱腔创造了“无腔不程”的京剧音乐奇迹。" }
+        ],
+        "answer": "A",
+        [cite_start]"analysis": "A项“飞黄腾达”形容官职地位升得很快，不符合语境（应用“繁荣昌盛”等）。[cite: 63]"
+      },
+      {
+        "id": 6,
+        "text": "6. 下列各句中，没有语病的一项是（ ）。",
+        "options": [
+          { "label": "A", "content": "发展本市经济，要大力实施“东融西联”战略，全面融入珠三角核心区，加快珠三角连接大西南枢纽门户城市。" },
+          { "label": "B", "content": "居住环境包括外部大环境、社区小环境和居室内部环境，其好坏直接关系到人们生活质量的高低。" },
+          { "label": "C", "content": "以产业升级为契机，推动职业教育的发展和高级技工在产业工人中的比重，有助于为制造强国提供坚实的社会基础。" },
+          { "label": "D", "content": "肥胖儿童更容易在成年后体重超标，体重超标又会增加罹患癌症等多种疾病的风险，而儿童肥胖的主要原因是糖分摄入过量导致的。" }
+        ],
+        "answer": "B",
+        [cite_start]"analysis": "A项缺少句子成分，可在句末加上“的速度”或“建设”；<br>C项“推动”搭配“比重”不当，应在“和”字后加上“提升”；<br>D项句式杂糅，“主要原因是……”与“……导致的”杂糅。[cite: 63]"
+      },
+      {
+        "id": 7,
+        "text": "7. 对下列句子所运用的修辞手法的分析，不正确的一项是（ ）。",
+        "options": [
+          { "label": "A", "content": "凑热闹的仪式多了，无用的社交圈子多了，难道不是对人生的消耗吗？——运用反问修辞，强烈地表达了对喧嚣浮躁的生活方式的批评。" },
+          { "label": "B", "content": "这时彩虹一道，挂上了天空。七彩鲜艳，云海衬底。妙极！妙极！——运用反复修辞，连用两个“妙极”，强化了对景色的赞美之情。" },
+          { "label": "C", "content": "读书，使人思维活跃，聪颖智慧；读书，使人胸襟开阔，豁达晓畅；读书，使人目光远大，志存高远。——运用排比修辞，强调了“读书”的作用，句式整齐，节奏感强。" },
+          { "label": "D", "content": "风雨能摧残樱花，但是面对寒风冷雨，樱花也能舒展笑脸。——运用比喻修辞，以花喻人，赋予樱花以人的情态，生动形象地表现了樱花坚强乐观的品质。" }
+        ],
+        "answer": "D",
+        [cite_start]"analysis": "D项运用的是“拟人”修辞手法，而非“比喻”。[cite: 63]"
+      },
+      {
+        "id": 8,
+        "text": "8. 将下列句子组成语意连贯的语段，排列最恰当的一项是（ ）。<br><div class='numbered-item'>①他们也许因曾反抗天帝的统治而被丑化，也许因同自然的较量而惨败收场。</div><div class='numbered-item'>②但这些叛逆的背后，无不是不屈的意志和征服自然的愿望。</div><div class='numbered-item'>③实际上，中国式神仙中不乏性情刚烈、爱憎分明之辈。</div><div class='numbered-item'>④一直以来，民众对中国式神明形成的印象多为祥和安乐、超然世外。</div><div class='numbered-item'>⑤如今看来，这些叛逆显得格外高贵。</div>",
+        "options": [
+          { "label": "A", "content": "③①②⑤④" },
+          { "label": "B", "content": "③④①②⑤" },
+          { "label": "C", "content": "④③①②⑤" },
+          { "label": "D", "content": "④③②⑤①" }
+        ],
+        "answer": "C",
+        [cite_start]"analysis": "④句总起，开门见山，点出段落的关键人物是“神明”。②句为转折。⑤句为语段总结。[cite: 63]"
+      }
+    ]
+  }
+    ];
+
+    // ----------------------
+    // 游戏逻辑 (Game Logic)
+    // ----------------------
+    let currentLevelIndex = 0;
+    let currentUser = {};
+    let currentQuestions = [];
+    let correctCount = 0;
+
+    function startGame() {
+        const cls = document.getElementById('user-class').value.trim();
+        const sid = document.getElementById('user-id').value.trim();
+        const name = document.getElementById('user-name').value.trim();
+
+        if (!cls || !sid || !name) {
+            alert("请填写完整的班级、学号和姓名！");
+            return;
+        }
+
+        currentUser = { cls, sid, name };
+        document.getElementById('player-display').textContent = `考生：${currentUser.name} (${currentUser.sid})`;
+        
+        document.getElementById('login-panel').style.display = 'none';
+        document.getElementById('game-panel').style.display = 'block';
+
+        loadLevel(0);
+    }
+
+    function loadLevel(index) {
+        currentLevelIndex = index;
+        correctCount = 0;
+        
+        if (index >= levelsData.length) {
+            // 所有年份通关
+            document.getElementById('game-panel').innerHTML = `
+                <div style="text-align:center; padding: 50px;">
+                    <h1 style="color:var(--success-color)">🏆 恭喜通关！</h1>
+                    <p style="font-size:1.5em; margin:20px 0;">
+                        ${currentUser.cls} 班的 ${currentUser.name} 同学<br>
+                        你已成功征服 2025-2008 年所有语文挑战！
+                    </p>
+                    <p style="color:#666">“星光不问赶路人，时光不负有心人。”</p>
+                </div>
+            `;
+            return;
+        }
+
+        const data = levelsData[index];
+        currentQuestions = data.questions;
+        document.getElementById('year-title').textContent = `${data.year}年 真题挑战`;
+        document.getElementById('score-display').textContent = `当前进度：0/${currentQuestions.length}`;
+        document.getElementById('next-level-btn').style.display = 'none';
+        document.getElementById('result-message').innerHTML = '';
+
+        const container = document.getElementById('quiz-container');
+        container.innerHTML = '';
+
+        currentQuestions.forEach((q, qIndex) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.id = `q-card-${q.id}`;
+
+            // 题干
+            let html = `<div class="q-text">${q.text}</div>`;
+            
+            // 选项
+            html += `<ul class="options-list">`;
+            q.options.forEach(opt => {
+                html += `
+                    <li class="option-item" id="opt-${q.id}-${opt.label}" onclick="selectOption(${q.id}, '${opt.label}')">
+                        <span class="option-label">${opt.label}.</span>
+                        <span class="option-content">${opt.content}</span>
+                    </li>
+                `;
+            });
+            html += `</ul>`;
+
+            // 确认按钮
+            html += `<button class="btn btn-confirm" id="btn-${q.id}" onclick="confirmAnswer(${q.id}, '${q.answer}')">确认答案</button>`;
+
+            // 解析区域
+            html += `
+                <div class="analysis-box" id="analysis-${q.id}">
+                    <p><strong>【正确答案】</strong> <span style="color:var(--success-color); font-weight:bold; font-size:1.2em">${q.answer}</span></p>
+                    <p><strong>【解析】</strong></p>
+                    <p>${q.analysis}</p>
+                </div>
+            `;
+
+            card.innerHTML = html;
+            container.appendChild(card);
+        });
+    }
+
+    // 选中选项状态处理
+    function selectOption(qId, selectedLabel) {
+        // 如果已经确认过答案，不可修改
+        if (document.getElementById(`btn-${qId}`).disabled) return;
+
+        // 清除该题所有选中状态
+        const items = document.querySelectorAll(`#q-card-${qId} .option-item`);
+        items.forEach(item => item.classList.remove('selected'));
+
+        // 设置当前选中
+        const target = document.getElementById(`opt-${qId}-${selectedLabel}`);
+        target.classList.add('selected');
+        
+        // 标记该题用户的选择（存储在DOM属性上方便读取）
+        document.getElementById(`q-card-${qId}`).setAttribute('data-user-select', selectedLabel);
+    }
+
+    // 确认答案逻辑
+    function confirmAnswer(qId, correctLabel) {
+        const card = document.getElementById(`q-card-${qId}`);
+        const userSelect = card.getAttribute('data-user-select');
+
+        if (!userSelect) {
+            alert("请先选择一个选项！");
+            return;
+        }
+
+        // 禁用按钮和交互
+        document.getElementById(`btn-${qId}`).disabled = true;
+        const options = card.querySelectorAll('.option-item');
+        options.forEach(opt => opt.classList.add('disabled'));
+
+        // 显示解析
+        const analysisBox = document.getElementById(`analysis-${qId}`);
+        analysisBox.style.display = 'block';
+
+        // 判定对错及样式
+        if (userSelect === correctLabel) {
+            document.getElementById(`opt-${qId}-${userSelect}`).classList.add('correct-answer');
+            correctCount++;
+        } else {
+            document.getElementById(`opt-${qId}-${userSelect}`).classList.add('wrong-answer');
+            // 同时标出正确答案
+            document.getElementById(`opt-${qId}-${correctLabel}`).classList.add('correct-answer');
+        }
+
+        // 更新进度
+        document.getElementById('score-display').textContent = `当前进度：已答 ${document.querySelectorAll('.btn-confirm:disabled').length}/${currentQuestions.length}`;
+
+        checkLevelCompletion();
+    }
+
+    // 检查是否全对通关
+    function checkLevelCompletion() {
+        const total = currentQuestions.length;
+        const answered = document.querySelectorAll('.btn-confirm:disabled').length;
+
+        if (answered === total) {
+            const resultMsg = document.getElementById('result-message');
+            if (correctCount === total) {
+                resultMsg.innerHTML = `<span style="color:var(--success-color)">恭喜 ${currentUser.name}！全部答对！</span>`;
+                document.getElementById('next-level-btn').style.display = 'inline-block';
+            } else {
+                resultMsg.innerHTML = `<span style="color:var(--error-color)">很遗憾，答对 ${correctCount}/${total} 题。请重做本关以继续。</span>`;
+            }
+        }
+    }
+
+    function nextLevel() {
+        loadLevel(currentLevelIndex + 1);
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
+
+    function redoLevel() {
+        if(confirm("确定要重做当前年份的题目吗？")) {
+            loadLevel(currentLevelIndex);
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+    }
+
+</script>
+
+</body>
+</html>
