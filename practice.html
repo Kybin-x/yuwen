@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>练习区 | 语文学习乐园</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="logo">语文学习乐园</div>
+    <nav class="main-nav">
+      <a href="index.html">首页</a>
+      <a href="knowledge.html">知识卡片</a>
+      <a href="practice.html" class="active">练习区</a>
+      <a href="games.html">游戏区</a>
+      <a href="mistakes.html">错题本</a>
+      <a href="progress.html">进度成就</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="page-title">
+      <h1>练习区</h1>
+      <p>抽取题库练习，系统记录答题结果与错题。</p>
+    </section>
+
+    <section class="quiz" id="practice-quiz">
+      <div class="quiz-card">
+        <div class="quiz-meta">
+          <span id="quiz-tag">综合练习</span>
+          <span id="quiz-progress">1 / 10</span>
+        </div>
+        <h2 id="quiz-question">题目加载中...</h2>
+        <div class="options" id="quiz-options"></div>
+        <div class="quiz-actions">
+          <button class="btn primary" id="quiz-submit">提交答案</button>
+          <button class="btn" id="quiz-next">下一题</button>
+        </div>
+        <div class="quiz-feedback" id="quiz-feedback"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>语文学习乐园 · 练习区</span>
+  </footer>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>
