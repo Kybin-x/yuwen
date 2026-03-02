@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>游戏区 | 语文学习乐园</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="logo">语文学习乐园</div>
+    <nav class="main-nav">
+      <a href="index.html">首页</a>
+      <a href="knowledge.html">知识卡片</a>
+      <a href="practice.html">练习区</a>
+      <a href="games.html" class="active">游戏区</a>
+      <a href="mistakes.html">错题本</a>
+      <a href="progress.html">进度成就</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="page-title">
+      <h1>游戏区</h1>
+      <p>用游戏巩固字音字形、句式与病句。</p>
+    </section>
+
+    <section class="games-grid">
+      <article class="card game-card">
+        <h2>多音字闯关</h2>
+        <p>根据语境选出正确读音。</p>
+        <button class="btn primary" data-game="pinyin">开始</button>
+      </article>
+      <article class="card game-card">
+        <h2>错别字消消乐</h2>
+        <p>找出正确的字形。</p>
+        <button class="btn primary" data-game="zixing">开始</button>
+      </article>
+      <article class="card game-card">
+        <h2>病句诊断室</h2>
+        <p>识别病句类型，快速修正。</p>
+        <button class="btn primary" data-game="bingju">开始</button>
+      </article>
+      <article class="card game-card">
+        <h2>句式变换挑战</h2>
+        <p>选择更合适的句式表达。</p>
+        <button class="btn primary" data-game="jushi">开始</button>
+      </article>
+    </section>
+
+    <section class="game-panel" id="game-panel">
+      <div class="quiz-card">
+        <div class="quiz-meta">
+          <span id="game-title">游戏加载中...</span>
+          <span id="game-progress">1 / 5</span>
+        </div>
+        <h2 id="game-question">题目加载中...</h2>
+        <div class="options" id="game-options"></div>
+        <div class="quiz-actions">
+          <button class="btn primary" id="game-submit">提交答案</button>
+          <button class="btn" id="game-next">下一题</button>
+        </div>
+        <div class="quiz-feedback" id="game-feedback"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>语文学习乐园 · 游戏区</span>
+  </footer>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>
