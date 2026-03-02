@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>进度成就 | 语文学习乐园</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="logo">语文学习乐园</div>
+    <nav class="main-nav">
+      <a href="index.html">首页</a>
+      <a href="knowledge.html">知识卡片</a>
+      <a href="practice.html">练习区</a>
+      <a href="games.html">游戏区</a>
+      <a href="mistakes.html">错题本</a>
+      <a href="progress.html" class="active">进度成就</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="page-title">
+      <h1>进度成就</h1>
+      <p>记录学习轨迹，积累徽章。</p>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h2>总答题数</h2>
+        <p id="stat-total">0</p>
+      </article>
+      <article class="card">
+        <h2>正确率</h2>
+        <p id="stat-accuracy">0%</p>
+      </article>
+      <article class="card">
+        <h2>已获得徽章</h2>
+        <ul id="stat-badges" class="list">
+          <li>暂无徽章，继续加油！</li>
+        </ul>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>语文学习乐园 · 进度成就</span>
+  </footer>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>
