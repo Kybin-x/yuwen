@@ -22,7 +22,7 @@
   <main class="container">
     <section class="page-title">
       <h1>进度成就</h1>
-      <p>记录学习轨迹，积累徽章。</p>
+      <p>学习数据一目了然，模块进度实时更新。</p>
     </section>
 
     <section class="grid">
@@ -41,12 +41,49 @@
         </ul>
       </article>
     </section>
+
+    <section class="card" style="margin-top: 20px;">
+      <h2>模块完成度</h2>
+      <ul class="list">
+        <li>字音字形：<span id="prog-pz">0</span>%</li>
+        <li>句式与病句：<span id="prog-jb">0</span>%</li>
+        <li>应用文写作：<span id="prog-yw">0</span>%</li>
+      </ul>
+    </section>
   </main>
 
   <footer class="site-footer">
     <span>语文学习乐园 · 进度成就</span>
   </footer>
 
-  <script src="assets/app.js"></script>
+  <script>
+    (function () {
+      const stats = JSON.parse(localStorage.getItem("yc_stats") || '{"total":0,"correct":0,"badges":[],"modules":{"pinyin-zixing":0,"jushi-bingju":0,"yw-wen":0}}');
+
+      document.getElementById("stat-total").textContent = stats.total;
+      const acc = stats.total ? Math.round((stats.correct / stats.total) * 100) : 0;
+      document.getElementById("stat-accuracy").textContent = acc + "%";
+
+      const badgesEl = document.getElementById("stat-badges");
+      badgesEl.innerHTML = "";
+      if (!stats.badges || stats.badges.length === 0) {
+        badgesEl.innerHTML = "<li>暂无徽章，继续加油！</li>";
+      } else {
+        stats.badges.forEach(b => {
+          const li = document.createElement("li");
+          li.textContent = b;
+          badgesEl.appendChild(li);
+        });
+      }
+
+      const pz = stats.modules["pinyin-zixing"] || 0;
+      const jb = stats.modules["jushi-bingju"] || 0;
+      const yw = stats.modules["yw-wen"] || 0;
+
+      document.getElementById("prog-pz").textContent = Math.min(100, Math.round((pz / 20) * 100));
+      document.getElementById("prog-jb").textContent = Math.min(100, Math.round((jb / 15) * 100));
+      document.getElementById("prog-yw").textContent = Math.min(100, Math.round((yw / 17) * 100));
+    })();
+  </script>
 </body>
 </html>
