@@ -22,7 +22,14 @@
   <main class="container">
     <section class="page-title">
       <h1>错题本</h1>
-      <p>错题自动记录，集中复习更高效。</p>
+      <p>按模块筛选错题，集中复习更高效。</p>
+    </section>
+
+    <section class="card" style="margin-bottom: 16px;">
+      <button class="btn" data-filter="all">全部</button>
+      <button class="btn" data-filter="pinyin-zixing">字音字形</button>
+      <button class="btn" data-filter="jushi-bingju">句式与病句</button>
+      <button class="btn" data-filter="yw-wen">应用文写作</button>
     </section>
 
     <section class="card" id="mistake-list">
@@ -38,6 +45,51 @@
     <span>语文学习乐园 · 错题本</span>
   </footer>
 
-  <script src="assets/app.js"></script>
+  <script>
+    (function () {
+      const listEl = document.getElementById("mistake-list");
+      const clearBtn = document.getElementById("clear-mistakes");
+      const filterBtns = document.querySelectorAll("[data-filter]");
+      let activeFilter = "all";
+
+      function getMistakes() {
+        return JSON.parse(localStorage.getItem("yc_mistakes") || "[]");
+      }
+
+      function render() {
+        const all = getMistakes();
+        const filtered = activeFilter === "all"
+          ? all
+          : all.filter(m => m.type === activeFilter);
+
+        if (!filtered.length) {
+          listEl.innerHTML = "<p>暂无错题，继续加油！</p>";
+          return;
+        }
+
+        listEl.innerHTML = filtered.map(m => (
+          `<div class="card">
+            <h3>[${m.type}] ${m.q}</h3>
+            <p>✅ 正确答案：${m.ans}</p>
+            <p>💡 解析：${m.exp}</p>
+          </div>`
+        )).join("");
+      }
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+          activeFilter = btn.dataset.filter;
+          render();
+        });
+      });
+
+      clearBtn.addEventListener("click", () => {
+        localStorage.removeItem("yc_mistakes");
+        render();
+      });
+
+      render();
+    })();
+  </script>
 </body>
 </html>
