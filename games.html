@@ -22,30 +22,34 @@
   <main class="container">
     <section class="page-title">
       <h1>游戏区</h1>
-      <p>用游戏巩固字音字形、句式与病句。</p>
+      <p>三大模块闯关游戏，边玩边巩固。</p>
     </section>
 
-    <section class="games-grid">
-      <article class="card game-card">
-        <h2>多音字闯关</h2>
-        <p>根据语境选出正确读音。</p>
+    <section class="grid">
+      <article class="card">
+        <h2>字音字形闯关</h2>
+        <p>题量：20题</p>
         <button class="btn primary" data-game="pinyin">开始</button>
       </article>
-      <article class="card game-card">
-        <h2>错别字消消乐</h2>
-        <p>找出正确的字形。</p>
-        <button class="btn primary" data-game="zixing">开始</button>
-      </article>
-      <article class="card game-card">
-        <h2>病句诊断室</h2>
-        <p>识别病句类型，快速修正。</p>
+      <article class="card">
+        <h2>句式病句挑战</h2>
+        <p>题量：15题</p>
         <button class="btn primary" data-game="bingju">开始</button>
       </article>
-      <article class="card game-card">
-        <h2>句式变换挑战</h2>
-        <p>选择更合适的句式表达。</p>
-        <button class="btn primary" data-game="jushi">开始</button>
+      <article class="card">
+        <h2>应用文写作挑战</h2>
+        <p>题量：17题</p>
+        <button class="btn primary" data-game="yw">开始</button>
       </article>
+    </section>
+
+    <section class="card" style="margin-top: 20px;">
+      <h2>模块统计</h2>
+      <ul class="list">
+        <li>字音字形已完成：<span id="stat-pz">0</span> / 20</li>
+        <li>句式与病句已完成：<span id="stat-jb">0</span> / 15</li>
+        <li>应用文写作已完成：<span id="stat-yw">0</span> / 17</li>
+      </ul>
     </section>
 
     <section class="game-panel" id="game-panel">
@@ -69,6 +73,14 @@
     <span>语文学习乐园 · 游戏区</span>
   </footer>
 
-  <script src="assets/app.js"></script>
+  <script type="module" src="assets/app.js"></script>
+  <script>
+    (function () {
+      const stats = JSON.parse(localStorage.getItem("yc_stats") || '{"modules":{"pinyin-zixing":0,"jushi-bingju":0,"yw-wen":0}}');
+      document.getElementById("stat-pz").textContent = stats.modules["pinyin-zixing"] || 0;
+      document.getElementById("stat-jb").textContent = stats.modules["jushi-bingju"] || 0;
+      document.getElementById("stat-yw").textContent = stats.modules["yw-wen"] || 0;
+    })();
+  </script>
 </body>
 </html>
