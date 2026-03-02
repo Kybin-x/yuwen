@@ -1,76 +1,84 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>语文学习乐园 | 中职高职高考语文</title>
-  <link rel="stylesheet" href="assets/styles.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>语文对口升学核心速记</title>
+  <link rel="stylesheet" href="assets/css/main.css" />
 </head>
-<body>
+<body class="light-mode">
   <header class="site-header">
-    <div class="logo">语文学习乐园</div>
-    <nav class="main-nav">
-      <a href="index.html" class="active">首页</a>
-      <a href="knowledge.html">知识卡片</a>
-      <a href="practice.html">练习区</a>
-      <a href="games.html">游戏区</a>
-      <a href="mistakes.html">错题本</a>
-      <a href="progress.html">进度成就</a>
-    </nav>
+    <div class="container">
+      <h1>语文对口升学核心速记</h1>
+      <p class="slogan">中职语文 · 语言知识速记 + 巩固练习</p>
+      <nav class="top-nav">
+        <ul>
+          <li><a href="index.html" class="active">首页</a></li>
+          <li><a href="chapters/language/index.html">语言知识</a></li>
+          <li><a href="#">写作专题</a></li>
+          <li><a href="about.html">关于</a></li>
+        </ul>
+      </nav>
+      <div class="theme-toggle">
+        <button id="toggle-theme">🌙 暗色模式</button>
+      </div>
+    </div>
   </header>
 
-  <main class="container">
+  <main class="container main-content">
     <section class="hero">
-      <div class="hero-text">
-        <h1>卡通活泼风的语文学习站</h1>
-        <p>面向中职高职高考语文：字音字形、句式与病句、应用文写作三大模块，配套练习、游戏和错题追踪。</p>
-        <div class="hero-actions">
-          <a class="btn primary" href="knowledge.html">开始学习</a>
-          <a class="btn" href="games.html">去玩游戏</a>
-        </div>
-      </div>
-      <div class="hero-card">
-        <div class="badge">题量说明</div>
-        <ul>
-          <li>字音字形：20题</li>
-          <li>句式与病句：15题</li>
-          <li>应用文写作：17题</li>
-          <li>综合闯关：30题</li>
-        </ul>
+      <h2>欢迎来到语文考点记忆中心</h2>
+      <p>本平台专为中职对口升学考生设计，聚焦核心基础考点，支持边学边练、标记掌握、错题回顾。</p>
+      <div class="cta-grid">
+        <a href="chapters/language/index.html" class="btn primary">进入【语言知识】章节</a>
+        <a href="#" class="btn secondary">快速搜索 →</a>
       </div>
     </section>
 
-    <section class="grid">
-      <article class="card">
-        <h2>知识卡片</h2>
-        <p>字音字形、句式与病句、应用文写作的重点速记。</p>
-        <a class="card-link" href="knowledge.html">进入</a>
-      </article>
-      <article class="card">
-        <h2>练习区</h2>
-        <p>综合题库 30 题，覆盖三大模块。</p>
-        <a class="card-link" href="practice.html">进入</a>
-      </article>
-      <article class="card">
-        <h2>游戏区</h2>
-        <p>三大模块闯关游戏，边玩边巩固。</p>
-        <a class="card-link" href="games.html">进入</a>
-      </article>
-      <article class="card">
-        <h2>错题本</h2>
-        <p>错题自动收录，支持按模块复习。</p>
-        <a class="card-link" href="mistakes.html">进入</a>
-      </article>
-      <article class="card">
-        <h2>进度成就</h2>
-        <p>答题数据+模块进度条，获取成就徽章。</p>
-        <a class="card-link" href="progress.html">进入</a>
-      </article>
+    <section class="featured-chapters">
+      <h3>近期重点模块</h3>
+      <div class="chapter-cards">
+        <div class="card">
+          <h4>📌 字音辨析</h4>
+          <p>多音字、形声字、易错读音速记表</p>
+          <a href="chapters/language/pinyin.html" class="card-link">→ 学习</a>
+        </div>
+        <div class="card">
+          <h4>📌 字形辨析</h4>
+          <p>形近字、同音字、常见错别字对比</p>
+          <a href="chapters/language/font.html" class="card-link">→ 学习</a>
+        </div>
+        <div class="card">
+          <h4>📌 标点符号</h4>
+          <p>作用、规范用法与典型错误解析</p>
+          <a href="chapters/language/punctuation.html" class="card-link">→ 学习</a>
+        </div>
+        <div class="card">
+          <h4>📌 病句修改</h4>
+          <p>6大类型 + 典型例句 + 改错练习</p>
+          <a href="chapters/language/sick-sentence.html" class="card-link">→ 学习</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="features">
+      <h3>学习功能亮点</h3>
+      <ul class="feature-list">
+        <li>✅ <strong>卡片式记忆</strong>：点击翻转查看“易错点”或“记忆口诀”</li>
+        <li>✅ <strong>即时练习</strong>：每章配套选择/填空/改错题，提交即反馈</li>
+        <li>✅ <strong>收藏标记</strong>：一键标记“已掌握”或“需复习”</li>
+        <li>✅ <strong>全局搜索</strong>：支持关键词检索所有考点（即将上线）</li>
+      </ul>
     </section>
   </main>
 
   <footer class="site-footer">
-    <span>语文学习乐园 · 中职高职高考语文</span>
+    <div class="container">
+      <p>&copy; 2025 语文对口升学核心速记 | XSimple 开发</p>
+      <p>本资料依据《中职生对口升学考试辅导用书·语文》整理</p>
+    </div>
   </footer>
+
+  <script src="assets/js/main.js"></script>
 </body>
 </html>
