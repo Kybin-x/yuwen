@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>语言表达得体与连贯 - 学习页面</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+    background: #0a0e27;
+    color: #e0e0e0;
+    line-height: 1.8;
+  }
+  /* Header */
+  .header {
+    background: linear-gradient(135deg, #1a1040 0%, #2d1b69 50%, #1a1040 100%);
+    padding: 40px 20px;
+    text-align: center;
+    border-bottom: 3px solid #7c4dff;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle at 20% 50%, rgba(124,77,255,0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(0,188,212,0.1) 0%, transparent 50%);
+  }
+  .header h1 {
+    font-size: 2em;
+    color: #fff;
+    position: relative;
+    text-shadow: 0 0 20px rgba(124,77,255,0.5);
+  }
+  .header .subtitle {
+    font-size: 1.1em;
+    color: #b39ddb;
+    margin-top: 8px;
+    position: relative;
+  }
+  .header .badge {
+    display: inline-block;
+    background: #7c4dff;
+    color: #fff;
+    padding: 4px 16px;
+    border-radius: 20px;
+    font-size: 0.85em;
+    margin-top: 12px;
+    position: relative;
+  }
+  /* Navigation Tabs */
+  .nav-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    background: #12163a;
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 2px solid #1e2456;
+    flex-wrap: wrap;
+  }
+  .nav-tab {
+    padding: 14px 24px;
+    cursor: pointer;
+    color: #8888aa;
+    font-size: 0.95em;
+    font-weight: 600;
+    transition: all 0.3s;
+    border-bottom: 3px solid transparent;
+    user-select: none;
+  }
+  .nav-tab:hover { color: #b39ddb; }
+  .nav-tab.active {
+    color: #7c4dff;
+    border-bottom-color: #7c4dff;
+    background: rgba(124,77,255,0.08);
+  }
+  /* Content Container */
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* Section Card */
+  .card {
+    background: #13173e;
+    border: 1px solid #1e2456;
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 24px;
+    transition: border-color 0.3s;
+  }
+  .card:hover { border-color: #7c4dff44; }
+  .card h2 {
+    font-size: 1.3em;
+    color: #7c4dff;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #1e2456;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .card h2 .icon {
+    font-size: 1.2em;
+  }
+  .card h3 {
+    font-size: 1.05em;
+    color: #00bcd4;
+    margin: 18px 0 10px;
+  }
+
+  /* Knowledge Points */
+  .point-list { list-style: none; }
+  .point-list li {
+    padding: 10px 14px;
+    margin: 8px 0;
+    background: rgba(124,77,255,0.06);
+    border-left: 4px solid #7c4dff;
+    border-radius: 0 8px 8px 0;
+    font-size: 0.95em;
+  }
+  .point-list li strong { color: #ff9800; }
+
+  .example-box {
+    background: #0d1030;
+    border: 1px dashed #2d3470;
+    border-radius: 8px;
+    padding: 16px 18px;
+    margin: 10px 0;
+    font-size: 0.9em;
+    color: #b0b8d0;
+  }
+  .example-box .label {
+    color: #00bcd4;
+    font-weight: 700;
+    margin-right: 6px;
+  }
+
+  /* Table */
+  .ref-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 0.9em;
+  }
+  .ref-table th {
+    background: #1a1f50;
+    color: #7c4dff;
+    padding: 12px;
+    text-align: left;
+    border-bottom: 2px solid #7c4dff;
+  }
+  .ref-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #1e2456;
+    vertical-align: top;
+  }
+  .ref-table tr:hover td { background: rgba(124,77,255,0.05); }
+  .tag-humble {
+    display: inline-block;
+    background: #1b5e20;
+    color: #a5d6a7;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.82em;
+    margin: 2px;
+  }
+  .tag-respect {
+    display: inline-block;
+    background: #b71c1c;
+    color: #ef9a9a;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.82em;
+    margin: 2px;
+  }
+  .tag-note {
+    display: inline-block;
+    background: #e65100;
+    color: #ffcc80;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.82em;
+    margin: 2px;
+  }
+
+  /* Quiz Section */
+  .quiz-item {
+    background: #13173e;
+    border: 1px solid #1e2456;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+  .quiz-item .q-num {
+    display: inline-block;
+    background: #7c4dff;
+    color: #fff;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 32px;
+    font-weight: 700;
+    font-size: 0.85em;
+    margin-right: 8px;
+  }
+  .quiz-item .q-type {
+    display: inline-block;
+    background: rgba(0,188,212,0.15);
+    color: #00bcd4;
+    padding: 2px 10px;
+    border-radius: 10px;
+    font-size: 0.8em;
+    margin-left: 6px;
+  }
+  .quiz-item .q-text {
+    margin: 14px 0;
+    font-size: 0.95em;
+    color: #c8cce8;
+    line-height: 2;
+  }
+  .quiz-item .q-text .blank {
+    display: inline-block;
+    border-bottom: 2px solid #7c4dff;
+    min-width: 60px;
+    margin: 0 2px;
+  }
+  .options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 14px 0;
+  }
+  @media(max-width:600px) {
+    .options-grid { grid-template-columns: 1fr; }
+  }
+  .opt-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 12px 16px;
+    background: #0d1030;
+    border: 2px solid #1e2456;
+    border-radius: 8px;
+    color: #b0b8d0;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+  .opt-btn:hover { border-color: #7c4dff; color: #e0e0e0; }
+  .opt-btn.selected { border-color: #7c4dff; background: rgba(124,77,255,0.12); color: #fff; }
+  .opt-btn.correct { border-color: #4caf50; background: rgba(76,175,80,0.12); color: #a5d6a7; }
+  .opt-btn.wrong { border-color: #f44336; background: rgba(244,67,54,0.12); color: #ef9a9a; }
+
+  .analysis-box {
+    display: none;
+    background: #0d1030;
+    border: 1px solid #1b5e20;
+    border-radius: 8px;
+    padding: 16px 18px;
+    margin-top: 12px;
+    font-size: 0.9em;
+  }
+  .analysis-box.show { display: block; animation: fadeIn 0.3s; }
+  .analysis-box .ans-label {
+    color: #4caf50;
+    font-weight: 700;
+    margin-right: 8px;
+  }
+  .analysis-box .detail { color: #90a4ae; margin-top: 8px; }
+
+  .btn-show-analysis {
+    padding: 8px 20px;
+    background: transparent;
+    border: 2px solid #7c4dff;
+    border-radius: 6px;
+    color: #7c4dff;
+    cursor: pointer;
+    font-size: 0.85em;
+    margin-top: 10px;
+    transition: all 0.3s;
+  }
+  .btn-show-analysis:hover {
+    background: #7c4dff;
+    color: #fff;
+  }
+
+  /* Score */
+  .score-bar {
+    background: #13173e;
+    border: 1px solid #1e2456;
+    border-radius: 12px;
+    padding: 20px 28px;
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .score-bar .score-text { font-size: 1.1em; color: #b39ddb; }
+  .score-bar .score-text span { color: #7c4dff; font-size: 1.5em; font-weight: 700; }
+  .btn-reset {
+    padding: 10px 24px;
+    background: #7c4dff;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background 0.3s;
+  }
+  .btn-reset:hover { background: #651fff; }
+
+  /* Flowchart */
+  .flow-steps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  .flow-step {
+    background: rgba(124,77,255,0.1);
+    border: 2px solid #7c4dff;
+    border-radius: 10px;
+    padding: 12px 18px;
+    text-align: center;
+    font-size: 0.88em;
+    color: #d0d0f0;
+    min-width: 130px;
+  }
+  .flow-step .step-num {
+    display: block;
+    color: #7c4dff;
+    font-weight: 700;
+    font-size: 0.8em;
+    margin-bottom: 4px;
+  }
+  .flow-arrow {
+    display: flex;
+    align-items: center;
+    color: #7c4dff;
+    font-size: 1.5em;
+    padding: 0 6px;
+  }
+
+  /* Highlight */
+  .hl { color: #ff9800; font-weight: 600; }
+  .hl-green { color: #4caf50; font-weight: 600; }
+  .hl-cyan { color: #00bcd4; font-weight: 600; }
+  .hl-red { color: #f44336; }
+  .hl-purple { color: #b39ddb; }
+
+  /* Sentence items for ordering */
+  .sent-items {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin: 10px 0;
+  }
+  .sent-item {
+    padding: 8px 14px;
+    background: #0d1030;
+    border: 1px solid #1e2456;
+    border-radius: 6px;
+    font-size: 0.9em;
+    color: #b0b8d0;
+  }
+  .sent-item .snum {
+    display: inline-block;
+    background: #7c4dff;
+    color: #fff;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 22px;
+    font-size: 0.75em;
+    margin-right: 8px;
+  }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* Progress */
+  .progress-wrap {
+    background: #1e2456;
+    border-radius: 10px;
+    height: 8px;
+    margin-top: 10px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #7c4dff, #00bcd4);
+    border-radius: 10px;
+    transition: width 0.5s;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 30px;
+    color: #4a4a6a;
+    font-size: 0.85em;
+    border-top: 1px solid #1e2456;
+    margin-top: 40px;
+  }
+
+  /* Tip box */
+  .tip-box {
+    background: rgba(255,152,0,0.08);
+    border: 1px solid rgba(255,152,0,0.3);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 14px 0;
+    font-size: 0.9em;
+  }
+  .tip-box .tip-title {
+    color: #ff9800;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .summary-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 14px 0;
+  }
+  @media(max-width:700px) {
+    .summary-grid { grid-template-columns: 1fr; }
+    .nav-tab { padding: 10px 14px; font-size: 0.85em; }
+    .header h1 { font-size: 1.5em; }
+  }
+  .summary-item {
+    background: #0d1030;
+    border-radius: 8px;
+    padding: 16px;
+    border: 1px solid #1e2456;
+  }
+  .summary-item h4 {
+    color: #00bcd4;
+    margin-bottom: 8px;
+    font-size: 0.95em;
+  }
+  .summary-item p {
+    font-size: 0.88em;
+    color: #90a4ae;
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <h1>📖 语言表达得体与连贯</h1>
+  <div class="subtitle">第一章 语言知识和语言表达 · 第八节</div>
+  <div class="badge">高职高考语文专题训练</div>
+</div>
+
+<!-- Navigation -->
+<div class="nav-tabs">
+  <div class="nav-tab active" onclick="switchTab('knowledge')">📚 知识精讲</div>
+  <div class="nav-tab" onclick="switchTab('table')">📋 谦敬辞表</div>
+  <div class="nav-tab" onclick="switchTab('quiz1')">✏️ 连贯排序</div>
+  <div class="nav-tab" onclick="switchTab('quiz2')">✏️ 得体辨析</div>
+</div>
+
+<div class="container">
+
+<!-- ==================== TAB 1: 知识精讲 ==================== -->
+<div id="tab-knowledge" class="tab-content active">
+
+  <div class="card">
+    <h2><span class="icon">🔗</span> 语句连贯排序 — 解题技巧</h2>
+    <p style="color:#90a4ae;margin-bottom:16px;">语句连贯排序题要求将打乱的句子重新排列，使之语意通畅、逻辑清晰。以下是核心解题方法：</p>
+
+    <div class="flow-steps">
+      <div class="flow-step"><span class="step-num">第一步</span>通读全文<br>把握主题</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><span class="step-num">第二步</span>确定首句<br>紧承前文</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><span class="step-num">第三步</span>寻找线索<br>句间关系</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><span class="step-num">第四步</span>验证排序<br>通顺自然</div>
+    </div>
+
+    <h3>一、紧承前文法（确定首句）</h3>
+    <ul class="point-list">
+      <li>横线前的语境是最重要的线索，首句必须与前文<strong>话题一致、语意衔接</strong></li>
+      <li>含<strong>"这""那""它""他们"</strong>等代词的句子，往往紧承前文指代对象</li>
+      <li>含<strong>"其实""确实"</strong>等词的句子，通常是对前文的回应或评价</li>
+    </ul>
+    <div class="example-box">
+      <span class="label">例：</span>前文提"强大的繁殖能力" → 首句应选"近年来，汉语互联网平均每天以诞生17.5个新词的速度在自我繁殖"（②紧承"繁殖能力"）
+    </div>
+
+    <h3>二、关联词配对法</h3>
+    <ul class="point-list">
+      <li><strong>"不仅……而且/也/还"</strong>：递进关系，前后句固定搭配</li>
+      <li><strong>"同时""此外""而且"</strong>：并列或补充，紧跟前句</li>
+      <li><strong>"但""然而"</strong>：转折关系</li>
+      <li><strong>"因为……所以""从而"</strong>：因果关系</li>
+    </ul>
+    <div class="example-box">
+      <span class="label">例：</span>"不仅为世界各国抗击疫情树立了典范" + "也为国际社会应对疫情作出了重要贡献" → ①②紧密相连
+    </div>
+
+    <h3>三、逻辑顺序法</h3>
+    <ul class="point-list">
+      <li><strong>时间顺序</strong>："最先" → "此后"（如②③排序依据）</li>
+      <li><strong>空间顺序</strong>：由近及远，由内到外</li>
+      <li><strong>层次顺序</strong>：先总说后分说，或先分说后总括</li>
+      <li><strong>先因后果</strong>：原因/条件在前，结果/结论在后</li>
+    </ul>
+
+    <h3>四、句意分组法</h3>
+    <ul class="point-list">
+      <li>将意义相关的句子<strong>先分组</strong>，再排组内顺序，最后确定组间顺序</li>
+      <li>识别<strong>过渡句</strong>（承上启下），它往往处于两组之间</li>
+    </ul>
+    <div class="example-box">
+      <span class="label">例：</span>世博会题——④讲临时场馆（单独一组）→ ③②讲永久场馆（一组）→ ①过渡句 → ⑤讲城市环保
+    </div>
+
+    <h3>五、标点符号提示法</h3>
+    <ul class="point-list">
+      <li>注意横线之间的<strong>标点符号</strong>（逗号、句号、分号），它们暗示句间的紧密程度</li>
+      <li><strong>分号</strong>表示并列的两个层次；<strong>句号</strong>表示意思完整的一句话</li>
+    </ul>
+
+    <div class="tip-box">
+      <div class="tip-title">💡 快速排除技巧</div>
+      先确定首句或尾句，排除不符的选项；再找关联词配对，进一步排除；最后验证通顺即可。
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="icon">🎯</span> 语言表达得体 — 核心知识</h2>
+    <p style="color:#90a4ae;margin-bottom:16px;">语言得体考查的是用语是否适合特定的场合、对象和目的。核心考点如下：</p>
+
+    <h3>一、谦辞与敬辞的区分</h3>
+    <div class="summary-grid">
+      <div class="summary-item">
+        <h4>🟢 谦辞（用于自己或自己一方）</h4>
+        <p>表示谦虚，贬低自己以示礼貌。如：舍弟、拙作、寒舍、内人、小女、老朽、愚见、献丑、略尽绵薄之力</p>
+      </div>
+      <div class="summary-item">
+        <h4>🔴 敬辞（用于对方或对方一方）</h4>
+        <p>表示尊敬，抬高对方以示礼貌。如：令堂、府上、高足、垂询、恭候、笑纳、惠存、斧正、赐教、莅临、贵恙、雅正、拜读</p>
+      </div>
+    </div>
+    <div class="tip-box">
+      <div class="tip-title">💡 口诀记忆："家大舍小令外人"</div>
+      <strong>家</strong>＋大（称自己长辈）：家父、家母、家兄<br>
+      <strong>舍</strong>＋小（称自己晚辈）：舍弟、舍妹<br>
+      <strong>令</strong>＋外人（称对方亲属）：令尊、令堂、令郎、令爱
+    </div>
+
+    <h3>二、口语与书面语的匹配</h3>
+    <ul class="point-list">
+      <li>正式场合（外交声明、公文）→ 使用<strong>庄重的书面语</strong></li>
+      <li>日常生活（家长对孩子说话）→ 使用<strong>通俗的口语</strong></li>
+      <li>"身体欠佳"属书面语，不宜用在家长和孩子的日常对话中</li>
+      <li>"两句话说不到一块儿就动刀动枪"属口语，不宜用在外交语境中</li>
+    </ul>
+
+    <h3>三、常见误用类型</h3>
+    <ul class="point-list">
+      <li><strong>谦敬错位</strong>：把谦辞用于对方（如"我承蒙父母照顾"→"承蒙"是敬辞）</li>
+      <li><strong>对象不当</strong>：把只能形容长辈/上级的词用于自己（如学生"赏识"老师）</li>
+      <li><strong>语体不符</strong>：正式场合用口语，或日常交谈用过于书面的词语</li>
+      <li><strong>场合失当</strong>：如护士对孩子说"再哭就给你扎出血来"——场合用语不当</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ==================== TAB 2: 谦敬辞速查表 ==================== -->
+<div id="tab-table" class="tab-content">
+  <div class="card">
+    <h2><span class="icon">📋</span> 常见谦辞速查表</h2>
+    <table class="ref-table">
+      <thead><tr><th>词语</th><th>含义</th><th>用法说明</th></tr></thead>
+      <tbody>
+        <tr><td><span class="tag-humble">舍弟/舍妹</span></td><td>我的弟弟/妹妹</td><td>称自己的晚辈或同辈小的</td></tr>
+        <tr><td><span class="tag-humble">家父/家母/家兄</span></td><td>我的父亲/母亲/兄长</td><td>称自己的长辈或同辈大的</td></tr>
+        <tr><td><span class="tag-humble">内人/拙荆</span></td><td>我的妻子</td><td>只能称自己的妻子</td></tr>
+        <tr><td><span class="tag-humble">小女/犬子</span></td><td>我的女儿/儿子</td><td>谦称自己的子女</td></tr>
+        <tr><td><span class="tag-humble">拙作/拙见</span></td><td>我的作品/见解</td><td>谦称自己的作品或看法</td></tr>
+        <tr><td><span class="tag-humble">寒舍</span></td><td>我的家</td><td>谦称自己的住处</td></tr>
+        <tr><td><span class="tag-humble">老朽</span></td><td>老年人自称</td><td>老年人的谦称</td></tr>
+        <tr><td><span class="tag-humble">献丑</span></td><td>展示自己的技能</td><td>展示作品/演出时的谦辞</td></tr>
+        <tr><td><span class="tag-humble">略尽绵薄之力</span></td><td>尽自己微小的力量</td><td>谦称自己的贡献</td></tr>
+        <tr><td><span class="tag-humble">浅知拙见</span></td><td>浅薄的知识和见解</td><td>谦称自己的看法</td></tr>
+        <tr><td><span class="tag-humble">不才</span></td><td>没有才能的人</td><td>自称的谦辞</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2><span class="icon">📋</span> 常见敬辞速查表</h2>
+    <table class="ref-table">
+      <thead><tr><th>词语</th><th>含义</th><th>用法说明</th></tr></thead>
+      <tbody>
+        <tr><td><span class="tag-respect">令尊/令堂</span></td><td>您的父亲/母亲</td><td>尊称对方的父母</td></tr>
+        <tr><td><span class="tag-respect">令郎/令爱</span></td><td>您的儿子/女儿</td><td>尊称对方的子女</td></tr>
+        <tr><td><span class="tag-respect">府上</span></td><td>您的家</td><td>尊称对方的住处</td></tr>
+        <tr><td><span class="tag-respect">高足</span></td><td>好学生、高徒</td><td>尊称对方的学生，不用于自称</td></tr>
+        <tr><td><span class="tag-respect">垂询</span></td><td>询问</td><td>尊称长辈/上级对自己的询问</td></tr>
+        <tr><td><span class="tag-respect">恭候</span></td><td>恭敬地等候</td><td>自己等别人，不说别人等自己</td></tr>
+        <tr><td><span class="tag-respect">笑纳</span></td><td>请您收下</td><td>请求对方收下自己的礼物</td></tr>
+        <tr><td><span class="tag-respect">惠存</span></td><td>请保存</td><td>请对方保存自己赠送的东西</td></tr>
+        <tr><td><span class="tag-respect">斧正</span></td><td>修改文章</td><td>请对方修改自己的文章</td></tr>
+        <tr><td><span class="tag-respect">赐教</span></td><td>给予教导</td><td>请对方给予指教</td></tr>
+        <tr><td><span class="tag-respect">雅正</span></td><td>指正</td><td>请对方指正自己的作品</td></tr>
+        <tr><td><span class="tag-respect">莅临</span></td><td>来到</td><td>尊称对方的到来，用于贵宾</td></tr>
+        <tr><td><span class="tag-respect">拜读</span></td><td>阅读</td><td>自己阅读对方的作品</td></tr>
+        <tr><td><span class="tag-respect">贵恙</span></td><td>您的病</td><td>尊称对方的疾病，不用于自己</td></tr>
+        <tr><td><span class="tag-respect">承蒙</span></td><td>承受、感谢</td><td>感谢对方对自己的帮助</td></tr>
+        <tr><td><span class="tag-respect">赏识</span></td><td>赏识、欣赏</td><td>上级对下级，不可下对上</td></tr>
+        <tr><td><span class="tag-respect">光临</span></td><td>到来</td><td>尊称宾客到来</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2><span class="icon">⚠️</span> 易混易错对照</h2>
+    <table class="ref-table">
+      <thead><tr><th>错误用法</th><th>问题所在</th><th>正确说法</th></tr></thead>
+      <tbody>
+        <tr><td>"我承蒙父母照顾"</td><td><span class="tag-note">承蒙是敬辞，用于感谢别人对自己</span></td><td>"他承蒙我父母照顾"</td></tr>
+        <tr><td>"我们赏识老师"</td><td><span class="tag-note">赏识用于上对下</span></td><td>"我们敬佩/欣赏老师"</td></tr>
+        <tr><td>"特于府上备酒"（说自己家）</td><td><span class="tag-note">府上是敬辞，指对方的家</span></td><td>"特于寒舍备酒"</td></tr>
+        <tr><td>"郭教授的内人"</td><td><span class="tag-note">内人是谦辞，指自己的妻子</span></td><td>"郭教授的夫人"</td></tr>
+        <tr><td>"我向先生不耻下问"</td><td><span class="tag-note">不耻下问指向地位低的人请教</span></td><td>"我向先生请教/求教"</td></tr>
+        <tr><td>"家严大人今年高寿"（问别人父亲）</td><td><span class="tag-note">家严指自己的父亲</span></td><td>"令尊大人今年高寿"</td></tr>
+        <tr><td>"对方已恭候多时"</td><td><span class="tag-note">恭候是自己等别人的谦辞</span></td><td>"对方已等候多时"</td></tr>
+        <tr><td>"我偶染贵恙"</td><td><span class="tag-note">贵恙是敬辞，指对方的病</span></td><td>"我偶感风寒/身体不适"</td></tr>
+        <tr><td>"敬请拜读我的拙作"</td><td><span class="tag-note">拜读用于自己读别人的作品</span></td><td>"敬请雅正/赐教"</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ==================== TAB 3: 连贯排序练习 ==================== -->
+<div id="tab-quiz1" class="tab-content">
+  <div class="score-bar">
+    <div class="score-text">连贯排序得分：<span id="score1">0</span> / <span id="total1">10</span></div>
+    <div>
+      <span style="color:#90a4ae;font-size:0.85em;margin-right:12px;" id="progress1-text">0/10 已完成</span>
+      <button class="btn-reset" onclick="resetQuiz('quiz1')">重新作答</button>
+    </div>
+  </div>
+  <div class="progress-wrap"><div class="progress-fill" id="progress1" style="width:0%"></div></div>
+  <br>
+  <div id="quiz1-container"></div>
+</div>
+
+<!-- ==================== TAB 4: 得体辨析练习 ==================== -->
+<div id="tab-quiz2" class="tab-content">
+  <div class="score-bar">
+    <div class="score-text">得体辨析得分：<span id="score2">0</span> / <span id="total2">9</span></div>
+    <div>
+      <span style="color:#90a4ae;font-size:0.85em;margin-right:12px;" id="progress2-text">0/9 已完成</span>
+      <button class="btn-reset" onclick="resetQuiz('quiz2')">重新作答</button>
+    </div>
+  </div>
+  <div class="progress-wrap"><div class="progress-fill" id="progress2" style="width:0%"></div></div>
+  <br>
+  <div id="quiz2-container"></div>
+</div>
+
+</div><!-- container -->
+
+<div class="footer">
+  高职高考语文专题训练 · 语言表达得体与连贯 · 学习页面<br>
+  内容来源：《高职高考语文专题训练》辽海出版社
+</div>
+
+<script>
+// ==================== Tab Switching ====================
+function switchTab(name) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ==================== Quiz Data ====================
+const quiz1Data = [
+  {
+    id: 1,
+    text: '在今天的语言竞赛中，互联网语言显示出强大的繁殖能力。<span class="blank"></span>，<span class="blank"></span>。<span class="blank"></span>，<span class="blank"></span>。<span class="blank"></span>。<span class="blank"></span>。',
+    sentences: [
+      '①对传统汉语构成犀利的挑战',
+      '②近年来，汉语互联网平均每天以诞生17.5个新词的速度在自我繁殖',
+      '③但绝大多数新鲜出炉的语言事物，只是一些转瞬即逝的泡沫',
+      '④新词组、新句式和新语体更是大量疯长，犹如春风野草',
+      '⑤同时，它也以每天淘汰9个新词的速度在自我清洗',
+      '⑥它们在互联网上喧嚣数日或数月，而后便消失在时间的洪流之中'
+    ],
+    options: ['A. ①③⑥②⑤④', 'B. ②①③⑥⑤④', 'C. ②⑤④①③⑥', 'D. ③⑥②⑤④①'],
+    answer: 2,
+    analysis: '②紧承前文"强大的繁殖能力"，故应排在首位；⑤句中"同时""也以"等词应紧承②；④进一步说明互联网语言的繁殖能力，应紧承⑤；①紧接④，③⑥是说大量的互联网语言阳寿不足。'
+  },
+  {
+    id: 2,
+    text: '从"教给学生再获得知识的知识，培养学生再形成能力的能力"这个核心思想出发，<span class="blank"></span>，<span class="blank"></span>，<span class="blank"></span>，<span class="blank"></span>，<span class="blank"></span>，去不断地提高自己，完善自己。',
+    sentences: [
+      '①他提出了"人——知识——能力——人"的人本教育公式',
+      '②在培养学生自我获取知识',
+      '③主张教师要从育人目的出发',
+      '④让学生自己进入发展状态',
+      '⑤自我形成能力的过程中'
+    ],
+    options: ['A. ①③②⑤④', 'B. ②①③⑤④', 'C. ②⑤④①③', 'D. ①③⑤④②'],
+    answer: 0,
+    analysis: '①紧承前文"核心思想"，故应排在首位，从"人本教育公式"中的"人——知识——能力——人"得到的排序应是③②⑤④。'
+  },
+  {
+    id: 3,
+    text: '西安是一块宝地！在这里，中国古代文化仿佛阳光空气一般，弥漫城中。唐代著名诗人的那些名篇名句，很多都与西安有关联。谁走过丈八沟、乐游原这样的地方不会立即联想到杜甫、李商隐的名篇呢？谁看到灞桥、渭水等的名字不会立刻神往盛唐呢？<span class="blank"></span>，<span class="blank"></span>；<span class="blank"></span>，<span class="blank"></span>；<span class="blank"></span>。',
+    sentences: [
+      '①这里是一个诗和梦的世界',
+      '②这里到处是诗',
+      '③美妙的诗',
+      '④这里到处是梦',
+      '⑤神奇的梦'
+    ],
+    options: ['A. ①③②⑤④', 'B. ②③⑤④①', 'C. ②⑤④③①', 'D. ②③④⑤①'],
+    answer: 3,
+    analysis: '根据上文先谈"诗"再写"梦"，应是②③再④⑤；①是总括放在最后。'
+  },
+  {
+    id: 4,
+    text: '清人张潮在其《幽梦影》中曾说："对渊博友如读异书，对风雅友如读名人诗文，对谨饬友如读圣贤经传，对滑稽友如阅传奇小说。"<span class="blank"></span>，<span class="blank"></span>。<span class="blank"></span>，<span class="blank"></span>，<span class="blank"></span>！',
+    sentences: [
+      '①人生一世，除了亲情、爱情外，友情更是不可缺的',
+      '②这话确有见地',
+      '③而友情则是一种广度',
+      '④爱情是一种纯度',
+      '⑤因为亲情是一种深度'
+    ],
+    options: ['A. ③②⑤④①', 'B. ②①⑤④③', 'C. ②⑤④③①', 'D. ②③④⑤①'],
+    answer: 1,
+    analysis: '"这"是紧承前文，故②应排在首位。①是承上启下句，从"除了亲情、爱情外，友情更是不可缺的"一句，可推知横线处"亲情""爱情""友情"的排列顺序，作者要突出"友情"。'
+  },
+  {
+    id: 5,
+    text: '下列句子组成语意连贯的语段：',
+    sentences: [
+      '①而且是发生最早或说是最原始的思维形式',
+      '②皮亚杰的工作说明，儿童正是最先出现顿悟思维',
+      '③此后才依次出现形象思维和逻辑思维的',
+      '④思维不仅是人类的基本思维形式'
+    ],
+    options: ['A. ③②④①', 'B. ②①④③', 'C. ④①②③', 'D. ④③②①'],
+    answer: 2,
+    analysis: '从"不仅……而且"这关联词判断，④①的排序，而且这是总起句，应排在首位；从"最先""此后"这组词判断出②③的排序。'
+  },
+  {
+    id: 6,
+    text: '"多动症"，全称为注意缺陷多动障碍(ADHD)，<span class="blank"></span>。<span class="blank"></span>，<span class="blank"></span>，<span class="blank"></span>，<span class="blank"></span>，严重者会做出一些冲动的举动甚至违法犯罪行为。',
+    sentences: [
+      '①一般情况下，患病儿童12岁之前就能够表现出一些明显的症状',
+      '②典型特征是具有与年龄不相符合的注意缺陷或者注意力时间短暂',
+      '③日常生活中多动、经常抽动',
+      '④是一个与神经发育相关的心理障碍',
+      '⑤从而导致学习、生活存在一定的困难'
+    ],
+    options: ['A. ④①②③⑤', 'B. ④①⑤②③', 'C. ②①④③⑤', 'D. ⑤②③④①'],
+    answer: 0,
+    analysis: '④是解释"多动症"这个定义的，所以应放在首位。从"从而"一词看到③⑤的排序，后面讲"多动症"危害，应放在最后。'
+  },
+  {
+    id: 7,
+    text: '随着疫情不断扩散，世界许多国家成为"重灾区"。我们党和政府始终秉持人类命运共同体理念，<span class="blank"></span>，<span class="blank"></span>，<span class="blank"></span>，<span class="blank"></span>，<span class="blank"></span>。',
+    sentences: [
+      '①不仅为世界各国抗击疫情树立了典范',
+      '②也为国际社会应对疫情作出了重要贡献',
+      '③积极回应各方关切',
+      '④展现了一个负责任大国的形象',
+      '⑤加强与国际社会合作'
+    ],
+    options: ['A. ③⑤①②④', 'B. ①②⑤④③', 'C. ③⑤④②①', 'D. ②③④⑤①'],
+    answer: 0,
+    analysis: '从语意上判断，先"回应"再"加强合作"，所以紧承前文的应是③⑤；从"不仅……也"这关联词判断，①②的排序。'
+  },
+  {
+    id: 8,
+    text: '象征是文学创作中的一种重要的表现方法。<span class="blank"></span>，<span class="blank"></span>，<span class="blank"></span>，<span class="blank"></span>，极大地增强了作品的艺术表现力和感染力。',
+    sentences: [
+      '①使思想更加形象、可感',
+      '②委婉、曲折、含蓄地表达出来',
+      '③它能够使不容易或不便于直接说出的思想感情',
+      '④而且化"抽象"为"具体"'
+    ],
+    options: ['A. ①③④②', 'B. ①④③②', 'C. ③④②①', 'D. ③②④①'],
+    answer: 3,
+    analysis: '③由"它"这一代词，可判断此为第一句；②从语意方面判断与上句句意衔接最紧密(不容易或不便于直接→委婉、曲折、含蓄)；④"而且"与上句表并列关系，在①前。'
+  },
+  {
+    id: 9,
+    text: '"中国结"的全称是"中国传统装饰结"，<span class="blank"></span>，<span class="blank"></span>，<span class="blank"></span>，<span class="blank"></span>，<span class="blank"></span>，<span class="blank"></span>，因此绳结也是中国古典服饰的重要组成部分。',
+    sentences: [
+      '①人们很早就开始用绳结来装饰器物，为绳结注入了美学内涵',
+      '②当时的绳结是人们日常生活中的必备用具',
+      '③"中国结"的起源可能追溯到上古时期',
+      '④它是中华民族独有的一种手工编织工艺品，具有悠久的历史',
+      '⑤此外，绳结还被应用在人们的衣着、佩饰上',
+      '⑥同时也具有记载历史的重要功用，因而在人们的心目中很神圣'
+    ],
+    options: ['A. ①②④⑥⑤①', 'B. ③①②⑤⑥④', 'C. ④①③②⑤⑥', 'D. ④③②⑥①⑤'],
+    answer: 3,
+    analysis: '④是总说，排在第一，⑤承启后文排在最后，①承启⑤，注意③②⑥里面的关键词"当时""同时"。'
+  },
+  {
+    id: 10,
+    text: '在儒家传统中，孔孟总是形影相随，<span class="blank"></span>。',
+    sentences: [
+      '①既有《论语》，则有《孟子》',
+      '②孔曰"成仁"，孟曰"取义"，他们的宗旨也始终相配合',
+      '③今人冯友兰，也把孔子比作苏格拉底，把孟子比作柏拉图',
+      '④既有大成至圣，则有亚圣',
+      '⑤《史记》说："孟子序诗书，述仲尼之意。"'
+    ],
+    options: ['A. ④②①③⑤', 'B. ①②④⑤③', 'C. ①④②③⑤', 'D. ④①②⑤③'],
+    answer: 3,
+    analysis: '④说其人，从衔接上更合理，排除B、C。⑤是司马迁的评价，"意"呼应②的"宗旨"。③是今人评价，放在最后。自古及今的顺序。'
+  }
+];
+
+const quiz2Data = [
+  {
+    id: 21,
+    text: '下列各句中，措辞得体的一项是：',
+    options: [
+      'A. 鲁迅先生不幸逝世，噩耗传来，举国震悼。',
+      'B. 中国政府历来主张，地区间的矛盾应以和平方式加以解决，不能两句话说不到一块儿，就动刀动枪的。',
+      'C. 你既然身体欠佳，那你给老师打个电话，请半天假。',
+      'D. 张老师，我们全班同学都很赏识你的教学方法。'
+    ],
+    answer: 0,
+    analysis: 'B项应用严肃庄重的书面语体，"两句话说不到一块儿"太口语化。C项"身体欠佳"很书面化，不适合家长与孩子的日常对话。D项"赏识"用在上对下，学生对老师"赏识"欠妥。'
+  },
+  {
+    id: 22,
+    text: '下列各句中，表达得体的一项是：',
+    options: [
+      'A. 真是事出意外！舍弟太过顽皮，碰碎了您家这么贵重的花瓶，敬请原谅，我们一定照价赔偿。',
+      'B. 他的书法龙飞凤舞，引来一片赞叹，但落款却出了差错，一时又无法弥补，只好连声道歉："献丑，献丑！"',
+      'C. 他是我最信任的朋友，头脑灵活，处事周到，每次我遇到难题写信垂询，都能得到很有启发的回复。',
+      'D. 我妻子和郭教授的内人是多年的闺蜜，她俩经常一起逛街、一起旅游，话多得似乎永远都说不完。'
+    ],
+    answer: 0,
+    analysis: 'B项"献丑"是展示作品时的谦辞，不用于道歉场合。C项"垂询"是敬语，用于尊称长辈/上级对自己的询问。D项"内人"用以称自己的妻子，不能称别人的妻子。A项"舍弟"正确，用于自己的弟弟。'
+  },
+  {
+    id: 23,
+    text: '下列各句中，表达得体的一项是：',
+    options: [
+      'A. 他是个可怜的孤儿，小时候承蒙我父母照顾，所以现在经常来看望我们。',
+      'B. 杨老师年过七旬仍然笔耕不辍，作为他的高足，我们感到既自豪又惭愧。',
+      'C. 这篇文章是我刚完成的，无论观点还是文字都不够成熟，请您不吝赐教。',
+      'D. 由于路上堵车非常严重，我赶到约定地点的时候，对方早已恭候多时。'
+    ],
+    answer: 2,
+    analysis: 'A"承蒙"是敬辞，应是别人承蒙自己，不是自己说别人承蒙。B"高足"是敬辞，不用于称自己。D"恭候"是谦辞，指自己恭敬地等候别人，不能说别人恭候自己。'
+  },
+  {
+    id: 24,
+    text: '下列交际用语使用得体的一项是：',
+    options: [
+      'A. 从数百里外捎来如此厚礼，推辞不了，只好笑纳！',
+      'B. 本月二十六日，小女举行婚礼，届时请务必光临。',
+      'C. 奉上刚刚草就的拙作，敬请拜读，专候宝贵意见。',
+      'D. 老朽退休多年，而获此殊荣，颇为羞愧，感谢诸位厚爱！'
+    ],
+    answer: 3,
+    analysis: 'A"笑纳"是敬辞，请别人收下礼物时用，不能用于自己收礼。B"务必"语气太强硬，可改为"赏脸"。C"拜读"是敬辞，用于自己阅读对方的作品，不能请别人"拜读"自己的作品。'
+  },
+  {
+    id: 25,
+    text: '李雷原本与同学约好一起去看球赛，却因感冒发烧无法前往，于是他给同学发了条短信。下列表达得体的一项是：',
+    options: [
+      'A. 我今天不去看球赛了，你自己去吧！',
+      'B. 我偶染贵恙，无法观赛，深表歉意！',
+      'C. 我感冒了，现在还在发烧，真糟糕！',
+      'D. 我生病不能去看球赛了，实在抱歉！'
+    ],
+    answer: 3,
+    analysis: 'A没有说明原因，且口气太硬。B"偶染贵恙"中"贵恙"是敬辞，应用于称对方的病，不能用于自己。C没有表达"无法前往"和道歉的意思。'
+  },
+  {
+    id: 26,
+    text: '下列交际用语使用得体的一项是：',
+    options: [
+      'A. 请柬：新居落成，我明天搬迁，为答谢您的祝贺，特于府上备下薄酒，恭请光临。',
+      'B. 书信：毕业之后，学生垂念师恩。值此春节到来之际，谨祝恩师节日快乐，万事如意！',
+      'C. 询问：家严大人今年高寿？多年不见，甚为牵挂，过两天我一定登门看望。',
+      'D. 介绍信：兹介绍我校张敏同学前往贵公司参加社会实践，请予接洽为荷。'
+    ],
+    answer: 3,
+    analysis: 'A"府上"是对别人的家的尊称，应改为"寒舍"。B"垂念"称对方(多指长辈或上级)对自己的关心挂念，应改为"感念"。C"家严"对别人称自己的父亲，应改为"令尊"。D正确，"荷"常用于书信、公文等中表示感谢或客气。'
+  },
+  {
+    id: 27,
+    text: '下列交际用语使用得体的一项是：',
+    options: [
+      'A. 一位同学在讨论会上说："像孙老师这样快要退休的老师仍在为培养我们而略尽绵薄之力，我们深感荣光。"',
+      'B. 一位同学在班上的学习方法交流会上说："我殷切期望方法不当的同学调整心态，改进方法，取得佳绩。"',
+      'C. 某报社的记者写给一位校长的便条：您来信约我莅临贵校采访，我乐意。',
+      'D. 某经理在部门工作分析会上做报告，最后总结说：这只是我的浅知拙见，如有不当，敬请批评指正。'
+    ],
+    answer: 3,
+    analysis: 'A"略尽绵薄之力"是谦辞，用于说自己，不能用于形容别人。B"殷切期望"语气不当，同学之间不宜这样说。C"莅临"是敬辞，不能用于自己。'
+  },
+  {
+    id: 28,
+    text: '下列各句中的传统礼貌用语使用得体的一项是：',
+    options: [
+      'A. 你和我小学毕业时的合影我一直当作珍贵的"文物"惠存着。',
+      'B. 可能是一时疏忽，你的稿子有几个不大通畅的语句，我斗胆作了斧正。',
+      'C. 你寄来的使用说明书，我有几个地方不大明白，特去信垂询。',
+      'D. 我的一首小诗在《星星》上发表了，现抄寄给你，请雅正。'
+    ],
+    answer: 3,
+    analysis: 'A"惠存"是敬辞，请对方保存，不能说自己惠存。B"斧正"是敬辞，请对方修改自己的文章，不能说自己斧正别人。C"垂询"是敬辞，尊称长辈/上级的询问，不能用于自己向别人询问。'
+  },
+  {
+    id: 29,
+    text: '下列各句，最得体的一句是：',
+    options: [
+      'A. 这个问题我请教了许多人，都得不到解决，于是不耻下问，向先生您请教。',
+      'B. 老师端起酒杯说："黄老先生，今天是您的寿诞之日，我祝您健康长寿！"',
+      'C. 护士拿着注射器说："孩子，别哭，再哭，我就给你扎出血来了！"',
+      'D. 在座的不是董事长，就是总经理，现在请大家出钱出物，为国家尽匹夫之责。'
+    ],
+    answer: 1,
+    analysis: 'A"不耻下问"指不以向地位低于自己的人请教为耻，不能用于向先生请教。C护士用语不看对象和场合，对孩子太恐吓。D"匹夫"指一般平民，而"董事长""总经理"不在一般百姓之列，用"匹夫"不当。'
+  }
+];
+
+// ==================== Render Quizzes ====================
+let quiz1State = {};
+let quiz2State = {};
+
+function renderQuiz(containerId, data, stateObj, quizName) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = '';
+  data.forEach((q, idx) => {
+    const div = document.createElement('div');
+    div.className = 'quiz-item';
+    div.id = `${quizName}-q${idx}`;
+
+    let sentHtml = '';
+    if (q.sentences) {
+      sentHtml = '<div class="sent-items">';
+      q.sentences.forEach(s => {
+        sentHtml += `<div class="sent-item">${s}</div>`;
+      });
+      sentHtml += '</div>';
+    }
+
+    let optHtml = '<div class="options-grid">';
+    q.options.forEach((opt, oi) => {
+      optHtml += `<button class="opt-btn" data-q="${idx}" data-o="${oi}" onclick="selectOption('${quizName}', ${idx}, ${oi})">${opt}</button>`;
+    });
+    optHtml += '</div>';
+
+    div.innerHTML = `
+      <span class="q-num">${q.id || idx+1}</span>
+      <span class="q-type">${quizName === 'quiz1' ? '排序题' : '得体题'}</span>
+      <div class="q-text">${q.text}</div>
+      ${sentHtml}
+      ${optHtml}
+      <button class="btn-show-analysis" onclick="toggleAnalysis('${quizName}', ${idx})">查看解析</button>
+      <div class="analysis-box" id="${quizName}-analysis-${idx}">
+        <span class="ans-label">✅ 正确答案：${q.options[q.answer].charAt(0)}</span><br>
+        <div class="detail">📝 ${q.analysis}</div>
+      </div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function selectOption(quizName, qIdx, oIdx) {
+  const state = quizName === 'quiz1' ? quiz1State : quiz2State;
+  const data = quizName === 'quiz1' ? quiz1Data : quiz2Data;
+  if (state[qIdx] !== undefined) return; // already answered
+
+  state[qIdx] = oIdx;
+  const q = data[qIdx];
+  const btns = document.querySelectorAll(`#${quizName}-q${qIdx} .opt-btn`);
+  btns.forEach((btn, i) => {
+    btn.style.pointerEvents = 'none';
+    if (i === q.answer) btn.classList.add('correct');
+    if (i === oIdx && oIdx !== q.answer) btn.classList.add('wrong');
+    if (i === oIdx) btn.classList.add('selected');
+  });
+
+  // Show analysis automatically
+  document.getElementById(`${quizName}-analysis-${qIdx}`).classList.add('show');
+
+  updateScore(quizName);
+}
+
+function toggleAnalysis(quizName, qIdx) {
+  const el = document.getElementById(`${quizName}-analysis-${qIdx}`);
+  el.classList.toggle('show');
+}
+
+function updateScore(quizName) {
+  const state = quizName === 'quiz1' ? quiz1State : quiz2State;
+  const data = quizName === 'quiz1' ? quiz1Data : quiz2Data;
+  let correct = 0;
+  let answered = 0;
+  Object.keys(state).forEach(k => {
+    answered++;
+    if (state[k] === data[k].answer) correct++;
+  });
+  document.getElementById(quizName === 'quiz1' ? 'score1' : 'score2').textContent = correct;
+  const total = data.length;
+  document.getElementById(quizName === 'quiz1' ? 'total1' : 'total2').textContent = total;
+  const pctEl = document.getElementById(quizName === 'quiz1' ? 'progress1' : 'progress2');
+  pctEl.style.width = (answered / total * 100) + '%';
+  document.getElementById(quizName === 'quiz1' ? 'progress1-text' : 'progress2-text').textContent = `${answered}/${total} 已完成`;
+}
+
+function resetQuiz(quizName) {
+  if (quizName === 'quiz1') {
+    quiz1State = {};
+    renderQuiz('quiz1-container', quiz1Data, quiz1State, 'quiz1');
+  } else {
+    quiz2State = {};
+    renderQuiz('quiz2-container', quiz2Data, quiz2State, 'quiz2');
+  }
+  updateScore(quizName);
+}
+
+// ==================== Initialize ====================
+renderQuiz('quiz1-container', quiz1Data, quiz1State, 'quiz1');
+renderQuiz('quiz2-container', quiz2Data, quiz2State, 'quiz2');
+</script>
+</body>
+</html>
