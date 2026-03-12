@@ -1,0 +1,1857 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>现代汉语常用字字音 - 学习页面</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  :root {
+    --primary: #4a3d8f;
+    --primary-light: #6c5ce7;
+    --primary-dark: #2d2566;
+    --accent: #e74c3c;
+    --accent-light: #ff6b6b;
+    --success: #27ae60;
+    --warning: #f39c12;
+    --bg: #f0f2f5;
+    --card-bg: #ffffff;
+    --text: #2c3e50;
+    --text-light: #7f8c8d;
+    --border: #e0e0e0;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* Header */
+  .header {
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary-light));
+    color: white;
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.2);
+  }
+
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .header h1 {
+    font-size: 22px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .header h1 .icon { font-size: 28px; }
+
+  .header .subtitle {
+    font-size: 13px;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+
+  .progress-bar-container {
+    background: rgba(255,255,255,0.15);
+    height: 4px;
+  }
+
+  .progress-bar {
+    height: 100%;
+    background: var(--accent-light);
+    width: 0%;
+    transition: width 0.5s ease;
+    border-radius: 0 2px 2px 0;
+  }
+
+  /* Navigation Tabs */
+  .nav-tabs {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    gap: 0;
+    overflow-x: auto;
+  }
+
+  .nav-tab {
+    padding: 12px 20px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.7);
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s;
+    white-space: nowrap;
+    user-select: none;
+  }
+
+  .nav-tab:hover { color: rgba(255,255,255,0.9); }
+
+  .nav-tab.active {
+    color: white;
+    border-bottom-color: var(--accent-light);
+  }
+
+  /* Main Content */
+  .main-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* Cards */
+  .card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    border: 1px solid var(--border);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  }
+
+  .card-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--primary-light);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* Knowledge Section */
+  .knowledge-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  .char-card {
+    background: linear-gradient(135deg, #f8f9fa, #fff);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+
+  .char-card:hover {
+    border-color: var(--primary-light);
+    box-shadow: 0 4px 16px rgba(106, 92, 231, 0.12);
+  }
+
+  .char-card .char {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--primary);
+    text-align: center;
+    margin-bottom: 8px;
+  }
+
+  .char-card .pinyin-list {
+    list-style: none;
+  }
+
+  .char-card .pinyin-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 6px 0;
+    border-bottom: 1px dashed #eee;
+    font-size: 14px;
+  }
+
+  .char-card .pinyin-item:last-child { border-bottom: none; }
+
+  .pinyin-tag {
+    display: inline-block;
+    background: var(--primary);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    min-width: 50px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .pinyin-tag.alt {
+    background: var(--accent);
+  }
+
+  .pinyin-tag.third {
+    background: var(--warning);
+  }
+
+  .example-text {
+    color: var(--text);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  /* Category filter */
+  .filter-bar {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+
+  .filter-btn {
+    padding: 6px 16px;
+    border: 2px solid var(--border);
+    border-radius: 20px;
+    background: white;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    transition: all 0.3s;
+  }
+
+  .filter-btn:hover {
+    border-color: var(--primary-light);
+    color: var(--primary);
+  }
+
+  .filter-btn.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+  }
+
+  /* Quiz Section */
+  .quiz-controls {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .quiz-controls .info {
+    font-size: 14px;
+    color: var(--text-light);
+    margin-left: auto;
+  }
+
+  .quiz-btn {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s;
+  }
+
+  .quiz-btn.primary {
+    background: var(--primary);
+    color: white;
+  }
+
+  .quiz-btn.primary:hover { background: var(--primary-dark); }
+
+  .quiz-btn.outline {
+    background: white;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+  }
+
+  .quiz-btn.outline:hover { background: var(--primary); color: white; }
+
+  .quiz-btn.success { background: var(--success); color: white; }
+  .quiz-btn.success:hover { background: #219a52; }
+
+  .question-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    border: 1px solid var(--border);
+    border-left: 5px solid var(--primary);
+  }
+
+  .question-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: var(--primary);
+    color: white;
+    border-radius: 50%;
+    font-size: 14px;
+    font-weight: 700;
+    margin-right: 10px;
+    flex-shrink: 0;
+  }
+
+  .question-text {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .options-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .option-item {
+    display: flex;
+    align-items: center;
+    padding: 14px 18px;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 15px;
+    user-select: none;
+  }
+
+  .option-item:hover {
+    border-color: var(--primary-light);
+    background: #f8f6ff;
+  }
+
+  .option-item.selected {
+    border-color: var(--primary);
+    background: #f0edff;
+  }
+
+  .option-item.correct {
+    border-color: var(--success);
+    background: #e8f8ef;
+    color: var(--success);
+  }
+
+  .option-item.wrong {
+    border-color: var(--accent);
+    background: #fdf0ef;
+    color: var(--accent);
+  }
+
+  .option-item.show-correct {
+    border-color: var(--success);
+    background: #e8f8ef;
+  }
+
+  .option-label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #f0f0f0;
+    font-weight: 700;
+    font-size: 13px;
+    margin-right: 12px;
+    flex-shrink: 0;
+  }
+
+  .option-item.selected .option-label {
+    background: var(--primary);
+    color: white;
+  }
+
+  .option-item.correct .option-label {
+    background: var(--success);
+    color: white;
+  }
+
+  .option-item.wrong .option-label {
+    background: var(--accent);
+    color: white;
+  }
+
+  .explanation {
+    margin-top: 16px;
+    padding: 16px;
+    background: #fffbf0;
+    border: 1px solid #fce8c3;
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 1.8;
+    display: none;
+  }
+
+  .explanation.show { display: block; }
+
+  .explanation-title {
+    font-weight: 700;
+    color: var(--warning);
+    margin-bottom: 6px;
+    font-size: 14px;
+  }
+
+  .answer-tag {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 16px;
+    margin-left: 8px;
+  }
+
+  .answer-tag.correct-tag {
+    background: #e8f8ef;
+    color: var(--success);
+  }
+
+  /* Search / Reference Table */
+  .search-box {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .search-input {
+    flex: 1;
+    padding: 12px 18px;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+
+  .search-input:focus { border-color: var(--primary-light); }
+
+  .search-input::placeholder { color: #bbb; }
+
+  .ref-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .ref-table th {
+    background: var(--primary);
+    color: white;
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .ref-table td {
+    padding: 10px 16px;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 14px;
+    vertical-align: top;
+  }
+
+  .ref-table tr:last-child td { border-bottom: none; }
+
+  .ref-table tr:nth-child(even) { background: #fafbfc; }
+
+  .ref-table tr:hover td { background: #f0edff; }
+
+  .ref-char {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--primary);
+  }
+
+  .ref-pinyin {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* Stats panel */
+  .stats-panel {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .stat-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid var(--border);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+
+  .stat-num {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--primary);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 13px;
+    color: var(--text-light);
+    margin-top: 6px;
+  }
+
+  .stat-card.accent .stat-num { color: var(--accent); }
+  .stat-card.success .stat-num { color: var(--success); }
+  .stat-card.warning .stat-num { color: var(--warning); }
+
+  /* Pagination */
+  .pagination {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+  }
+
+  .page-btn {
+    width: 36px;
+    height: 36px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+  }
+
+  .page-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+
+  .page-btn.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+  }
+
+  .page-btn.answered { background: #e8f8ef; border-color: var(--success); }
+  .page-btn.wrong-ans { background: #fdf0ef; border-color: var(--accent); }
+
+  /* Highlight pinyin */
+  .hl { color: var(--accent); font-weight: 700; }
+  .hl-g { color: var(--success); font-weight: 700; }
+
+  /* Tips box */
+  .tips-box {
+    background: linear-gradient(135deg, #667eea11, #764ba211);
+    border: 1px solid #667eea33;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  .tips-box h3 {
+    color: var(--primary);
+    margin-bottom: 10px;
+    font-size: 16px;
+  }
+
+  .tips-box ul {
+    padding-left: 20px;
+    font-size: 14px;
+  }
+
+  .tips-box li { margin-bottom: 6px; }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .header h1 { font-size: 18px; }
+    .nav-tab { padding: 10px 14px; font-size: 13px; }
+    .main-content { padding: 16px; }
+    .card { padding: 18px; }
+    .question-card { padding: 20px; }
+    .knowledge-grid { grid-template-columns: 1fr; }
+    .stats-panel { grid-template-columns: repeat(2, 1fr); }
+    .quiz-controls .info { margin-left: 0; width: 100%; }
+  }
+
+  /* Scroll to top */
+  .scroll-top {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 99;
+    transition: all 0.3s;
+  }
+
+  .scroll-top:hover { transform: scale(1.1); background: var(--primary-dark); }
+  .scroll-top.show { display: flex; }
+
+  /* Accordion */
+  .accordion-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    padding: 14px 0;
+    border-bottom: 1px solid #eee;
+  }
+
+  .accordion-header:hover { color: var(--primary); }
+
+  .accordion-header .arrow {
+    transition: transform 0.3s;
+    font-size: 12px;
+  }
+
+  .accordion-header.open .arrow { transform: rotate(90deg); }
+
+  .accordion-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+
+  .accordion-body.open {
+    max-height: 2000px;
+  }
+
+  .accordion-content {
+    padding: 16px 0;
+  }
+
+  /* Dot emphasis for characters */
+  .dotted {
+    text-emphasis: dot;
+    text-emphasis-position: under;
+    -webkit-text-emphasis: dot;
+    -webkit-text-emphasis-position: under;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  /* Badge */
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    vertical-align: middle;
+    margin-left: 6px;
+  }
+
+  .badge-purple { background: #f0edff; color: var(--primary); }
+  .badge-red { background: #fdf0ef; color: var(--accent); }
+  .badge-green { background: #e8f8ef; color: var(--success); }
+
+  /* Modal overlay */
+  .modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .modal-overlay.show { display: flex; }
+
+  .modal-content {
+    background: white;
+    border-radius: 16px;
+    padding: 32px;
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+    animation: modalIn 0.3s ease;
+  }
+
+  @keyframes modalIn {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .modal-icon { font-size: 56px; margin-bottom: 16px; }
+  .modal-title { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+  .modal-text { font-size: 14px; color: var(--text-light); margin-bottom: 24px; }
+
+  .result-detail {
+    text-align: left;
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 20px;
+    font-size: 14px;
+  }
+
+  .result-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px dashed #eee;
+  }
+
+  .result-row:last-child { border-bottom: none; }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <div class="header-top">
+    <div>
+      <h1><span class="icon">📖</span> 现代汉语常用字字音</h1>
+      <div class="subtitle">高职高考语文 · 第一章 语言知识和语言表达 · 第一节</div>
+    </div>
+  </div>
+  <div class="nav-tabs">
+    <div class="nav-tab active" data-tab="overview">📋 学习概览</div>
+    <div class="nav-tab" data-tab="knowledge">📚 知识整理</div>
+    <div class="nav-tab" data-tab="quiz">✏️ 在线练习</div>
+    <div class="nav-tab" data-tab="reference">🔍 字音速查</div>
+  </div>
+  <div class="progress-bar-container">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+
+  <!-- ========== 学习概览 ========== -->
+  <div class="section active" id="sec-overview">
+    <div class="stats-panel">
+      <div class="stat-card">
+        <div class="stat-num">30</div>
+        <div class="stat-label">练习题数</div>
+      </div>
+      <div class="stat-card accent">
+        <div class="stat-num" id="totalChars">65</div>
+        <div class="stat-label">多音字收录</div>
+      </div>
+      <div class="stat-card success">
+        <div class="stat-num" id="answeredCount">0</div>
+        <div class="stat-label">已答题数</div>
+      </div>
+      <div class="stat-card warning">
+        <div class="stat-num" id="correctRate">0%</div>
+        <div class="stat-label">正确率</div>
+      </div>
+    </div>
+
+    <div class="tips-box">
+      <h3>💡 考点解读</h3>
+      <ul>
+        <li><strong>多音字辨析</strong>是本节重点，同一个字在不同词语中读音不同，需根据语境判断。</li>
+        <li><strong>形近字区分</strong>：形似但读音不同的字，如"竦 sǒng"与"悚 sǒng"、"速 sù"。</li>
+        <li><strong>常见易错读音</strong>：如"着"有四个读音、"和"有五个读音、"差"有四个读音等。</li>
+        <li><strong>答题技巧</strong>：先排除自己确定的读音，再逐一辨析不确定的字。注意"同音"和"不同音"的审题。</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🎯 高频多音字 TOP 10</div>
+      <div class="knowledge-grid" id="topCharsGrid"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📊 考查题型分布</div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span style="width:140px;font-size:14px;font-weight:600;">读音全都相同</span>
+          <div style="flex:1;background:#f0f0f0;border-radius:10px;height:24px;overflow:hidden;">
+            <div style="width:43%;background:var(--primary);height:100%;border-radius:10px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;color:white;font-size:11px;font-weight:700;">13题</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span style="width:140px;font-size:14px;font-weight:600;">读音全都不相同</span>
+          <div style="flex:1;background:#f0f0f0;border-radius:10px;height:24px;overflow:hidden;">
+            <div style="width:47%;background:var(--accent);height:100%;border-radius:10px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;color:white;font-size:11px;font-weight:700;">14题</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span style="width:140px;font-size:14px;font-weight:600;">每对读音相同</span>
+          <div style="flex:1;background:#f0f0f0;border-radius:10px;height:24px;overflow:hidden;">
+            <div style="width:7%;min-width:40px;background:var(--success);height:100%;border-radius:10px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;color:white;font-size:11px;font-weight:700;">2题</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span style="width:140px;font-size:14px;font-weight:600;">读音不完全相同</span>
+          <div style="flex:1;background:#f0f0f0;border-radius:10px;height:24px;overflow:hidden;">
+            <div style="width:3%;min-width:40px;background:var(--warning);height:100%;border-radius:10px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;color:white;font-size:11px;font-weight:700;">1题</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== 知识整理 ========== -->
+  <div class="section" id="sec-knowledge">
+    <div class="filter-bar" id="categoryFilter">
+      <button class="filter-btn active" data-cat="all">全部</button>
+      <button class="filter-btn" data-cat="common">常见多音字</button>
+      <button class="filter-btn" data-cat="verb">动词相关</button>
+      <button class="filter-btn" data-cat="noun">名词相关</button>
+      <button class="filter-btn" data-cat="idiom">成语易错</button>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📝 多音字详解</div>
+      <div class="knowledge-grid" id="knowledgeGrid"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">⚠️ 易混淆形近字</div>
+      <div id="confusableChars"></div>
+    </div>
+  </div>
+
+  <!-- ========== 在线练习 ========== -->
+  <div class="section" id="sec-quiz">
+    <div class="quiz-controls">
+      <button class="quiz-btn primary" onclick="resetQuiz()">🔄 重新开始</button>
+      <button class="quiz-btn outline" onclick="showAllAnswers()">👁️ 显示全部答案</button>
+      <button class="quiz-btn success" onclick="submitQuiz()">✅ 提交判分</button>
+      <span class="info" id="quizInfo">已答: 0/30</span>
+    </div>
+    
+    <div class="pagination" id="quizPagination"></div>
+    <div style="height:16px;"></div>
+    <div id="quizContainer"></div>
+    <div class="pagination" id="quizPaginationBottom"></div>
+  </div>
+
+  <!-- ========== 字音速查 ========== -->
+  <div class="section" id="sec-reference">
+    <div class="search-box">
+      <input type="text" class="search-input" id="searchInput" placeholder="输入汉字搜索读音，如：和、着、差...">
+    </div>
+    <div class="card">
+      <div class="card-title">📖 多音字速查表</div>
+      <div style="overflow-x:auto;">
+        <table class="ref-table" id="refTable">
+          <thead>
+            <tr>
+              <th style="width:60px;">字</th>
+              <th style="width:80px;">读音①</th>
+              <th>例词①</th>
+              <th style="width:80px;">读音②</th>
+              <th>例词②</th>
+              <th style="width:80px;">读音③</th>
+              <th>例词③</th>
+            </tr>
+          </thead>
+          <tbody id="refTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Scroll to top -->
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- Result Modal -->
+<div class="modal-overlay" id="resultModal">
+  <div class="modal-content">
+    <div class="modal-icon" id="modalIcon">🎉</div>
+    <div class="modal-title" id="modalTitle">测试结果</div>
+    <div class="modal-text" id="modalText"></div>
+    <div class="result-detail" id="resultDetail"></div>
+    <button class="quiz-btn primary" onclick="closeModal()" style="width:100%;">确定</button>
+  </div>
+</div>
+
+<script>
+// ==========================================
+// DATA
+// ==========================================
+
+const multiCharData = [
+  { char: '和', cat: 'common', readings: [
+    { py: 'hé', ex: '和亲、和畅、和衷共济、和颜悦色' },
+    { py: 'hè', ex: '曲高和寡、唱和' },
+    { py: 'huó', ex: '和面' },
+    { py: 'huò', ex: '和药' },
+    { py: 'huo', ex: '暖和' }
+  ]},
+  { char: '着', cat: 'common', readings: [
+    { py: 'zhuó', ex: '着装、着眼、着落、着手成春、着陆、着想' },
+    { py: 'zháo', ex: '着急、着凉' },
+    { py: 'zhāo', ex: '着数、高着' },
+    { py: 'zhe', ex: '看着、走着' }
+  ]},
+  { char: '差', cat: 'common', readings: [
+    { py: 'chā', ex: '差别、差距' },
+    { py: 'chà', ex: '差劲、差不多' },
+    { py: 'chāi', ex: '出差、差遣' },
+    { py: 'cī', ex: '参差不齐' }
+  ]},
+  { char: '哄', cat: 'common', readings: [
+    { py: 'hōng', ex: '哄闹、哄堂大笑' },
+    { py: 'hǒng', ex: '诱哄、哄逗小孩' },
+    { py: 'hòng', ex: '一哄而散、哄抬物价' }
+  ]},
+  { char: '阿', cat: 'common', readings: [
+    { py: 'ē', ex: '阿附、阿胶、阿弥陀佛、阿谀奉承' },
+    { py: 'ā', ex: '阿姨、阿爸' }
+  ]},
+  { char: '提', cat: 'verb', readings: [
+    { py: 'tí', ex: '提携、提纲挈领、提心吊胆' },
+    { py: 'dī', ex: '提防' }
+  ]},
+  { char: '模', cat: 'noun', readings: [
+    { py: 'mó', ex: '摹本、摩肩接踵、顶礼膜拜' },
+    { py: 'mú', ex: '模样、模板、模具' }
+  ]},
+  { char: '创', cat: 'verb', readings: [
+    { py: 'chuàng', ex: '创造' },
+    { py: 'chuāng', ex: '创伤' }
+  ]},
+  { char: '应', cat: 'common', readings: [
+    { py: 'yīng', ex: '应有尽有、应届生' },
+    { py: 'yìng', ex: '应运而生、应接不暇、应声而落' }
+  ]},
+  { char: '帖', cat: 'common', readings: [
+    { py: 'tiē', ex: '妥帖、服服帖帖' },
+    { py: 'tiě', ex: '请帖' },
+    { py: 'tiè', ex: '字帖、碑帖' }
+  ]},
+  { char: '藉', cat: 'noun', readings: [
+    { py: 'jiè', ex: '慰藉' },
+    { py: 'jí', ex: '狼藉、声名狼藉' }
+  ]},
+  { char: '否', cat: 'common', readings: [
+    { py: 'fǒu', ex: '否定、否则' },
+    { py: 'pǐ', ex: '否极泰来' }
+  ]},
+  { char: '畜', cat: 'noun', readings: [
+    { py: 'xù', ex: '畜牧、畜养' },
+    { py: 'chù', ex: '牲畜、畜生' }
+  ]},
+  { char: '勾', cat: 'verb', readings: [
+    { py: 'gōu', ex: '勾搭、勾画' },
+    { py: 'gòu', ex: '勾当' }
+  ]},
+  { char: '乘', cat: 'common', readings: [
+    { py: 'chéng', ex: '乘客、乘势、乘机' },
+    { py: 'shèng', ex: '史乘、千乘之国' }
+  ]},
+  { char: '载', cat: 'common', readings: [
+    { py: 'zǎi', ex: '记载、登载、一年半载' },
+    { py: 'zài', ex: '载歌载舞、装载' }
+  ]},
+  { char: '参', cat: 'common', readings: [
+    { py: 'cān', ex: '参加、参观' },
+    { py: 'cēn', ex: '参差不齐' },
+    { py: 'shēn', ex: '人参' }
+  ]},
+  { char: '角', cat: 'noun', readings: [
+    { py: 'jiǎo', ex: '钩心斗角、角落' },
+    { py: 'jué', ex: '角逐、角色' }
+  ]},
+  { char: '藏', cat: 'common', readings: [
+    { py: 'cáng', ex: '矿藏、收藏' },
+    { py: 'zàng', ex: '宝藏、西藏' }
+  ]},
+  { char: '吁', cat: 'verb', readings: [
+    { py: 'yù', ex: '呼吁' },
+    { py: 'xū', ex: '长吁短叹' }
+  ]},
+  { char: '曾', cat: 'common', readings: [
+    { py: 'zēng', ex: '曾祖' },
+    { py: 'céng', ex: '曾经沧海、曾经' }
+  ]},
+  { char: '调', cat: 'common', readings: [
+    { py: 'diào', ex: '调运、调动' },
+    { py: 'tiáo', ex: '调解、调和' }
+  ]},
+  { char: '数', cat: 'common', readings: [
+    { py: 'shù', ex: '数列、数字' },
+    { py: 'shǔ', ex: '数落、数不清' },
+    { py: 'shuò', ex: '数见不鲜' }
+  ]},
+  { char: '供', cat: 'verb', readings: [
+    { py: 'gōng', ex: '供给、提供' },
+    { py: 'gòng', ex: '供奉、供品' }
+  ]},
+  { char: '蒙', cat: 'common', readings: [
+    { py: 'mēng', ex: '蒙头转向、蒙骗' },
+    { py: 'méng', ex: '蒙面、启蒙' },
+    { py: 'měng', ex: '蒙古' }
+  ]},
+  { char: '强', cat: 'common', readings: [
+    { py: 'qiáng', ex: '强弩之末、坚强' },
+    { py: 'qiǎng', ex: '强词夺理、勉强' },
+    { py: 'jiàng', ex: '倔强' }
+  ]},
+  { char: '荷', cat: 'noun', readings: [
+    { py: 'hé', ex: '荷花' },
+    { py: 'hè', ex: '负荷、电荷' }
+  ]},
+  { char: '处', cat: 'common', readings: [
+    { py: 'chǔ', ex: '处罚、养尊处优、处理' },
+    { py: 'chù', ex: '处所、到处' }
+  ]},
+  { char: '累', cat: 'common', readings: [
+    { py: 'lèi', ex: '劳累、疲累' },
+    { py: 'lěi', ex: '连篇累牍、累计' },
+    { py: 'léi', ex: '果实累累' }
+  ]},
+  { char: '削', cat: 'verb', readings: [
+    { py: 'xuē', ex: '剥削、削足适履' },
+    { py: 'xiāo', ex: '削皮' }
+  ]},
+  { char: '挑', cat: 'verb', readings: [
+    { py: 'tiāo', ex: '挑选、挑战' },
+    { py: 'tiǎo', ex: '挑拨、挑逗' }
+  ]},
+  { char: '悄', cat: 'common', readings: [
+    { py: 'qiǎo', ex: '悄无声息、悄然落泪' },
+    { py: 'qiāo', ex: '静悄悄' }
+  ]},
+  { char: '扁', cat: 'common', readings: [
+    { py: 'biǎn', ex: '扁豆、扁担' },
+    { py: 'piān', ex: '扁舟' }
+  ]},
+  { char: '裨', cat: 'noun', readings: [
+    { py: 'bì', ex: '大有裨益、无裨于事' },
+    { py: 'pí', ex: '裨将（副将）' }
+  ]},
+  { char: '便', cat: 'common', readings: [
+    { py: 'biàn', ex: '方便、便利' },
+    { py: 'pián', ex: '大腹便便、便宜' }
+  ]},
+  { char: '校', cat: 'noun', readings: [
+    { py: 'jiào', ex: '校对、校正、校勘' },
+    { py: 'xiào', ex: '学校、上校' }
+  ]},
+  { char: '炮', cat: 'noun', readings: [
+    { py: 'pào', ex: '大炮、炮弹' },
+    { py: 'páo', ex: '炮制、庖丁（同音）' }
+  ]},
+  { char: '熨', cat: 'verb', readings: [
+    { py: 'yù', ex: '熨帖' },
+    { py: 'yùn', ex: '熨烫、熨斗' }
+  ]},
+  { char: '横', cat: 'common', readings: [
+    { py: 'héng', ex: '横行霸道、纵横' },
+    { py: 'hèng', ex: '横祸、蛮横、横事' }
+  ]},
+  { char: '划', cat: 'common', readings: [
+    { py: 'huá', ex: '划桨、划算' },
+    { py: 'huà', ex: '划价、划一不二、计划' }
+  ]},
+  { char: '抹', cat: 'verb', readings: [
+    { py: 'mǒ', ex: '抹杀、抹黑、抹粉' },
+    { py: 'mò', ex: '转弯抹角' },
+    { py: 'mā', ex: '抹布' }
+  ]},
+  { char: '禁', cat: 'common', readings: [
+    { py: 'jìn', ex: '禁忌、禁止' },
+    { py: 'jīn', ex: '令行禁止（使人承受）、不禁' }
+  ]},
+  { char: '识', cat: 'common', readings: [
+    { py: 'shí', ex: '识破、认识、识趣' },
+    { py: 'zhì', ex: '博闻强识、标识' }
+  ]},
+  { char: '逮', cat: 'verb', readings: [
+    { py: 'dài', ex: '逮捕' },
+    { py: 'dǎi', ex: '逮住、逮老鼠' }
+  ]},
+  { char: '擂', cat: 'verb', readings: [
+    { py: 'léi', ex: '自吹自擂' },
+    { py: 'lèi', ex: '擂台' }
+  ]},
+  { char: '量', cat: 'common', readings: [
+    { py: 'liáng', ex: '丈量、估量' },
+    { py: 'liàng', ex: '数量、质量' }
+  ]},
+  { char: '好', cat: 'common', readings: [
+    { py: 'hǎo', ex: '好人、美好、洁身自好' },
+    { py: 'hào', ex: '好为人师、爱好' }
+  ]},
+  { char: '曲', cat: 'common', readings: [
+    { py: 'qū', ex: '曲折、弯曲' },
+    { py: 'qǔ', ex: '元曲、歌曲、曲高和寡' }
+  ]},
+  { char: '伺', cat: 'verb', readings: [
+    { py: 'cì', ex: '伺候' },
+    { py: 'sì', ex: '伺机、窥伺' }
+  ]},
+  { char: '当', cat: 'common', readings: [
+    { py: 'dāng', ex: '锐不可当、当仁不让' },
+    { py: 'dàng', ex: '典当、当铺' }
+  ]},
+  { char: '塞', cat: 'common', readings: [
+    { py: 'sāi', ex: '塞车、堵塞' },
+    { py: 'sè', ex: '搪塞、闭塞' },
+    { py: 'sài', ex: '边塞、塞外' }
+  ]},
+  { char: '薄', cat: 'common', readings: [
+    { py: 'báo', ex: '薄饼（口语）' },
+    { py: 'bó', ex: '日薄西山、妄自菲薄、刻薄' },
+    { py: 'bò', ex: '薄荷' }
+  ]},
+  { char: '将', cat: 'common', readings: [
+    { py: 'jiāng', ex: '将计就计、将功赎罪、挈妇将雏' },
+    { py: 'jiàng', ex: '将领、大将' }
+  ]},
+  { char: '盛', cat: 'common', readings: [
+    { py: 'shèng', ex: '胜迹、盛情难却、圣经贤传（同音shèng）' },
+    { py: 'chéng', ex: '盛饭、盛器' }
+  ]},
+  { char: '行', cat: 'common', readings: [
+    { py: 'xíng', ex: '行走、行为' },
+    { py: 'háng', ex: '行业、银行、引吭高歌（háng同音）' },
+    { py: 'hèng', ex: '道行（特殊读法）' }
+  ]},
+  { char: '拾', cat: 'common', readings: [
+    { py: 'shí', ex: '拾人牙慧、路不拾遗' },
+    { py: 'shè', ex: '拾级而上' }
+  ]},
+  { char: '殷', cat: 'common', readings: [
+    { py: 'yīn', ex: '殷实、殷勤' },
+    { py: 'yān', ex: '殷红' }
+  ]},
+  { char: '迫', cat: 'verb', readings: [
+    { py: 'pò', ex: '迫害、迫不及待' },
+    { py: 'pǎi', ex: '迫击炮' }
+  ]},
+  { char: '奇', cat: 'common', readings: [
+    { py: 'qí', ex: '出奇制胜、奇怪' },
+    { py: 'jī', ex: '奇数、奇偶' }
+  ]},
+  { char: '泊', cat: 'common', readings: [
+    { py: 'bó', ex: '停泊、淡泊名利' },
+    { py: 'pō', ex: '湖泊、血泊' }
+  ]},
+  { char: '臭', cat: 'common', readings: [
+    { py: 'chòu', ex: '臭味、口臭' },
+    { py: 'xiù', ex: '铜臭、乳臭未干' }
+  ]},
+  { char: '禅', cat: 'noun', readings: [
+    { py: 'chán', ex: '禅宗、参禅' },
+    { py: 'shàn', ex: '禅让' }
+  ]},
+  { char: '鲜', cat: 'common', readings: [
+    { py: 'xiān', ex: '新鲜、鲜花' },
+    { py: 'xiǎn', ex: '鲜有、屡见不鲜、鲜为人知' }
+  ]},
+  { char: '暴/曝', cat: 'common', readings: [
+    { py: 'bào', ex: '暴风骤雨、暴殄天物' },
+    { py: 'pù', ex: '一曝十寒（曝）' }
+  ]},
+  { char: '答', cat: 'common', readings: [
+    { py: 'dá', ex: '回答、答非所问' },
+    { py: 'dā', ex: '答理、答应' }
+  ]}
+];
+
+const quizData = [
+  { id:1, text:'下列各组词语中加点的字，读音全都相同的一组是', answer:'A',
+    options: [
+      'A．札记/挣扎　星宿/嗅觉　蛊惑人心/古籍　苦心孤诣/疫情',
+      'B．摘要/债务　剖析/庖丁　沁人肺腑/罄竹难书　咀嚼/沮丧',
+      'C．洗涮/帅气　亵渎/泄气　颠沛流离/胚芽　应运而生/应届生',
+      'D．创造/创伤　手拎/铃声　概不赊账/奢侈　恬不知耻/腼腆'
+    ],
+    explain: 'A项 zhá、xiù、gǔ、yì；B项 zhāi/zhài、pōu/páo、qìn/qìng、jǔ；C项 shuàn/shuài、xiè、pèi/pēi、yìng/yīng；D项 chuàng/chuāng、līn/líng、shē、tián/tiǎn。'
+  },
+  { id:2, text:'下列各组词语中加点的字，读音全都相同的一组是', answer:'D',
+    options: [
+      'A．请帖/字帖　接济/无济于事　商贾/余勇可贾',
+      'B．畜牧/畜养　慰藉/狼藉　否极泰来/否定',
+      'C．勾搭/勾当　酿酒/粮饷　瑕不掩瑜/闻名遐迩',
+      'D．乘客/乘势　提防/河堤　株连/口诛笔伐'
+    ],
+    explain: 'A项 tiě/tiè、jì、gǔ；B项 xù、jiè/jí、pǐ/fǒu；C项 gōu/gòu、niàng/liáng、xiá；D项 chéng、dī、zhū。'
+  },
+  { id:3, text:'下列词语中加点的字，读音完全相同的一组是', answer:'C',
+    options: [
+      'A．和亲　和畅　和衷共济　曲高和寡',
+      'B．哄闹　诱哄　哄堂大笑　一哄而散',
+      'C．阿附　阿胶　阿弥陀佛　阿谀奉承',
+      'D．提防　提携　提纲挈领　提心吊胆'
+    ],
+    explain: 'A项 和hè寡，其余读hé；B项 诱哄hǒng，一哄hòng而散，其余读hōng；C项 都读ē；D项 提dī防，其余读tí。'
+  },
+  { id:4, text:'下列词语中加点的字，读音相同的一组是', answer:'A',
+    options: [
+      'A．骁勇　甚嚣尘上　枭雄　气凌霄汉',
+      'B．摹本　摩肩接踵　模样　顶礼膜拜',
+      'C．似的　舐犊情深　祭祀　噬脐莫及',
+      'D．趔趄　雕兰玉砌　惬意　锲而不舍'
+    ],
+    explain: 'A项 均读xiāo；B项 模mú，其余读mó；C项 祀sì，其余读shì；D项 砌qì，趄qie，其余读qiè。'
+  },
+  { id:5, text:'下列词语中加点的字，读音全都不相同的一组是', answer:'C',
+    options: [
+      'A．喇叭　辣手　竦立　毛骨悚然　不速之客',
+      'B．禅宗　邯郸　不惮　殚精竭虑　箪食壶浆',
+      'C．茧绸　浑浊　蛰伏　风烛残年　风雪不蚀',
+      'D．憧憬　瞳孔　潼关　招摇撞骗　灯影幢幢'
+    ],
+    explain: 'A项 lǎ、là、sǒng、sǒng、sù；B项 chán、dān、dàn、dān、dān；C项 jiǎn、zhuó、zhé、zhú、shí；D项 chōng、tóng、tóng、zhuàng、chuáng。'
+  },
+  { id:6, text:'下列词语中加点的字，每对读音完全相同的一组是', answer:'A',
+    options: [
+      'A．秩序/旗帜　瘟疫/战役　着陆/着想',
+      'B．经营/均匀　河畔/叛逆　松柏/柏油',
+      'C．亩产/计谋　侥幸/矫健　关卡/卡壳',
+      'D．奴隶/战栗　奈何/按捺　呜咽/哽咽'
+    ],
+    explain: 'A项 zhì，yì，zhuó；B项 yíng/yún，pàn，bǎi；C项 mǔ/móu，jiǎo，qiǎ；D项 lì，nài/nà，yè。'
+  },
+  { id:7, text:'下列各组词语中加点的字，读音全都相同的一组是', answer:'C',
+    options: [
+      'A．有恃无恐/对峙　参与/与日俱增　一哄而散/哄逗小孩',
+      'B．应接不暇/应有尽有　地壳/甲壳　相机行事/首相',
+      'C．不顾劳累/疲累　迫害/迫不及待　剥削/削足适履',
+      'D．强词夺理/强弩之末　负荷/电荷　处罚/养尊处优'
+    ],
+    explain: 'A项 shì/zhì、yù/yǔ、hòng/hǒng；B项 yìng/yīng、qiào、xiàng；C项 lèi、pò、xuē；D项 qiǎng/qiáng、hè、chǔ。'
+  },
+  { id:8, text:'下列各组词语中加点的字，读音全都不相同的一组是', answer:'B',
+    options: [
+      'A．怠慢/百战不殆　廉政/镰刀　憎恨/磨磨蹭蹭',
+      'B．匹配/媲美　穿凿/糟糠之妻　内讧/哄抬物价',
+      'C．柔和/和面　搭讪/汕头　折扣/百折不挠',
+      'D．肥胖/心宽体胖　模板/模具　奇数/出奇制胜'
+    ],
+    explain: 'A项 dài、lián、zēng/cèng；B项 pǐ/pì、záo/zāo、hòng/hōng；C项 hé/huó、shàn、zhé；D项 pàng/pán、mú、jī/qí。'
+  },
+  { id:9, text:'下列各组词语中加点的字，读音全都相同的一组是', answer:'D',
+    options: [
+      'A．忏悔/阡陌　南柯一梦/百舸争流　陡峭/不屑一顾',
+      'B．胸脯/匍匐　悄无声息/惟妙惟肖　哽咽/耿直',
+      'C．辑录/作揖　恪守/烙印　谛听/啼叫',
+      'D．箩筐/诓骗　枯槁/缟素　不期而遇/期限'
+    ],
+    explain: 'A项 chàn/qiān、kē/gě、qiào/xiè；B项 pú、qiǎo/xiào、gěng；C项 jí/yī、kè/lào、dì/tí；D项 kuāng、gǎo、qī。'
+  },
+  { id:10, text:'下列词语中加点的字，读音全都不相同的一组是', answer:'B',
+    options: [
+      'A．发霉　懊悔　欺侮　风雨如晦　诲人不倦',
+      'B．疏浚　皴裂　逡巡　日月如梭　怙恶不悛',
+      'C．椅角　绮丽　崎岖　倚马可待　风光旖旎',
+      'D．弹劾　刻薄　隔阂　垓下之围　言简意赅'
+    ],
+    explain: 'A项 méi，huǐ，wǔ，huì，huì；B项 jùn，cūn，qūn，suō，quān；C项 jī，qǐ，qí，yǐ，yǐ；D项 hé，kè，hé，gāi，gāi。'
+  },
+  { id:11, text:'下列每对加点字，读音都不相同的一组是', answer:'C',
+    options: [
+      'A．骏马/竣工　角逐/钩心斗角　参加/参差不齐',
+      'B．湖泊/淡泊　铜臭/乳臭未干　楷书/和谐',
+      'C．宝藏/矿藏　呼吁/长吁短叹　曾祖/曾经沧海',
+      'D．铁骑/崎岖　着落/不着边际　慰藉/声名狼藉'
+    ],
+    explain: 'A项 jùn、jué/jiǎo、cān/cēn；B项 pō/bó、xiù、kǎi/xié；C项 zàng/cáng、yù/xū、zēng/céng；D项 qí、zhuó、jiè/jí。'
+  },
+  { id:12, text:'下列各组词语中加点的字，读音全部相同的一组是', answer:'B',
+    options: [
+      'A．调运/调解　悬崖勒马/软肋　惊魂甫定/苗圃',
+      'B．沉淀/海淀　喟然/愧疚　并行不悖/背信弃义',
+      'C．差劲/出差　似乎/似是而非　数列/数见不鲜',
+      'D．供给/供奉　囤积/屯田　蒙头转向/蒙面'
+    ],
+    explain: 'A项 diào/tiáo、lè/lèi、fǔ/pǔ；B项 diàn、kuì、bèi；C项 chà/chāi、sì、shù/shuò；D项 gōng/gòng、tún、mēng/méng。'
+  },
+  { id:13, text:'下列各组词语中加点的字，读音全都不相同的一组是', answer:'D',
+    options: [
+      'A．绮丽/倚靠　刀俎/诅咒　稠密/筹码',
+      'B．瑞雪/湍急　田畴/筹划　洁身自好/好为人师',
+      'C．丈量/估量　禁忌/令行禁止　博闻强识/识破',
+      'D．逮住/逮捕　自吹自擂/擂台　饮水思源/映衬'
+    ],
+    explain: 'A项 qǐ/yǐ、zǔ、chóu；B项 ruì/tuān、chóu、hào；C项 liáng/liang、jìn、zhì/shí；D项 dǎi/dài、léi/lèi、yǐn/yìng。'
+  },
+  { id:14, text:'下列各组词语中加点的字，读音都不相同的一组是', answer:'B',
+    options: [
+      'A．框架/门框　大厦/夏天　揣度/审时度势',
+      'B．河畔/伴侣　答理/答非所问　拮据/秸秆',
+      'C．发酵/混淆　绯闻/妄自菲薄　水藻/洗澡',
+      'D．践踏/信笺　剽窃/飘逸　正月/横征暴敛'
+    ],
+    explain: 'A项 kuàng、shà/xià、duó；B项 pàn/bàn、dā/dá、jié/jiē；C项 jiào/xiáo、fēi/fěi、zǎo；D项 jiàn/jiān、piāo、zhēng。'
+  },
+  { id:15, text:'下列词语中加点的字，读音都不相同的一组是', answer:'C',
+    options: [
+      'A．汲取　积极　负笈从师　岌岌可危',
+      'B．自刭　颈椎　泾渭分明　毛孔痉挛',
+      'C．觊觎　觇视　面面相觑　循规蹈矩',
+      'D．荟萃　杂烩　脍炙人口　市侩嘴脸'
+    ],
+    explain: 'A项 都读jí；B项 jǐng、jǐng、jīng、jìng；C项 jì、chān、qù、guī；D项 huì、huì、kuài、kuài。'
+  },
+  { id:16, text:'下列词语中加点的字，读音完全相同的一组是', answer:'A',
+    options: [
+      'A．胜迹　史乘　剩余　盛情难却　圣经贤传',
+      'B．横事　衡器　道行　横行霸道　恒河沙数',
+      'C．识趣　实录　拾级　食古不化　拾人牙慧',
+      'D．闻达　紊乱　稳练　刎颈之交　纹丝不动'
+    ],
+    explain: 'A项 均读shèng；B项 hèng、héng、heng、héng、héng；C项 shí、shí、shè、shí、shí；D项 wén、wěn、wěn、wěn、wén。'
+  },
+  { id:17, text:'下列各组词语中加点的字，读音全都不相同的一组是', answer:'C',
+    options: [
+      'A．熏陶/葡萄　稂莠/秋月朗朗　前仆后继/反扑',
+      'B．戈壁/游弋　框架/热泪满眶　遏制/拜谒',
+      'C．漂洗/漂浮　滂沱/气势磅礴　粘连/拈轻怕重',
+      'D．恶劣/恶习　炫耀/弦外之音　勘探/狼狈不堪'
+    ],
+    explain: 'A项 táo/tao、láng/lǎng、pū；B项 gē/yì、kuàng、è/yè；C项 piǎo/piāo、pāng/páng、zhān/niān；D项 è、xuàn/xián、kān。'
+  },
+  { id:18, text:'下列词语中加点的字，读音完全相同的一组是', answer:'B',
+    options: [
+      'A．宦官　豢养　盥洗　患得患失　风云变幻',
+      'B．莅临　乖戾　官吏　呕心沥血　不寒而栗',
+      'C．翌日　对弈　肄业　苦心孤诣　雄关险隘',
+      'D．羡慕　汗腺　霰弹　谄媚阿谀　借花献佛'
+    ],
+    explain: 'A项"盥"读guàn，其他读huàn；B项 均读lì；C项"隘"读ài，其他读yì；D项"谄"读chǎn，其他读xiàn。'
+  },
+  { id:19, text:'下列词语中加点的字，读音完全相同的一组是', answer:'D',
+    options: [
+      'A．弹射　偏袒　啖以重利　肆无忌惮',
+      'B．痉挛　根茎　独辟蹊径　泾渭分明',
+      'C．淆乱　叫嚣　祸起萧墙　骁勇善战',
+      'D．赡养　禅让　擅离职守　缮写公文'
+    ],
+    explain: 'D项 均读shàn；A项 弹tán，袒tǎn，啖dàn，惮dàn；B项 痉jìng/径jìng，泾jīng/茎jīng；C项 淆xiáo，其余读xiāo。'
+  },
+  { id:20, text:'下列词语中加点的字，读音完全不相同的一组是', answer:'B',
+    options: [
+      'A．驾驭　翁妪　熨帖　誉满全球　与会人员',
+      'B．唆使　辛酸　浚泥船　逡巡不前　怙恶不悛',
+      'C．潺湲　猿猴　缘分　源远流长　百喙莫辩',
+      'D．庇护　秕谷　臂膀　筚路蓝缕　笔墨官司'
+    ],
+    explain: 'A项 全读yù；B项 suō、suān、jùn、qūn、quān；C项 喙huì，其余读yuán；D项 bì、bǐ、bì、bì、bǐ。'
+  },
+  { id:21, text:'下列词语中加点的字，读音不完全相同的一组是', answer:'D',
+    options: [
+      'A．顾盼　雇佣　痼疾　故弄玄虚',
+      'B．负疚　马厩　就范　咎由自取',
+      'C．慰藉　解送　芥蒂　借花献佛',
+      'D．叫嚣　发酵　枭雄　惟妙惟肖'
+    ],
+    explain: 'A项 都读gù；B项 都读jiù；C项 都读jiè；D项 xiāo，jiào，xiāo，xiào。'
+  },
+  { id:22, text:'下列各组词语中加点的字，读音都相同的一组是', answer:'B',
+    options: [
+      'A．挑剔/警惕　谨慎/缜密　疾风劲草/刚劲挺拔',
+      'B．苛求/荆轲　哺育/逮捕　停泊/淡泊名利',
+      'C．栖息/七夕　讴歌/沤肥　应允/应声而落',
+      'D．毒蛇/虚与委蛇　笨拙/茁长　鲜有/屡见不鲜'
+    ],
+    explain: 'A项 tī/tì、shèn/zhěn、jìng；B项 kē、bǔ、bó；C项 qī/xī、ōu/òu、yīng/yìng；D项 shé/yí、zhuō/zhuó、xiǎn/xiān。'
+  },
+  { id:23, text:'下列词语中加点的字，读音全都不相同的一组是', answer:'B',
+    options: [
+      'A．羁縻　糜烂　麾下　摩肩接踵　望风披靡',
+      'B．蓼蓝　谬论　寂寥　未雨绸缪　戮力同心',
+      'C．奴婢　裨益　稗官　俾有所悟　纵横捭阖',
+      'D．妖娆　环绕　蹊跷　饶有兴味　百折不挠'
+    ],
+    explain: 'A项 mí、mí、huī、mó、mǐ；B项 liǎo、miù、liáo、móu、lù；C项 bì、bì、bài、bǐ、bǎi；D项 ráo、rào、qiao、ráo、náo。'
+  },
+  { id:24, text:'下列各组词语中加点的字，读音都不相同的一组是', answer:'D',
+    options: [
+      'A．记载/载歌载舞　轶事/卷帙浩繁　曲高和寡/唱和',
+      'B．挑战/挑拨　铁锅/女娲　悼念/卓尔不凡',
+      'C．悄无声息/悄然落泪　服帖/碑帖　连累/连篇累牍',
+      'D．扁豆/扁舟　大有裨益/裨将　方便/大腹便便'
+    ],
+    explain: 'A项 zǎi/zài、yì/zhì、hè；B项 tiǎo、guō/wā、dào/zhuó；C项 qiǎo、tiē/tiè、lei/lěi；D项 biǎn/piān、bì/pí、biàn/pián。'
+  },
+  { id:25, text:'下列各组词语中加点的字，读音都相同的一组是', answer:'A',
+    options: [
+      'A．田垄/陇山　校对/校正　鸿篇巨制/洪钟大吕',
+      'B．纤绳/籼米　炮制/大炮　白浪掀天/鲜为人知',
+      'C．熨帖/熨烫　横祸/蛮横　剿袭/矫枉过正',
+      'D．颤栗/忏悔　灯盏/客栈　胁肩谄笑/馋涎欲滴'
+    ],
+    explain: 'A项 lǒng、jiào、hóng；B项 xiān、páo/pào、xiān/xiǎn；C项 yù/yùn、hèng、chāo/jiǎo；D项 zhàn/chàn、zhǎn/zhàn、chǎn/chán。'
+  },
+  { id:26, text:'下列词语中加点的字，读音完全相同的一组是', answer:'B',
+    options: [
+      'A．划桨　划算　划价　划一不二',
+      'B．着装　着眼　着落　着手成春',
+      'C．抹杀　抹黑　抹粉　转弯抹角',
+      'D．妥帖　请帖　字帖　服服帖帖'
+    ],
+    explain: 'A项 huá、huá、huà、huà；B项 均读zhuó；C项 mǒ、mǒ、mǒ、mò；D项 tiē、tiě、tiè、tiē。'
+  },
+  { id:27, text:'下列各组词语中加点的字，读音都不相同的一组是', answer:'C',
+    options: [
+      'A．症结/征兆　殷实/殷勤　无裨于事/婢女',
+      'B．澄澈/沉默　校勘/上校　遗漏/路不拾遗',
+      'C．跻身/济济人才　凯旋而归/侃侃而谈　浑身解数/解答',
+      'D．愤慨/灌溉　挫折/惊慌失措　晶莹/萤火虫'
+    ],
+    explain: 'A项 zhēng、yīn、bì；B项 chéng/chén、jiào/xiào、yí；C项 jī/jǐ、kǎi/kǎn、xiè/jiě；D项 kǎi/gài、cuò、yíng。'
+  },
+  { id:28, text:'下列词语中加点的字，读音都不相同的一组是', answer:'C',
+    options: [
+      'A．潼关/瞳孔　分开/分辨　违拗/拗口',
+      'B．啜泣/辍学　契约/锲而不舍　恬静/甜蜜',
+      'C．元曲/曲折　伺候/伺机　引吭高歌/抗战',
+      'D．脾气/啤酒　塞车/搪塞　锐不可当/典当'
+    ],
+    explain: 'A项 tóng、fēn、ào；B项 chuò、qì/qiè、tián；C项 qǔ/qū、cì/sì、háng/kàng；D项 pí、sāi/sè、dāng/dàng。'
+  },
+  { id:29, text:'下列词语中加点的字，读音完全相同的一组是', answer:'D',
+    options: [
+      'A．暴风骤雨　暴殄天物　一曝十寒',
+      'B．一块薄饼　日薄西山　妄自菲薄',
+      'C．和衷共济　和颜悦色　曲高和寡',
+      'D．将计就计　将功赎罪　挈妇将雏'
+    ],
+    explain: 'D项 均读jiāng。A项 一曝十寒pù，其余读bào；B项 一块薄饼báo，其余读bó；C项 曲高和寡hè，其余读hé。'
+  },
+  { id:30, text:'下列词语中加点的字，读音全都不相同的一组是', answer:'D',
+    options: [
+      'A．沉疴　坎坷　呵护　苛捐杂税　百舸争流',
+      'B．估量　训诂　故旧　沽名钓誉　怙恶不悛',
+      'C．偶尔　寓所　遭遇　向隅而泣　藕断丝连',
+      'D．洒脱　哂笑　牺牲　风吹日晒　两栖动物'
+    ],
+    explain: 'A项 kē，kě，hē，kē，gě；B项 gū，gǔ，gù，gū，hù；C项 ǒu，yù，yù，yú，ǒu；D项 sǎ，shěn，xī，shài，qī。'
+  }
+];
+
+// ==========================================
+// STATE
+// ==========================================
+let userAnswers = {};
+let currentPage = 1;
+const questionsPerPage = 5;
+
+// ==========================================
+// INIT
+// ==========================================
+document.addEventListener('DOMContentLoaded', () => {
+  initTabs();
+  renderTopChars();
+  renderKnowledge();
+  renderConfusableChars();
+  renderQuiz();
+  renderRefTable();
+  initSearch();
+  initScroll();
+  loadState();
+});
+
+// ==========================================
+// TABS
+// ==========================================
+function initTabs() {
+  document.querySelectorAll('.nav-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('sec-' + tab.dataset.tab).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+}
+
+// ==========================================
+// OVERVIEW - Top Chars
+// ==========================================
+function renderTopChars() {
+  const topChars = multiCharData.filter(c => 
+    ['和','着','差','哄','应','帖','强','塞','薄','累'].includes(c.char)
+  );
+  const grid = document.getElementById('topCharsGrid');
+  grid.innerHTML = topChars.map(c => renderCharCard(c)).join('');
+}
+
+function renderCharCard(c) {
+  return `
+    <div class="char-card">
+      <div class="char">${c.char}</div>
+      <ul class="pinyin-list">
+        ${c.readings.map((r, i) => `
+          <li class="pinyin-item">
+            <span class="pinyin-tag ${i===1?'alt':''} ${i>=2?'third':''}">${r.py}</span>
+            <span class="example-text">${r.ex}</span>
+          </li>
+        `).join('')}
+      </ul>
+    </div>
+  `;
+}
+
+// ==========================================
+// KNOWLEDGE
+// ==========================================
+function renderKnowledge() {
+  const grid = document.getElementById('knowledgeGrid');
+  renderFilteredKnowledge('all');
+  
+  document.querySelectorAll('#categoryFilter .filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#categoryFilter .filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderFilteredKnowledge(btn.dataset.cat);
+    });
+  });
+}
+
+function renderFilteredKnowledge(cat) {
+  const grid = document.getElementById('knowledgeGrid');
+  const filtered = cat === 'all' ? multiCharData : multiCharData.filter(c => c.cat === cat);
+  grid.innerHTML = filtered.map(c => renderCharCard(c)).join('');
+  if (filtered.length === 0) {
+    grid.innerHTML = '<p style="color:#999;text-align:center;grid-column:1/-1;padding:40px;">该分类暂无数据</p>';
+  }
+}
+
+function renderConfusableChars() {
+  const container = document.getElementById('confusableChars');
+  const groups = [
+    { title: '声母易混', items: [
+      { chars: '竦 sǒng / 悚 sǒng / 速 sù', note: '竦与悚同音，速不同' },
+      { chars: '忏 chàn / 阡 qiān', note: '声母不同，ch vs q' },
+      { chars: '憎 zēng / 蹭 cèng', note: '声母不同，z vs c' },
+      { chars: '粘 zhān / 拈 niān', note: '声母不同，zh vs n' }
+    ]},
+    { title: '韵母易混', items: [
+      { chars: '峭 qiào / 屑 xiè', note: '韵母不同，iao vs ie' },
+      { chars: '柯 kē / 舸 gě', note: '声母不同且声调不同' },
+      { chars: '沁 qìn / 罄 qìng', note: '韵母不同，in vs ing' },
+      { chars: '愤慨 kǎi / 灌溉 gài', note: '声母声调均不同' }
+    ]},
+    { title: '声调易混', items: [
+      { chars: '稂 láng / 朗 lǎng', note: '第二声 vs 第三声' },
+      { chars: '仆 pū（前仆后继）/ 扑 pū', note: '同音' },
+      { chars: '谛 dì / 啼 tí', note: '声母声调均不同' },
+      { chars: '恬 tián / 腆 tiǎn', note: '声调不同' }
+    ]}
+  ];
+
+  container.innerHTML = groups.map(g => `
+    <div class="accordion-header" onclick="toggleAccordion(this)">
+      <span style="font-weight:600;font-size:15px;">📌 ${g.title}</span>
+      <span class="arrow">▶</span>
+    </div>
+    <div class="accordion-body">
+      <div class="accordion-content">
+        ${g.items.map(item => `
+          <div style="display:flex;gap:12px;padding:8px 0;border-bottom:1px dashed #eee;font-size:14px;">
+            <span style="min-width:200px;font-weight:600;color:var(--primary);">${item.chars}</span>
+            <span style="color:var(--text-light);">${item.note}</span>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleAccordion(header) {
+  header.classList.toggle('open');
+  const body = header.nextElementSibling;
+  body.classList.toggle('open');
+}
+
+// ==========================================
+// QUIZ
+// ==========================================
+function renderQuiz() {
+  renderPagination();
+  renderQuizPage();
+}
+
+function renderPagination() {
+  const totalPages = Math.ceil(quizData.length / questionsPerPage);
+  let html = '';
+  for (let i = 1; i <= quizData.length; i++) {
+    const cls = i === currentPage ? 'active' : '';
+    const answered = userAnswers[i] ? (userAnswers[i] === quizData[i-1].answer ? 'answered' : 'wrong-ans') : '';
+    html += `<button class="page-btn ${cls} ${answered}" onclick="goToQuestion(${i})">${i}</button>`;
+  }
+  document.getElementById('quizPagination').innerHTML = html;
+  document.getElementById('quizPaginationBottom').innerHTML = html;
+}
+
+function renderQuizPage() {
+  const container = document.getElementById('quizContainer');
+  const start = (currentPage - 1) * questionsPerPage;
+  const end = Math.min(start + questionsPerPage, quizData.length);
+  
+  let html = '';
+  for (let i = start; i < end; i++) {
+    const q = quizData[i];
+    const userAns = userAnswers[q.id];
+    const showExplain = userAns !== undefined;
+    
+    html += `
+      <div class="question-card" id="q${q.id}">
+        <div class="question-text">
+          <span class="question-num">${q.id}</span>
+          <span>${q.text}（　　）</span>
+        </div>
+        <ul class="options-list">
+          ${q.options.map((opt, oi) => {
+            const label = String.fromCharCode(65 + oi);
+            let cls = '';
+            if (userAns) {
+              if (label === userAns && label === q.answer) cls = 'correct';
+              else if (label === userAns && label !== q.answer) cls = 'wrong';
+              else if (label === q.answer) cls = 'show-correct';
+            }
+            return `
+              <li class="option-item ${cls} ${label === userAns && !showExplain ? 'selected' : ''}" 
+                  onclick="selectOption(${q.id}, '${label}')" data-label="${label}">
+                <span class="option-label">${label}</span>
+                <span>${opt.substring(2)}</span>
+              </li>
+            `;
+          }).join('')}
+        </ul>
+        <div class="explanation ${showExplain ? 'show' : ''}" id="explain${q.id}">
+          <div class="explanation-title">📖 解析 
+            <span class="answer-tag correct-tag">答案：${q.answer}</span>
+          </div>
+          <div>${q.explain}</div>
+        </div>
+      </div>
+    `;
+  }
+  container.innerHTML = html;
+  updateQuizInfo();
+}
+
+function goToQuestion(qNum) {
+  currentPage = Math.ceil(qNum / questionsPerPage);
+  renderPagination();
+  renderQuizPage();
+  
+  setTimeout(() => {
+    const el = document.getElementById('q' + qNum);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, 100);
+}
+
+function selectOption(qId, label) {
+  if (userAnswers[qId]) return; // already answered
+  
+  userAnswers[qId] = label;
+  const q = quizData.find(x => x.id === qId);
+  
+  // Update UI
+  const card = document.getElementById('q' + qId);
+  card.querySelectorAll('.option-item').forEach(item => {
+    const l = item.dataset.label;
+    item.classList.remove('selected');
+    if (l === label && l === q.answer) item.classList.add('correct');
+    else if (l === label && l !== q.answer) item.classList.add('wrong');
+    else if (l === q.answer) item.classList.add('show-correct');
+  });
+  
+  document.getElementById('explain' + qId).classList.add('show');
+  updateQuizInfo();
+  renderPagination();
+  saveState();
+}
+
+function updateQuizInfo() {
+  const answered = Object.keys(userAnswers).length;
+  const correct = Object.entries(userAnswers).filter(([id, ans]) => {
+    const q = quizData.find(x => x.id === parseInt(id));
+    return q && ans === q.answer;
+  }).length;
+  
+  document.getElementById('quizInfo').textContent = `已答: ${answered}/30 | 正确: ${correct}`;
+  document.getElementById('answeredCount').textContent = answered;
+  document.getElementById('correctRate').textContent = answered > 0 ? Math.round(correct / answered * 100) + '%' : '0%';
+  
+  // Update progress bar
+  document.getElementById('progressBar').style.width = (answered / 30 * 100) + '%';
+}
+
+function resetQuiz() {
+  if (!confirm('确定要重新开始吗？所有答题记录将被清除。')) return;
+  userAnswers = {};
+  currentPage = 1;
+  renderPagination();
+  renderQuizPage();
+  updateQuizInfo();
+  saveState();
+}
+
+function showAllAnswers() {
+  quizData.forEach(q => {
+    if (!userAnswers[q.id]) {
+      userAnswers[q.id] = ''; // mark as viewed
+    }
+  });
+  
+  // Re-render current page showing all answers
+  const container = document.getElementById('quizContainer');
+  const start = (currentPage - 1) * questionsPerPage;
+  const end = Math.min(start + questionsPerPage, quizData.length);
+  
+  for (let i = start; i < end; i++) {
+    const q = quizData[i];
+    const card = document.getElementById('q' + q.id);
+    if (!card) continue;
+    
+    card.querySelectorAll('.option-item').forEach(item => {
+      const l = item.dataset.label;
+      item.classList.remove('selected', 'wrong');
+      if (l === q.answer) item.classList.add('show-correct');
+    });
+    document.getElementById('explain' + q.id).classList.add('show');
+  }
+  renderPagination();
+}
+
+function submitQuiz() {
+  const answered = Object.keys(userAnswers).filter(k => userAnswers[k] !== '').length;
+  const correct = Object.entries(userAnswers).filter(([id, ans]) => {
+    const q = quizData.find(x => x.id === parseInt(id));
+    return q && ans === q.answer;
+  }).length;
+  
+  const rate = answered > 0 ? Math.round(correct / answered * 100) : 0;
+  
+  let icon = '🎉', title = '太棒了！';
+  if (rate < 60) { icon = '💪'; title = '继续加油！'; }
+  else if (rate < 80) { icon = '👍'; title = '不错哦！'; }
+  
+  document.getElementById('modalIcon').textContent = icon;
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalText').textContent = `你完成了 ${answered}/30 道题`;
+  document.getElementById('resultDetail').innerHTML = `
+    <div class="result-row"><span>答题数</span><span>${answered}/30</span></div>
+    <div class="result-row"><span>正确数</span><span style="color:var(--success);font-weight:700;">${correct}</span></div>
+    <div class="result-row"><span>错误数</span><span style="color:var(--accent);font-weight:700;">${answered - correct}</span></div>
+    <div class="result-row"><span>正确率</span><span style="font-weight:700;font-size:18px;color:${rate>=80?'var(--success)':rate>=60?'var(--warning)':'var(--accent)'};">${rate}%</span></div>
+  `;
+  document.getElementById('resultModal').classList.add('show');
+}
+
+function closeModal() {
+  document.getElementById('resultModal').classList.remove('show');
+}
+
+// ==========================================
+// REFERENCE TABLE
+// ==========================================
+function renderRefTable(filter = '') {
+  const tbody = document.getElementById('refTableBody');
+  let filtered = multiCharData;
+  if (filter) {
+    filtered = multiCharData.filter(c => c.char.includes(filter));
+  }
+  
+  tbody.innerHTML = filtered.map(c => {
+    const r = c.readings;
+    return `
+      <tr>
+        <td><span class="ref-char">${c.char}</span></td>
+        <td><span class="ref-pinyin">${r[0] ? r[0].py : ''}</span></td>
+        <td>${r[0] ? r[0].ex : ''}</td>
+        <td><span class="ref-pinyin">${r[1] ? r[1].py : ''}</span></td>
+        <td>${r[1] ? r[1].ex : ''}</td>
+        <td><span class="ref-pinyin">${r[2] ? r[2].py : ''}</span></td>
+        <td>${r[2] ? r[2].ex : ''}</td>
+      </tr>
+    `;
+  }).join('');
+  
+  if (filtered.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#999;padding:40px;">未找到匹配的汉字</td></tr>';
+  }
+}
+
+function initSearch() {
+  const input = document.getElementById('searchInput');
+  input.addEventListener('input', () => {
+    renderRefTable(input.value.trim());
+  });
+}
+
+// ==========================================
+// SCROLL
+// ==========================================
+function initScroll() {
+  window.addEventListener('scroll', () => {
+    const btn = document.getElementById('scrollTop');
+    if (window.scrollY > 300) btn.classList.add('show');
+    else btn.classList.remove('show');
+  });
+}
+
+// ==========================================
+// LOCAL STORAGE
+// ==========================================
+function saveState() {
+  try {
+    localStorage.setItem('quizAnswers', JSON.stringify(userAnswers));
+  } catch (e) {}
+}
+
+function loadState() {
+  try {
+    const saved = localStorage.getItem('quizAnswers');
+    if (saved) {
+      userAnswers = JSON.parse(saved);
+      updateQuizInfo();
+      renderPagination();
+    }
+  } catch (e) {}
+}
+</script>
+</body>
+</html>
