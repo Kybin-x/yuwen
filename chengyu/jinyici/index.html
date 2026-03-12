@@ -1,0 +1,2002 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>正确使用词语 - 近义词辨析学习</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6C5CE7;
+            --primary-light: #A29BFE;
+            --secondary: #00B894;
+            --accent: #FD79A8;
+            --warning: #FDCB6E;
+            --danger: #E17055;
+            --dark: #2D3436;
+            --gray: #636E72;
+            --light-gray: #DFE6E9;
+            --bg: #F8F9FA;
+            --white: #FFFFFF;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: var(--bg);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #2D3436 0%, #6C5CE7 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
+            animation: headerPulse 8s ease-in-out infinite;
+        }
+
+        @keyframes headerPulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        .header h1 {
+            font-size: 2.2em;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header .subtitle {
+            font-size: 1.1em;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header .badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-top: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Navigation */
+        .nav-container {
+            background: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav {
+            display: flex;
+            max-width: 900px;
+            margin: 0 auto;
+            overflow-x: auto;
+        }
+
+        .nav-item {
+            flex: 1;
+            min-width: 120px;
+            padding: 16px 12px;
+            text-align: center;
+            cursor: pointer;
+            font-size: 0.95em;
+            font-weight: 500;
+            color: var(--gray);
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            white-space: nowrap;
+            user-select: none;
+        }
+
+        .nav-item:hover {
+            color: var(--primary);
+            background: #F8F7FF;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .nav-item .nav-icon {
+            display: block;
+            font-size: 1.3em;
+            margin-bottom: 4px;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 24px 16px;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        /* Section Title */
+        .section-title {
+            font-size: 1.4em;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+
+        .section-desc {
+            color: var(--gray);
+            margin-bottom: 24px;
+            font-size: 0.95em;
+        }
+
+        /* Category Filter */
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .filter-btn {
+            padding: 8px 18px;
+            border: 2px solid var(--light-gray);
+            border-radius: 25px;
+            background: var(--white);
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s;
+            color: var(--gray);
+            font-weight: 500;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        /* Word Cards */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .word-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+            cursor: pointer;
+            border-left: 4px solid var(--primary);
+        }
+
+        .word-card:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-2px);
+        }
+
+        .word-card.expanded {
+            grid-column: 1 / -1;
+        }
+
+        .word-pair {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .word-tag {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1.05em;
+        }
+
+        .word-tag.a {
+            background: #EBF5FB;
+            color: #2980B9;
+        }
+
+        .word-tag.b {
+            background: #FDEDEC;
+            color: #E74C3C;
+        }
+
+        .word-vs {
+            color: var(--gray);
+            font-size: 0.85em;
+            font-weight: 700;
+        }
+
+        .word-category {
+            display: inline-block;
+            font-size: 0.75em;
+            padding: 2px 10px;
+            border-radius: 12px;
+            background: #F0EFFF;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .word-def {
+            font-size: 0.9em;
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
+        .word-def .def-item {
+            margin-bottom: 8px;
+            padding-left: 12px;
+            border-left: 2px solid var(--light-gray);
+        }
+
+        .word-def .def-item strong {
+            color: var(--dark);
+        }
+
+        .word-def .highlight {
+            background: #FFF9C4;
+            padding: 1px 4px;
+            border-radius: 3px;
+        }
+
+        .card-toggle {
+            display: inline-block;
+            margin-top: 8px;
+            color: var(--primary);
+            font-size: 0.85em;
+            cursor: pointer;
+        }
+
+        .card-detail {
+            display: none;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px dashed var(--light-gray);
+        }
+
+        .word-card.expanded .card-detail {
+            display: block;
+        }
+
+        /* Conjunction Table */
+        .conj-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            margin-bottom: 24px;
+        }
+
+        .conj-table th {
+            background: var(--primary);
+            color: white;
+            padding: 14px 16px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .conj-table td {
+            padding: 14px 16px;
+            background: var(--white);
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .conj-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .conj-table tr:hover td {
+            background: #F8F7FF;
+        }
+
+        .conj-tag {
+            display: inline-block;
+            padding: 3px 12px;
+            border-radius: 6px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .conj-tag.causal {
+            background: #E8F8F5;
+            color: #1ABC9C;
+        }
+
+        .conj-tag.transition {
+            background: #FDE8E8;
+            color: #E74C3C;
+        }
+
+        .conj-tag.condition {
+            background: #EBF5FB;
+            color: #3498DB;
+        }
+
+        .conj-tag.choice {
+            background: #FEF9E7;
+            color: #F39C12;
+        }
+
+        .conj-tag.progressive {
+            background: #F4ECF7;
+            color: #8E44AD;
+        }
+
+        .conj-tag.hypothesis {
+            background: #FDEBD0;
+            color: #E67E22;
+        }
+
+        /* Quiz Section */
+        .quiz-progress {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+            padding: 16px 20px;
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        .progress-bar-container {
+            flex: 1;
+            height: 8px;
+            background: var(--light-gray);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-text {
+            font-size: 0.9em;
+            color: var(--gray);
+            white-space: nowrap;
+        }
+
+        .score-display {
+            display: flex;
+            gap: 16px;
+        }
+
+        .score-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .score-item.correct {
+            color: var(--secondary);
+        }
+
+        .score-item.wrong {
+            color: var(--danger);
+        }
+
+        .quiz-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+        }
+
+        .quiz-number {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            width: 32px;
+            height: 32px;
+            line-height: 32px;
+            text-align: center;
+            border-radius: 50%;
+            font-size: 0.85em;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .quiz-question {
+            font-size: 1.05em;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        .quiz-question .blank {
+            display: inline-block;
+            min-width: 80px;
+            border-bottom: 2px solid var(--primary);
+            margin: 0 4px;
+            text-align: center;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        @media (max-width: 600px) {
+            .quiz-options {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .quiz-option {
+            padding: 14px 18px;
+            border: 2px solid var(--light-gray);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.95em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quiz-option:hover:not(.disabled) {
+            border-color: var(--primary-light);
+            background: #F8F7FF;
+        }
+
+        .quiz-option .option-letter {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--light-gray);
+            font-weight: 700;
+            font-size: 0.85em;
+            flex-shrink: 0;
+        }
+
+        .quiz-option.selected {
+            border-color: var(--primary);
+            background: #F0EFFF;
+        }
+
+        .quiz-option.selected .option-letter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .quiz-option.correct {
+            border-color: var(--secondary);
+            background: #E8F8F5;
+        }
+
+        .quiz-option.correct .option-letter {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .quiz-option.wrong {
+            border-color: var(--danger);
+            background: #FDEDEC;
+        }
+
+        .quiz-option.wrong .option-letter {
+            background: var(--danger);
+            color: white;
+        }
+
+        .quiz-option.disabled {
+            cursor: default;
+            opacity: 0.7;
+        }
+
+        .quiz-explanation {
+            margin-top: 16px;
+            padding: 16px;
+            border-radius: 12px;
+            background: #F8F7FF;
+            border-left: 4px solid var(--primary);
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .quiz-explanation.show {
+            display: block;
+        }
+
+        .quiz-explanation h4 {
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+
+        .quiz-explanation p {
+            font-size: 0.9em;
+            color: var(--gray);
+            line-height: 1.8;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .quiz-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.95em;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5A4BD1;
+            box-shadow: 0 4px 12px rgba(108, 92, 231, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: #F0EFFF;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .stat-card .stat-icon {
+            font-size: 2em;
+            margin-bottom: 8px;
+        }
+
+        .stat-card .stat-value {
+            font-size: 2em;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .stat-card .stat-label {
+            font-size: 0.85em;
+            color: var(--gray);
+            margin-top: 4px;
+        }
+
+        /* Search */
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--white);
+            border-radius: 12px;
+            padding: 12px 20px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 1em;
+            color: var(--dark);
+        }
+
+        .search-box input::placeholder {
+            color: #B2BEC3;
+        }
+
+        .search-icon {
+            color: var(--gray);
+            font-size: 1.2em;
+        }
+
+        /* Result Badge */
+        .result-badge {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            background: var(--white);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+        }
+
+        .result-badge.show {
+            display: block;
+        }
+
+        .result-badge .result-emoji {
+            font-size: 4em;
+            margin-bottom: 16px;
+        }
+
+        .result-badge .result-title {
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .result-badge .result-desc {
+            color: var(--gray);
+            margin-bottom: 24px;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 1.6em;
+            }
+
+            .container {
+                padding: 16px 12px;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-item {
+                font-size: 0.85em;
+                padding: 12px 8px;
+            }
+
+            .quiz-card {
+                padding: 20px;
+            }
+        }
+
+        /* Scroll to top */
+        .scroll-top {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1.3em;
+            box-shadow: 0 4px 12px rgba(108, 92, 231, 0.4);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            z-index: 99;
+        }
+
+        .scroll-top:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(108, 92, 231, 0.5);
+        }
+
+        .scroll-top.show {
+            display: flex;
+        }
+
+        /* Tooltip */
+        .tip-box {
+            background: linear-gradient(135deg, #6C5CE7 0%, #A29BFE 100%);
+            color: white;
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            font-size: 0.9em;
+            line-height: 1.7;
+        }
+
+        .tip-box strong {
+            display: block;
+            margin-bottom: 4px;
+            font-size: 1em;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+        <h1>📝 正确使用词语</h1>
+        <div class="subtitle">第一章 语言知识和语言表达 · 第四节</div>
+        <div class="badge">高职高考语文专题训练</div>
+    </header>
+
+    <div class="nav-container">
+        <nav class="nav">
+            <div class="nav-item active" data-tab="knowledge">
+                <span class="nav-icon">📖</span>
+                知识卡片
+            </div>
+            <div class="nav-item" data-tab="conjunctions">
+                <span class="nav-icon">🔗</span>
+                关联词
+            </div>
+            <div class="nav-item" data-tab="quiz">
+                <span class="nav-icon">✏️</span>
+                练习题
+            </div>
+            <div class="nav-item" data-tab="stats">
+                <span class="nav-icon">📊</span>
+                学习统计
+            </div>
+        </nav>
+    </div>
+
+    <div class="container">
+
+        <div id="knowledge" class="section active">
+            <h2 class="section-title">近义词辨析知识卡片</h2>
+            <p class="section-desc">点击卡片查看详细辨析，掌握易混淆词语的区别</p>
+
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchInput" placeholder="搜索词语，如：受权、遏止..." oninput="filterCards()">
+            </div>
+
+            <div class="filter-bar">
+                <button class="filter-btn active" data-filter="all" onclick="filterByCategory('all', this)">全部</button>
+                <button class="filter-btn" data-filter="meaning"
+                    onclick="filterByCategory('meaning', this)">词义辨析</button>
+                <button class="filter-btn" data-filter="emotion"
+                    onclick="filterByCategory('emotion', this)">感情色彩</button>
+                <button class="filter-btn" data-filter="usage" onclick="filterByCategory('usage', this)">搭配用法</button>
+                <button class="filter-btn" data-filter="scope" onclick="filterByCategory('scope', this)">范围程度</button>
+            </div>
+
+            <div class="cards-grid" id="cardsGrid">
+            </div>
+        </div>
+
+        <div id="conjunctions" class="section">
+            <h2 class="section-title">关联词分类速查</h2>
+            <p class="section-desc">常见关联词的分类及用法对比</p>
+
+            <div class="tip-box">
+                <strong>💡 辨析关联词的方法</strong>
+                关键在于分析前后分句之间的逻辑关系：因果？转折？条件？选择？递进？假设？弄清关系后选择对应关联词。
+            </div>
+
+            <table class="conj-table">
+                <thead>
+                    <tr>
+                        <th>关联词</th>
+                        <th>关系类型</th>
+                        <th>用法说明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>因为……所以……</strong></td>
+                        <td><span class="conj-tag causal">因果关系</span></td>
+                        <td>前因后果，因为A，所以B</td>
+                    </tr>
+                    <tr>
+                        <td><strong>既然……就……</strong></td>
+                        <td><span class="conj-tag causal">因果关系</span></td>
+                        <td>已知前提推导结论</td>
+                    </tr>
+                    <tr>
+                        <td><strong>虽然……但是……</strong></td>
+                        <td><span class="conj-tag transition">转折关系</span></td>
+                        <td>承认前面，重点在后面相反的意思</td>
+                    </tr>
+                    <tr>
+                        <td><strong>尽管……却……</strong></td>
+                        <td><span class="conj-tag transition">转折关系</span></td>
+                        <td>让步转折，"尽管"后跟已知事实</td>
+                    </tr>
+                    <tr>
+                        <td><strong>即使……也……</strong></td>
+                        <td><span class="conj-tag transition">转折关系</span></td>
+                        <td>假设性让步，即使假设成立，结果也不变</td>
+                    </tr>
+                    <tr>
+                        <td><strong>无论……都……</strong></td>
+                        <td><span class="conj-tag condition">条件关系</span></td>
+                        <td>排除一切条件，结果不变</td>
+                    </tr>
+                    <tr>
+                        <td><strong>只要……就……</strong></td>
+                        <td><span class="conj-tag condition">条件关系</span></td>
+                        <td>充分条件：有此条件就有此结果</td>
+                    </tr>
+                    <tr>
+                        <td><strong>宁可……也不……</strong></td>
+                        <td><span class="conj-tag choice">选择关系</span></td>
+                        <td>两害相权取其轻，选择前者舍弃后者</td>
+                    </tr>
+                    <tr>
+                        <td><strong>不但……而且……</strong></td>
+                        <td><span class="conj-tag progressive">递进关系</span></td>
+                        <td>后面比前面更进一层</td>
+                    </tr>
+                    <tr>
+                        <td><strong>如果……那么……</strong></td>
+                        <td><span class="conj-tag hypothesis">假设关系</span></td>
+                        <td>假设条件及结果</td>
+                    </tr>
+                    <tr>
+                        <td><strong>一方面……另一方面……</strong></td>
+                        <td><span class="conj-tag causal">并列关系</span></td>
+                        <td>列举两个并列的方面</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="tip-box" style="background: linear-gradient(135deg, #00B894, #55EFC4);">
+                <strong>⚠️ 易混关联词对比</strong>
+                • "即使……也……"（转折） ≠ "既然……就……"（因果）<br>
+                • "尽管……却……"（转折） ≠ "无论……都……"（条件）<br>
+                • "只要……就……"（条件） ≠ "如果……那么……"（假设）<br>
+                • "宁可……也不……"（选择） ≠ "不但……而且……"（递进）
+            </div>
+        </div>
+
+        <div id="quiz" class="section">
+            <h2 class="section-title">互动练习</h2>
+            <p class="section-desc">选择正确答案，提交后查看解析</p>
+
+            <div class="quiz-progress">
+                <div class="progress-text" id="progressText">第 1/30 题</div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" id="progressBar" style="width: 3.3%"></div>
+                </div>
+                <div class="score-display">
+                    <span class="score-item correct">✓ <span id="correctCount">0</span></span>
+                    <span class="score-item wrong">✗ <span id="wrongCount">0</span></span>
+                </div>
+            </div>
+
+            <div id="quizContainer">
+            </div>
+
+            <div class="result-badge" id="resultBadge">
+                <div class="result-emoji" id="resultEmoji">🎉</div>
+                <div class="result-title" id="resultTitle">完成练习！</div>
+                <div class="result-desc" id="resultDesc">你的得分：0/30</div>
+                <button class="btn btn-primary" onclick="resetQuiz()">重新开始</button>
+            </div>
+
+            <div class="quiz-nav" id="quizNav">
+                <button class="btn btn-outline" id="prevBtn" onclick="prevQuestion()" disabled>← 上一题</button>
+                <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()">下一题 →</button>
+            </div>
+        </div>
+
+        <div id="stats" class="section">
+            <h2 class="section-title">学习统计</h2>
+            <p class="section-desc">追踪你的学习进度</p>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">📚</div>
+                    <div class="stat-value" id="statTotal">60+</div>
+                    <div class="stat-label">词语对数</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-value" id="statCorrect">0</div>
+                    <div class="stat-label">答对题数</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📝</div>
+                    <div class="stat-value" id="statAnswered">0</div>
+                    <div class="stat-label">已答题数</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🎯</div>
+                    <div class="stat-value" id="statAccuracy">0%</div>
+                    <div class="stat-label">正确率</div>
+                </div>
+            </div>
+
+            <div class="tip-box">
+                <strong>📌 学习建议</strong>
+                1. 先浏览知识卡片，理解每组近义词的区别<br>
+                2. 记住关联词的分类和用法<br>
+                3. 通过练习题检验学习效果<br>
+                4. 对错题进行重点复习<br>
+                5. 注意词语的<b>感情色彩</b>、<b>搭配习惯</b>和<b>语义侧重</b>
+            </div>
+
+            <h3 style="margin: 24px 0 16px; font-size: 1.1em;">🔑 辨析近义词的方法</h3>
+            <div class="cards-grid">
+                <div class="word-card" style="border-left-color: #E17055;">
+                    <h4 style="margin-bottom:8px; color:#E17055;">1. 辨词义</h4>
+                    <p class="word-def">抓住词语的核心含义，找出意义上的细微差别。如"遏止"强调"止住"，"遏制"强调"控制"。</p>
+                </div>
+                <div class="word-card" style="border-left-color: #00B894;">
+                    <h4 style="margin-bottom:8px; color:#00B894;">2. 辨色彩</h4>
+                    <p class="word-def">注意感情色彩（褒/贬/中性）。如"牟取"是贬义，"谋取"是中性；"充斥"是贬义，"充溢"是褒义。</p>
+                </div>
+                <div class="word-card" style="border-left-color: #0984E3;">
+                    <h4 style="margin-bottom:8px; color:#0984E3;">3. 辨搭配</h4>
+                    <p class="word-def">不同词语有不同的搭配对象。如"改进"搭配工作、方法；"改善"搭配条件、生活。</p>
+                </div>
+                <div class="word-card" style="border-left-color: #6C5CE7;">
+                    <h4 style="margin-bottom:8px; color:#6C5CE7;">4. 辨语体</h4>
+                    <p class="word-def">注意书面语/口语、敬辞/谦辞的区别。如"效劳"含自谦，"效力"为客观陈述；"惠赠"指对方赠予，"敬赠"指己方赠出。</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <button class="scroll-top" id="scrollTopBtn" onclick="scrollToTop()">↑</button>
+
+    <script>
+        // ==================== DATA ====================
+        const wordPairs = [
+            {
+                wordA: "受权", wordB: "授权", category: "meaning",
+                defA: '接受（别人给予的）权力。强调"接受"。',
+                defB: '授给别人权力。强调"给予"。',
+                tip: "受 = 接受；授 = 给予",
+                example: "劳动统计局<b>受权</b>执行任务（统计局是接受权力的一方）"
+            },
+            {
+                wordA: "原型", wordB: "原形", category: "meaning",
+                defA: "原来的类型或模型。多用于文学艺术创作。",
+                defB: '原来的形状。常含贬义，如"原形毕露"。',
+                tip: "型 = 模型；形 = 形状",
+                example: "亚洲最强战舰舰长是《战狼2》的<b>原型</b>"
+            },
+            {
+                wordA: "引见", wordB: "引荐", category: "meaning",
+                defA: "引人相见，使彼此认识。",
+                defB: "荐举，推荐别人。",
+                tip: "见 = 见面认识；荐 = 推荐",
+                example: "他们素未谋面，请你<b>引见</b>一下"
+            },
+            {
+                wordA: "遏止", wordB: "遏制", category: "scope",
+                defA: '用力阻止，使其停止。强调"止住"。',
+                defB: '制止、控制，使不发展。强调"控制"。',
+                tip: "止 = 完全停住；制 = 控制住",
+                example: "霍乱的爆发已被<b>遏制</b>住"
+            },
+            {
+                wordA: "牟取", wordB: "谋取", category: "emotion",
+                defA: "用不正当手段取得名利。<b>贬义词</b>。",
+                defB: "设法取得。<b>中性词</b>。",
+                tip: "牟 = 不正当 = 贬义",
+                example: "不法商人<b>牟取</b>利益"
+            },
+            {
+                wordA: "关注", wordB: "关心", category: "emotion",
+                defA: "将注意力集中到某事上。<b>不带感情色彩</b>。",
+                defB: "出于良好愿望的关注。<b>带感情色彩</b>。",
+                tip: "关注 = 客观注意；关心 = 带感情",
+                example: "后续政策走向引人<b>关注</b>"
+            },
+            {
+                wordA: "一起", wordB: "一齐", category: "meaning",
+                defA: "在空间上合在一处或同一地点发生。",
+                defB: '在时间上同时发生，有"同时"义。',
+                tip: "起 = 空间合一；齐 = 时间同步",
+                example: "人们<b>一起</b>动手（在同一地点）"
+            },
+            {
+                wordA: "品位", wordB: "品味", category: "usage",
+                defA: "<b>名词</b>，泛指人或事物的品质、水平。",
+                defB: "<b>动词</b>，仔细体会。",
+                tip: "位 = 名词(水平)；味 = 动词(体会)",
+                example: "提高自己的<b>品位</b>"
+            },
+            {
+                wordA: "沟通", wordB: "勾通", category: "emotion",
+                defA: "疏通彼此的意见（思想、情感）。<b>中性/褒义</b>。",
+                defB: "暗中串通（利益方面）。<b>贬义</b>。",
+                tip: "沟通 = 正当交流；勾通 = 暗中串通",
+                example: "教师与家长缺乏有效的<b>沟通</b>"
+            },
+            {
+                wordA: "构建", wordB: "修建", category: "usage",
+                defA: "建立。<b>多用于抽象事物</b>。",
+                defB: "建造，建筑。用于具体事物。",
+                tip: "构建 → 抽象；修建 → 具体",
+                example: '<b>构建</b>人才成长的"立交桥"'
+            },
+            {
+                wordA: "锐意", wordB: "刻意", category: "meaning",
+                defA: "意志坚决，勇往直前。<b>褒义</b>。",
+                defB: "用上全部心思。可褒可中性。",
+                tip: "锐意 = 坚决进取；刻意 = 用心追求",
+                example: "不要<b>刻意</b>地去追求"
+            },
+            {
+                wordA: "显示", wordB: "体现", category: "meaning",
+                defA: "明确地表现出。",
+                defB: "某种性质或现象通过某一事物具体表现出来。",
+                tip: "显示 = 直接呈现；体现 = 通过事物表现",
+                example: "调查结果<b>显示</b>"
+            },
+            {
+                wordA: "搜集", wordB: "收集", category: "scope",
+                defA: "到处寻找并聚集在一起。范围广、费力。",
+                defB: "把分散的东西收拢在一起。相对简单。",
+                tip: "搜 = 到处找（费力）；收 = 收拢（简单）",
+                example: "用了近十年千辛万苦才<b>搜集</b>到的"
+            },
+            {
+                wordA: "合计", wordB: "核计", category: "meaning",
+                defA: "①总计、共计 ②盘算、琢磨。",
+                defB: "核实计算（为了核对某个数目）。",
+                tip: "合计 = 总计/盘算；核计 = 核实计算",
+                example: "大家一起<b>合计</b>这件事怎么办"
+            },
+            {
+                wordA: "勘误", wordB: "刊误", category: "meaning",
+                defA: "校正印刷品的差错。侧重<b>校勘</b>。",
+                defB: "侧重<b>改错</b>。",
+                tip: "勘误 = 校勘找错；刊误 = 改正错误",
+                example: "附有两页纸的<b>勘误</b>表"
+            },
+            {
+                wordA: "年轻", wordB: "年青", category: "scope",
+                defA: "相比较而言年纪不大。<b>使用范围广</b>。",
+                defB: "年纪不大，多指十几岁至二十几岁。<b>范围窄</b>。",
+                tip: "年轻 → 相对概念；年青 → 绝对年龄段",
+                example: "80多岁看起来依然<b>年轻</b>"
+            },
+            {
+                wordA: "躁动", wordB: "燥动", category: "meaning",
+                defA: '主要指<b>行为</b>。如"躁动不安"。',
+                defB: '主要指<b>心情</b>（注意：没有"燥动不安"的说法）。',
+                tip: "躁 = 行为不安分；燥 = 心情烦躁",
+                example: "<b>躁动</b>不安的时代"
+            },
+            {
+                wordA: "坑害", wordB: "损害", category: "scope",
+                defA: "用狡诈、狠毒的手段使人受到损害。<b>主观故意</b>。",
+                defB: "使受伤害、损失。<b>客观结果</b>。",
+                tip: "坑害 = 故意害人；损害 = 造成损失",
+                example: "药品质量低劣，<b>坑害</b>群众"
+            },
+            {
+                wordA: "修缮", wordB: "修理", category: "usage",
+                defA: "修补整治。多用于<b>建筑物</b>。",
+                defB: "对损坏的物体和事物进行修复和理顺。<b>范围广</b>。",
+                tip: "修缮 → 建筑；修理 → 一般物品",
+                example: "不管<b>修缮</b>还是重建"
+            },
+            {
+                wordA: "真诚", wordB: "忠诚", category: "meaning",
+                defA: "真实诚恳，坦诚相待。用以形容<b>人格态度</b>。",
+                defB: "对国家、人民、事业等真心诚意，<b>没有二心</b>。",
+                tip: "真诚 = 态度真实；忠诚 = 忠心不二",
+                example: '<b>真诚</b>地"吸纳百川"'
+            },
+            {
+                wordA: "清净", wordB: "清静", category: "meaning",
+                defA: '没有事物打扰。如"耳根清净"。',
+                defB: "多指环境安静，不嘈杂。",
+                tip: "清净 = 无打扰；清静 = 环境安静",
+                example: "没过几天<b>清净</b>日子"
+            },
+            {
+                wordA: "开辟", wordB: "开拓", category: "usage",
+                defA: "打通，开拓。多和<b>抽象义</b>的词语搭配。",
+                defB: '除了"开辟"义，还有采掘前修建巷道等工序的意思。',
+                tip: "开辟 → 抽象搭配（航线、未来）；开拓 → 也可具体",
+                example: "自力更生<b>开辟</b>新水源"
+            },
+            {
+                wordA: "时势", wordB: "时事", category: "meaning",
+                defA: "当时的情势或趋势。",
+                defB: "当代的事情，特指近期的国内大事。",
+                tip: "时势 = 趋势；时事 = 具体事件",
+                example: "<b>时势</b>发展得这样快"
+            },
+            {
+                wordA: "刮目", wordB: "侧目", category: "meaning",
+                defA: "用新的眼光（看待）。<b>褒义</b>。",
+                defB: "斜着眼睛看，形容畏惧而又愤恨。<b>贬义</b>。",
+                tip: "刮目 = 另眼相看(好)；侧目 = 畏惧愤恨",
+                example: "使专业人士<b>刮目</b>相看"
+            },
+            {
+                wordA: "鉴别", wordB: "鉴赏", category: "meaning",
+                defA: "侧重于<b>辨别真假好坏</b>。",
+                defB: "侧重于<b>欣赏</b>。",
+                tip: "鉴别 = 辨真假；鉴赏 = 欣赏",
+                example: "没有<b>鉴别</b>能力"
+            },
+            {
+                wordA: "复议", wordB: "附议", category: "meaning",
+                defA: "对已做决定的事做<b>再一次</b>的讨论。",
+                defB: "同意别人的提议，作为<b>共同提议人</b>。",
+                tip: "复议 = 重新讨论；附议 = 赞同提议",
+                example: "市政府还要<b>复议</b>"
+            },
+            {
+                wordA: "瞬间", wordB: "时间", category: "scope",
+                defA: "指<b>极短的时间</b>。",
+                defB: "概念的总称，也可以表示一段或某一点时间。",
+                tip: "瞬间 = 极短；时间 = 笼统概念",
+                example: "被埋没前后<b>瞬间</b>的情景"
+            },
+            {
+                wordA: "效力", wordB: "效劳", category: "usage",
+                defA: "为某人或某事出力。<b>客观陈述</b>。",
+                defB: "为别人出力做事。含<b>自谦</b>语气。",
+                tip: "效力 = 客观；效劳 = 谦辞",
+                example: "在火箭队<b>效力</b>的姚明"
+            },
+            {
+                wordA: "从属", wordB: "归属", category: "usage",
+                defA: '依附，附属。可与"于"连用。',
+                defB: '属于。<b>一般不与"于"连用</b>。',
+                tip: "从属于 ✓ ；归属于 ✗",
+                example: "封面设计<b>从属</b>于整体规划"
+            },
+            {
+                wordA: "考查", wordB: "考察", category: "meaning",
+                defA: "依据标准检查、衡量。目的是<b>评定或审核</b>。对象：成绩、学习等。",
+                defB: "观察、调查、研究。目的是<b>取得材料</b>。对象：山川、工程等。",
+                tip: "考查 = 检查评定；考察 = 调查研究",
+                example: "以实际运用能力来<b>考查</b>学习效果"
+            },
+            {
+                wordA: "监测", wordB: "监控", category: "meaning",
+                defA: "侧重<b>测算、测量</b>，针对某种事物或问题。",
+                defB: "侧重<b>控制</b>，针对某种现象或行为。",
+                tip: "监测 = 测量数据；监控 = 控制行为",
+                example: "国家有关部门的<b>监测</b>结果"
+            },
+            {
+                wordA: "擅自", wordB: "私自", category: "meaning",
+                defA: '侧重"擅"，<b>随意、不按规定</b>或要求做。',
+                defB: '侧重"私"，<b>只顾个人</b>。',
+                tip: "擅自 = 超越职权；私自 = 暗中个人",
+                example: "未认真履行职责，<b>擅自</b>离岗"
+            },
+            {
+                wordA: "充溢", wordB: "充斥", category: "emotion",
+                defA: "充满，洋溢。<b>褒义</b>。",
+                defB: "到处都是（不好的事物）。<b>贬义</b>。",
+                tip: "充溢 = 好的充满；充斥 = 坏的充满",
+                example: "<b>充溢</b>着饱满的生气"
+            },
+            {
+                wordA: "盈利", wordB: "营利", category: "usage",
+                defA: "所得的利润。<b>名词</b>。",
+                defB: "谋求利润。<b>动词</b>。",
+                tip: "盈利(名) = 利润额；营利(动) = 去赚钱",
+                example: "为了维持<b>盈利</b>"
+            },
+            {
+                wordA: "心声", wordB: "心神", category: "meaning",
+                defA: "发自内心的声音，心里话。",
+                defB: "①心思精力 ②精神状态。",
+                tip: "心声 = 心里话；心神 = 精神状态",
+                example: "几乎是每个市民的<b>心声</b>"
+            },
+            {
+                wordA: "显著", wordB: "显赫", category: "meaning",
+                defA: "非常明显。用于<b>效果、成绩</b>等。",
+                defB: "权势等盛大。用于<b>地位、权势</b>。",
+                tip: "显著 = 明显；显赫 = 权势大",
+                example: "在减贫领域表现<b>显著</b>"
+            },
+            {
+                wordA: "云集", wordB: "聚集", category: "usage",
+                defA: "比喻许多人从四面八方聚集在一起。<b>比喻义</b>。",
+                defB: "集合，凑在一起。<b>一般用法</b>。",
+                tip: "云集 = 像云一样聚集(比喻)；聚集 = 普通聚合",
+                example: "友朋<b>云集</b>"
+            },
+            {
+                wordA: "以致", wordB: "以至", category: "meaning",
+                defA: "连词，表示上述原因形成的结果，多指<b>不好的结果</b>。",
+                defB: '用在时间、数量、程度等词语间，表示"<b>直到</b>"。',
+                tip: "以致 = 导致(坏结果)；以至 = 直到",
+                example: "被我们所忽略，<b>以致</b>最终丧失"
+            },
+            {
+                wordA: "应用", wordB: "运用", category: "meaning",
+                defA: "直接使用，用于<b>生活或生产</b>。",
+                defB: "根据事物特性加以利用。",
+                tip: "应用 = 直接使用；运用 = 灵活利用",
+                example: "新疫苗很快就能<b>应用</b>"
+            },
+            {
+                wordA: "防御", wordB: "抵御", category: "meaning",
+                defA: "着重于<b>防备</b>。在行动之前。",
+                defB: "着重于<b>抵抗</b>。面对时的抵挡。",
+                tip: "防御 = 事前防备；抵御 = 面对抵抗",
+                example: "共同<b>防御</b>危机"
+            },
+            {
+                wordA: "整合", wordB: "整治", category: "meaning",
+                defA: "着重于几种关系的<b>调整、组合</b>。",
+                defB: "着重于<b>整理、修理</b>。",
+                tip: "整合 = 重组优化；整治 = 整理修理",
+                example: "不断<b>整合</b>资源"
+            },
+            {
+                wordA: "停滞", wordB: "停止", category: "scope",
+                defA: "因受阻碍而处于原来状况，<b>不能继续发展</b>。",
+                defB: "<b>不再进行</b>、不再实行。完全停下来。",
+                tip: "停滞 = 原地不前；停止 = 完全停下",
+                example: "制造业陷入<b>停滞</b>"
+            },
+            {
+                wordA: "夺冠", wordB: "问鼎", category: "usage",
+                defA: "夺取冠军。可独立使用。",
+                defB: "图谋夺取最高职位或名誉。后面<b>一般要接介宾短语</b>。",
+                tip: "夺冠 = 独立使用；问鼎 + 介宾短语",
+                example: "这次虽未能<b>夺冠</b>"
+            },
+            {
+                wordA: "敬赠", wordB: "惠赠", category: "usage",
+                defA: "敬辞，指恭敬地<b>赠给对方</b>。主语是自己。",
+                defB: "敬辞，指<b>对方赠予</b>（财物）。主语是对方。",
+                tip: "敬赠 = 我送你；惠赠 = 你送我",
+                example: "<b>敬赠</b>投身抗疫一线的医护人员"
+            },
+            {
+                wordA: "墙脚", wordB: "墙角", category: "meaning",
+                defA: '墙根，<b>基础</b>。如"挖墙脚"。',
+                defB: "两堵墙相接而形成的<b>角</b>。",
+                tip: "墙脚 = 基础(挖墙脚)；墙角 = 角落",
+                example: "酒店挖<b>墙脚</b>"
+            },
+            {
+                wordA: "反复", wordB: "重复", category: "meaning",
+                defA: "再来一次或多次，但<b>不一定按原样</b>。",
+                defB: "按原样再来一次或多次。<b>完全相同</b>。",
+                tip: "反复 = 多次(可变化)；重复 = 按原样",
+                example: "引起感觉的东西<b>反复</b>出现"
+            },
+            {
+                wordA: "庇护", wordB: "庇佑", category: "meaning",
+                defA: "袒护，保护。用于<b>世俗</b>。",
+                defB: "一般指<b>神灵</b>保佑。",
+                tip: "庇护 = 人的保护；庇佑 = 神灵保佑",
+                example: "为犯罪活动提供非法<b>庇护</b>"
+            },
+            {
+                wordA: "实施", wordB: "实行", category: "usage",
+                defA: "用行动来实现。常与<b>政策、法令</b>搭配。",
+                defB: "用行动来实现。常与<b>制度、方针</b>搭配。",
+                tip: "实施 + 政策/法令；实行 + 制度/方针",
+                example: "<b>实施</b>了6年的政策"
+            },
+            {
+                wordA: "及其", wordB: "以及", category: "usage",
+                defA: '连词，"其"有<b>指代</b>作用，指前面提到的事物。',
+                defB: "连词，连接并列成分。",
+                tip: "及其 = 以及它的；以及 = 和",
+                example: "掌握实词的运用情况<b>及其</b>基本规律"
+            },
+            {
+                wordA: "消夜", wordB: "宵夜", category: "meaning",
+                defA: "消遣夜间时光，夜里吃点心。",
+                defB: "夜间和夜宵。",
+                tip: "消夜 = 夜里吃东西的行为",
+                example: "在南滨路<b>消夜</b>的人减少了"
+            },
+            {
+                wordA: "简朴", wordB: "俭朴", category: "usage",
+                defA: "文笔、语言<b>简洁朴素</b>。",
+                defB: "形容<b>生活作风</b>朴素。",
+                tip: "简朴 → 文笔/语言；俭朴 → 生活作风",
+                example: "以<b>简朴</b>的文笔反映湘西"
+            },
+            {
+                wordA: "妥善", wordB: "妥当", category: "meaning",
+                defA: "强调<b>完善</b>。",
+                defB: "强调<b>适当可靠</b>。",
+                tip: "妥善 = 完善周到；妥当 = 适当可靠",
+                example: "欠薪纠纷得到<b>妥善</b>解决"
+            },
+            {
+                wordA: "绝不", wordB: "决不", category: "meaning",
+                defA: "绝对不。强调<b>无一例外</b>，不受任何限制。",
+                defB: "一定不。主要从<b>态度、立场</b>等方面强调。",
+                tip: "绝不 = 绝对不(无例外)；决不 = 一定不(态度)",
+                example: "<b>绝不</b>是赝品可以比拟的"
+            },
+            {
+                wordA: "宁静", wordB: "安静", category: "scope",
+                defA: "①安静、平静 ②指<b>心灵上的静</b>。范围更广。",
+                defB: "没有声音；没有吵闹和喧哗。侧重<b>外部环境</b>。",
+                tip: "宁静 = 环境+心灵；安静 = 环境无声",
+                example: "破坏了夜晚的<b>宁静</b>"
+            },
+            {
+                wordA: "抑制", wordB: "抑止", category: "scope",
+                defA: "尽量控制，但<b>并不绝对</b>，强调过程。",
+                defB: "制止住，使其<b>不再发生</b>。",
+                tip: "抑制 = 控制过程；抑止 = 完全止住",
+                example: "<b>抑制</b>不住内心的喜悦"
+            },
+            {
+                wordA: "防止", wordB: "防治", category: "usage",
+                defA: "预先设法制止（<b>坏事</b>发生）。",
+                defB: "预防和治疗（<b>疾病、病虫害</b>等）。",
+                tip: "防止 → 坏事；防治 → 疾病",
+                example: "<b>防止</b>环境污染和生态破坏"
+            },
+            {
+                wordA: "涌动", wordB: "萌动", category: "meaning",
+                defA: "对象一般为<b>人潮、水流</b>等大量涌出。",
+                defB: "草木发芽，比喻事情<b>刚起头</b>。",
+                tip: "涌动 = 大量涌出；萌动 = 刚开始萌发",
+                example: "生机盎然的绿，<b>涌动</b>着青春的朝气"
+            },
+            {
+                wordA: "调剂", wordB: "调节", category: "meaning",
+                defA: "调整有无、<b>余缺</b>等情况，调整使合宜。",
+                defB: "在<b>数量、程度、规模</b>等方面进行调整，使符合标准。",
+                tip: "调剂 = 有无余缺之间调整；调节 = 数量程度调整",
+                example: "得到某种<b>调剂</b>和补偿"
+            },
+            {
+                wordA: "融化", wordB: "溶化", category: "meaning",
+                defA: "冰、雪从冻结变为液态。<b>物理变化</b>。",
+                defB: "物质在溶剂里溶解。<b>化学过程</b>。",
+                tip: "融化 = 冰雪化水；溶化 = 溶解在液体中",
+                example: "冰雪渐渐<b>融化</b>"
+            },
+            {
+                wordA: "喧闹", wordB: "喧哗", category: "usage",
+                defA: "声音大而热闹。多用于<b>市场、会场、节日</b>。",
+                defB: "声音大而<b>杂乱</b>。",
+                tip: "喧闹 = 热闹；喧哗 = 杂乱",
+                example: "农贸批发市场就<b>喧闹</b>起来"
+            },
+            {
+                wordA: "沉重", wordB: "繁重", category: "meaning",
+                defA: "着重于<b>量重</b>，范围大。还可引申为心情不畅。",
+                defB: "着重于<b>事情多而责任重</b>。",
+                tip: "沉重 = 分量重/心情重；繁重 = 任务多而重",
+                example: "伤的就格外<b>沉重</b>"
+            },
+            {
+                wordA: "改善", wordB: "改进", category: "usage",
+                defA: "常与<b>关系、条件、生活</b>等搭配。",
+                defB: "常与<b>工作、方法、技术</b>等搭配。",
+                tip: "改善 → 条件/生活；改进 → 方法/技术",
+                example: "<b>改善</b>市民住房条件"
+            },
+            {
+                wordA: "解除", wordB: "废除", category: "usage",
+                defA: "对象多是<b>抽象事物</b>，如精神压力、束缚。",
+                defB: "取消、废止（<b>法令、制度、条约</b>等）。",
+                tip: "解除 → 精神束缚；废除 → 法令制度",
+                example: "<b>解除</b>心灵上的枷锁"
+            },
+            {
+                wordA: "理念", wordB: "理想", category: "meaning",
+                defA: "通常指<b>思想</b>，也指表象或客观事物在人脑中的概括形象。",
+                defB: "对<b>未来事物</b>的想象或希望。",
+                tip: "理念 = 已有的思想观念；理想 = 对未来的期望",
+                example: "一种现代的生活<b>理念</b>"
+            },
+            {
+                wordA: "攫取", wordB: "牟取", category: "emotion",
+                defA: "抓取，获取，掠取。<b>中性词</b>，多指取得物。",
+                defB: "谋取，尤指以不正当手段取得金钱。<b>贬义词</b>。",
+                tip: "攫取 = 抓取(中性)；牟取 = 非法取得(贬义)",
+                example: "总想<b>攫取</b>更多的财富"
+            },
+            {
+                wordA: "清冷", wordB: "冷清", category: "meaning",
+                defA: "凉爽而带有寒意。侧重<b>温度感觉</b>。",
+                defB: "冷静而凄凉。强调<b>不热闹、萧索</b>。",
+                tip: "清冷 = 有寒意；冷清 = 不热闹",
+                example: "心中泛起一种<b>清冷</b>的感觉"
+            },
+            {
+                wordA: "单纯", wordB: "纯粹", category: "meaning",
+                defA: "①简单纯一，不复杂 ②单一，只顾。侧重于<b>范围(单)</b>。",
+                defB: "①不掺杂别的成分 ②单纯地、单单。侧重于<b>无杂质(纯)</b>。",
+                tip: "单纯 = 范围单一；纯粹 = 纯而无杂",
+                example: "并不<b>单纯</b>是遵循道德律"
+            },
+            {
+                wordA: "意识", wordB: "感觉", category: "scope",
+                defA: "通过分析综合得出的<b>理性化</b>结论。程度深。",
+                defB: "侧重于<b>表面、浅层</b>的。程度浅。",
+                tip: "意识 = 理性认知；感觉 = 感性体验",
+                example: "使人类<b>意识</b>到自身在当前的处境"
+            },
+            {
+                wordA: "景色", wordB: "景点", category: "scope",
+                defA: "可以含<b>多处</b>风景。<b>范围大</b>。",
+                defB: "强调<b>某一处</b>风景。<b>范围小</b>。",
+                tip: "景色 = 大范围风景；景点 = 某个具体地方",
+                example: "第一片接近南方的<b>景色</b>"
+            },
+            {
+                wordA: "开阔", wordB: "开朗", category: "meaning",
+                defA: "突出心胸<b>广阔的程度</b>。",
+                defB: "重在表现思想<b>乐观、畅快</b>。",
+                tip: "开阔 = 广阔；开朗 = 乐观",
+                example: "心胸就<b>开阔</b>起来"
+            },
+            {
+                wordA: "紧俏", wordB: "紧缺", category: "meaning",
+                defA: "商品因<b>销路好</b>而供不应求。",
+                defB: "物资因<b>短缺</b>而供应紧张。",
+                tip: "紧俏 = 畅销供不应求；紧缺 = 短缺",
+                example: "地皮<b>紧俏</b>"
+            },
+            {
+                wordA: "镇定", wordB: "镇静", category: "meaning",
+                defA: "遇到<b>紧急情况</b>不慌不忙。",
+                defB: "遇事安定、沉着、冷静。着重指<b>不感情用事</b>。",
+                tip: "镇定 = 紧急时不慌；镇静 = 理性不冲动",
+                example: "我更要保持<b>镇定</b>"
+            },
+            {
+                wordA: "草率", wordB: "轻率", category: "meaning",
+                defA: "马马虎虎地了结。比喻做工作<b>不负责任</b>。",
+                defB: "言行随便，<b>不慎重</b>，不严肃。",
+                tip: "草率 = 马虎了事；轻率 = 不慎重",
+                example: "胜过百次<b>草率</b>行动"
+            },
+            {
+                wordA: "难免", wordB: "未免", category: "meaning",
+                defA: "表示客观上<b>不容易避免</b>。",
+                defB: "表示对某种过分的情况<b>不以为然</b>，侧重于评价。",
+                tip: "难免 = 客观难以避免；未免 = 主观认为过分",
+                example: "文学功能就<b>难免</b>受到影响"
+            },
+            {
+                wordA: "渗透", wordB: "渗入", category: "usage",
+                defA: '比喻一种事物或势力逐渐进入到其他方面。后面可加"到"。',
+                defB: '"进入到"的意思。后面<b>不能再加"到"</b>。',
+                tip: "渗透到 ✓ ；渗入到 ✗",
+                example: "便<b>渗透</b>到了各行各业"
+            },
+            {
+                wordA: "颠倒", wordB: "颠覆", category: "meaning",
+                defA: "上下倒置，也指对一切事物的<b>错倒</b>。",
+                defB: "对某项事物造成强烈冲击改变，使事物<b>本质发生变化</b>。",
+                tip: "颠倒 = 黑白对调；颠覆 = 彻底推翻",
+                example: "<b>颠倒</b>黑白"
+            }
+        ];
+
+        // Quiz data
+        const quizData = [
+            {
+                q: '①劳动统计局________执行定期搜集和报告劳动力统计数字的重要任务。\n②亚洲最强战舰舰长原来是《战狼2》的________。\n③他们两位素未谋面,还要请你________一下。',
+                options: ["受权　原型　引见", "授权　原形　引荐", "授权　原型　引见", "受权　原形　引荐"],
+                answer: 0,
+                explanation: '"受权"是接受权力，"授权"是授给别人权力。"原型"指原来的类型或模型，"原形"指原来的形状。"引见"指引人相见，"引荐"指推荐。'
+            },
+            {
+                q: '①霍乱的爆发已被________住。\n②在疫情中有些不法商人售卖不合格的口罩,以次充好,用来________利益,这是法律所不允许的。\n③英国政府目前仍在不断调整抗疫策略,后续政策走向引人________。',
+                options: ["遏止　谋取　关注", "遏制　谋取　关心", "遏止　牟取　关心", "遏制　牟取　关注"],
+                answer: 3,
+                explanation: '"遏制"侧重控制；"牟取"带贬义，指用不正当手段取得名利；"关注"不带感情色彩，"关心"带感情色彩。'
+            },
+            {
+                q: '①印尼政府和各国救灾援助队的人们________动手,在最短的时间内,基本上消除了海啸给亚奇重灾区人民带来的灾难,恢复了昔日家园的面貌。\n②现今天社会上很多青年一心追崇外语歌曲,以为这样就提高了自己的________,其实不然。\n③抗击疫情的路________千难万险,________不能阻挡医务工作者前行的步伐。',
+                options: ["一起　品位　即使/也", "一起　品味　既然/就", "一齐　品位　即使/也", "一齐　品味　既然/就"],
+                answer: 0,
+                explanation: '"一起"表空间上合在一处；"品位"是名词，指品质水平；"即使……也……"是转折关系。'
+            },
+            {
+                q: '①由于教师与家长缺乏有效的________,两者关系紧张是当前的普遍现象。\n②多渠道、多层次、全方位________特区人才成长的“立交桥”,培养更多更好的特区建设者。\n③买彩票当然是希望有机会中大奖,但彩民不要________地去追求这种机会。\n④德国一项调查结果________,如今德国儿童的上网比例已高达37%。',
+                options: ["沟通　修建　锐意　显示", "勾通　修建　锐意　体现", "沟通　构建　刻意　显示", "勾通　构建　刻意　体现"],
+                answer: 2,
+                explanation: '"沟通"指疏通彼此意见；"构建"多用于抽象事物；"刻意"指用上全部心思；"显示"指明确地表现出。'
+            },
+            {
+                q: '①水乡小镇,一条百来步的小街,九曲连环,倒有十来座________的小桥相衔。\n②我们的方针是统筹兼顾,________安排。\n③他________牺牲自己,________暴露党的组织。',
+                options: ["精巧　适当　宁可/也不", "奇巧　适当　宁可/也不", "奇巧　适度　不但/而且", "精巧　适度　不但/而且"],
+                answer: 0,
+                explanation: '"精巧"侧重精致；"适当"指合适妥当；"宁可……也不……"表选择关系。'
+            },
+            {
+                q: '①近几年来,他们________了不少资料,向美国读者介绍中华移民遭受歧视和虐待的详情。\n②大家一起________这件事该怎么办。\n③一本只有几十页的小书,居然附有两页纸的________表,这实在让人深思。',
+                options: ["收集　核计　勘误", "搜集　合计　勘误", "收集　核计　刊误", "搜集　合计　刊误"],
+                answer: 1,
+                explanation: '"搜集"强调到处寻找；"合计"有盘算、琢磨之义；"勘误"侧重校勘。'
+            },
+            {
+                q: '①________骆驼是沙漠里的重要交通工具,________人们称骆驼为“沙漠之舟”。\n②钟南山爷爷已经80多岁,看起来依然________。\n③现在正处在新老交替的转型期,是个很有意思的时代,________不安的时代。',
+                options: ["虽然/但是　年轻　燥动", "因为/所以　年轻　躁动", "虽然/但是　年青　燥动", "因为/所以　年青　躁动"],
+                answer: 1,
+                explanation: '因果关系用"因为……所以……"；"年轻"可用于相对比较；只有"躁动不安"这一说法。'
+            },
+            {
+                q: '①这些药品质量低劣,________群众,严重危害人民群众的健康与生命安全。\n②不管________还是重建,对废墟来说,要义在于保存。\n③中国人“有容乃大”,曾________地“吸纳百川”,拿来了很多外国文化融进了民族文化之中。',
+                options: ["坑害　修缮　真诚", "损害　修缮　忠诚", "损害　修理　忠诚", "坑害　修理　真诚"],
+                answer: 0,
+                explanation: '"坑害"指用狡诈手段使人受损害；"修缮"指修补整治建筑物；"真诚"形容人格态度真实诚恳。'
+            },
+            {
+                q: '①他退居二线,摆脱了繁忙的事务,可没过几天________日子,他又闲不住了。\n②在充分利用原有水利设施的同时,还自力更生________新水源,采取人力、畜力换班,机器不停的办法,昼夜抗旱灌水。\n③________发展得这样快,我们只有努力学习,加倍工作,才不至于落后啊!',
+                options: ["清静　开拓　时势", "清净　开辟　时势", "清净　开辟　时事", "清静　开拓　时事"],
+                answer: 1,
+                explanation: '"清净"指没有事物打扰；"开辟"多和抽象义词语搭配；"时势"指当时的情势或趋势。'
+            },
+            {
+                q: '①父亲多才多艺,在研究外国文学和影视文学方面的造诣,足以使专业人士________相看。\n②如果阅读古典作品,因受感动而去模仿书中人物的行为,这就证明读者没有________能力,糊糊涂涂做了古代作品的俘虏。\n③关于在市区修建大型运动场和游泳馆的议案,市政府还要________。',
+                options: ["刮目　鉴别　复议", "侧目　鉴赏　复议", "侧目　鉴别　附议", "刮目　鉴赏　附议"],
+                answer: 0,
+                explanation: '"刮目"指用新的眼光；"鉴别"侧重辨别真假好坏；"复议"指对已做决定的事再次讨论。'
+            },
+            {
+                q: '①近期,中国观众有幸目睹了来自意大利庞贝古城的遗珍,它们清晰地再现了古城被埋没前后________的情景。\n②在休斯敦火箭队________的姚明,出席“护鲨行动从我做起”的活动时说:“今后,本人在任何情况下都拒绝食用鱼翅。”\n③书的封面设计________于书籍出版发行的整体规划,同时必须结合书的内容特点和读者对象进行构思。',
+                options: ["时间　效劳　从属", "瞬间　效力　从属", "瞬间　效劳　归属", "时间　效力　归属"],
+                answer: 1,
+                explanation: '"瞬间"指极短的时间；"效力"为客观陈述；"从属"可与"于"连用，"归属"一般不能。'
+            },
+            {
+                q: '①应该以实际运用能力来________我们的学习效果。\n②老百姓说得好,________常年无灾情,不可一日不防备。\n③这小伙子整体素质的确不错,________诚实温和。',
+                options: ["考查　宁可　品性", "考察　宁愿　品性", "考查　宁愿　品行", "考察　宁可　品行"],
+                answer: 0,
+                explanation: '"考查"侧重检查衡量；"宁可"表示权衡利害后的选择；"品性"指思想态度方面。'
+            },
+            {
+                q: '①国家有关部门的________结果表明,广东大亚湾核电站运行一年,废液、废气排放量均大大低于国家标准。\n②事发当日,看守所民警值班期间未认真履行看管职责,________离岗,外出吃饭,造成在押人员脱管。\n③像孩童第一次睁开眼睛看见阳光,作者的目光是那样惊喜,________着饱满的生气。',
+                options: ["监测　私自　充斥", "监控　擅自　充斥", "监测　擅自　充溢", "监控　私自　充溢"],
+                answer: 2,
+                explanation: '"监测"侧重测算测量；"擅自"侧重不按规定做事；"充溢"多用褒义。'
+            },
+            {
+                q: '①许多企业为了维持________而远走他乡,纷纷将工厂迁至成本更为低廉的内陆省份,或向其它发展中国家转移产能。\n②期望交通顺畅,空气清新,几乎是每个市民的________。\n③报告特别指出,中国在减贫领域表现________,已成功将贫困人口数量从1990年的7.8亿减少到了2015年的1000万以下。',
+                options: ["盈利　心神　显著", "盈利　心声　显著", "营利　心神　显赫", "营利　心声　显赫"],
+                answer: 1,
+                explanation: '"盈利"是名词，指所得利润；"心声"指发自内心的声音；"显著"指非常明显。'
+            },
+            {
+                q: '①当一个人不再富贵的时候,过去那种友朋________,车马盈门的热闹场景就顿时不见了,门前变得冷冷清清。\n②有时,成功就在我们眼前,但却被我们所忽略,________最终地丧失。\n③新疫苗的研发已经到了临床试验阶段,很快就能________。',
+                options: ["云集　以至　运用", "聚集　以致　运用", "云集　以致　应用", "聚集　以至　应用"],
+                answer: 2,
+                explanation: '"云集"用比喻义；"以致"表不好的结果；"应用"指直接使用于生活或生产。'
+            },
+            {
+                q: '①亚洲金融危机的爆发深刻暴露了亚洲各国在协调经济政策、共同________危机方面的苍白无力。\n②我们不断________资源,分享知识,传递力量!\n③随着疫情的持续恶化,美国制造业陷入________,经济大幅衰退难以避免。',
+                options: ["防御　整合　停滞", "防御　整治　停止", "抵御　整治　停滞", "抵御　整合　停止"],
+                answer: 0,
+                explanation: '"防御"着重防备；"整合"着重调整组合；"停滞"指因受阻碍不能继续发展。'
+            },
+            {
+                q: '①这次虽未能________,但不必丧气,胜败乃兵家常事。\n②近日,河北航空特别推出医护人员专享“礼遇权益包”,________投身抗疫一线的医护人员。\n③杭州大酒店越来越多,一流厨师供不应求,于是不少店家争相出高价招聘,有人戏称:“酒店挖________,肥了大厨师。”',
+                options: ["问鼎　惠赠　墙角", "夺冠　敬赠　墙角", "夺冠　敬赠　墙脚", "问鼎　惠赠　墙脚"],
+                answer: 2,
+                explanation: '"夺冠"可独立使用；"敬赠"指己方恭敬地赠给对方；"墙脚"指基础。'
+            },
+            {
+                q: '①社会实践的继续,使人们在实践中引起感觉和印象的东西________出现,于是人们头脑里便发生了一个认识过程中的突变,产生了概念。\n②这些反映20世纪二三十年代广州风貌的老照片,是他用了近十年的时间千辛万苦才________到的。最近,他决定举办一个小型展览。\n③司法机关在界定黑社会性质的组织时,对是否要有国家工作人员参与犯罪活动或者为犯罪活动提供非法________,一直以来都有不同认识。',
+                options: ["反复　搜集　庇护", "反复　收集　庇佑", "重复　收集　庇护", "重复　搜集　庇佑"],
+                answer: 0,
+                explanation: '"反复"指再来一次或多次，不一定按原样；"搜集"强调到处寻找；"庇护"指袒护保护。'
+            },
+            {
+                q: '①一切只顾个人不顾社会、只顾眼前不顾将来、只顾权利不顾义务、只顾消费不顾________的观点和行为,都是同和谐社会格格不入的。\n②今年我国铁路春运各类旅客列车的票价一律不再上浮,这标志着________了6年之久的火车票春运上浮政策正式终止。\n③在学习文言文的时候,我们不仅要掌握实词的常用义和用法,还要注意掌握实词的运用情况________基本规律。',
+                options: ["生产　实施　及其", "节约　实行　以及", "节约　实行　及其", "生产　实施　以及"],
+                answer: 0,
+                explanation: '与"消费"对应的反义词是"生产"；"实施"与"政策"搭配；"及其"中的"其"有指代作用。'
+            },
+            {
+                q: '①冬至过后,气温下降,寒风瑟瑟,在南滨路________的人减少了。\n②沈从文的《边城》以________的文笔反映湘西的人文风貌。\n③重庆商报与市劳动局联合组织了一次“讨薪行动”,第一天就有四起欠薪纠纷得到________解决。\n④本次历代名家书画展由中华博物馆举办,这些作品堪称经典之作,________是赝品可以比拟的。',
+                options: ["宵夜　简朴　妥善　决不", "消夜　简朴　妥善　绝不", "宵夜　俭朴　妥当　绝不", "消夜　俭朴　妥当　决不"],
+                answer: 1,
+                explanation: '"消夜"指夜里吃点心；"简朴"形容文笔简洁朴素；"妥善"强调完善；"绝不"强调无一例外。'
+            },
+            {
+                q: '①这声尖利的哭喊破坏了夜晚的________。\n②我真是________不住内心的喜悦,蹦蹦跳跳地进了家门。\n③合理利用自然资源,________环境污染和生态破坏。',
+                options: ["宁静　抑止　防治", "安静　抑制　防止", "安静　抑止　防治", "宁静　抑制　防止"],
+                answer: 3,
+                explanation: '"宁静"可指心灵上的静；"抑制"强调尽量控制的过程；"防止"指预先制止坏事发生。'
+            },
+            {
+                q: '①比起秋天的枫林来,夏天的枫林没有那么撩人的红韵,但那生机盎然的绿,________着的却是一股青春的朝气。\n②自得其乐的游戏,使动物紧张的自然竞争生活得到某种________和补偿,使它们在生理上、心理上容易保持平衡。\n③我们相隔的不是几小时的车程,而是一整块大陆,就像歌里所唱的,用我的晚安陪你吃早餐,但是________也隔不断彼此的思念。',
+                options: ["萌动　调剂　地久天长", "涌动　调节　地久天长", "萌动　调节　山长水远", "涌动　调剂　山长水远"],
+                answer: 3,
+                explanation: '"涌动"对象一般为人潮、水流等；"调剂"指调整有无余缺使合宜；"山长水远"指山水阻隔、道路遥远。'
+            },
+            {
+                q: '①春天的脚步近了,大草原上的冰雪渐渐________成了朵朵白色的“大蘑菇”,煞是壮观。\n②中方修建坦赞铁路,________困难重重,总理________依旧信心满满。\n③每天天还没亮,位于城郊的农贸批发市场就________起来,人们又开始了一天的劳作。',
+                options: ["溶化　尽管/却　喧哗", "溶化　无论/都　喧闹", "融化　无论/都　喧哗", "融化　尽管/却　喧闹"],
+                answer: 3,
+                explanation: '"融化"指冰雪从冻结变为液态；"尽管……却……"是转折关联词；"喧闹"指声音大而热闹。'
+            },
+            {
+                q: '①幻想飞得太高,坠在现实上的时候,伤的就格外________。\n②市政府决心持续为市民做实事,把________市民住房条件当做大事来抓。\n③只有________心灵上的枷锁,才能让心灵的宝藏发挥潜能。',
+                options: ["繁重　改进　解除", "沉重　改进　废除", "繁重　改善　废除", "沉重　改善　解除"],
+                answer: 3,
+                explanation: '"沉重"着重于量重，可引申为心情不畅；"改善"常与条件、生活搭配；"解除"对象多是抽象事物。'
+            },
+            {
+                q: '①崇尚美,追求美,就是重视生活情趣,讲究生活质量,这体现了一种现代的生活________和消费时尚。\n②他们这伙人不满足于合法收入,日夜绞尽脑汁,总想________更多的财富。\n③每当吟诵起宋代晏殊的“梨花院落溶溶月,柳絮池塘淡淡风”的诗句,我心中就会泛起一种________的感觉。',
+                options: ["理念　攫取　冷清", "理想　牟取　清冷", "理想　牟取　冷清", "理念　攫取　清冷"],
+                answer: 3,
+                explanation: '"理念"指思想观念；"攫取"为中性词，指抓取获取；"清冷"意为凉爽而带有寒意。'
+            },
+            {
+                q: '①道德行为,并不________是遵循道德律的行为。\n②人类的历史意识给人类以智慧,使人类________到自身在当前的处境,有利于瞻望未来。\n③________他说得有些过分,但总是为咱自己好。',
+                options: ["单纯　感觉　不管", "纯粹　意识　不管", "单纯　意识　尽管", "纯粹　感觉　尽管"],
+                answer: 2,
+                explanation: '"单纯"侧重范围，即单；"意识"是通过分析综合得出的理性化结论；"尽管……但……"是转折关系。'
+            },
+            {
+                q: '①外面出现了第一片接近南方的________,如同水墨画一样一片模糊。\n②当我忧从中来、无可告语的时候,一想到大海,心胸就________起来。\n③地皮________,这是通达公司在市中心建造摩天大楼的重要原因。',
+                options: ["景点　开阔　紧缺", "景色　开朗　紧缺", "景色　开阔　紧俏", "景点　开朗　紧俏"],
+                answer: 2,
+                explanation: '"景色"可含多处风景；"开阔"突出心胸广阔的程度；"紧俏"指商品因销路好而供不应求。'
+            },
+            {
+                q: '①新型冠状病毒威胁着我的身体健康,我更要保持________,竭尽全力确保我的心理健康不受影响。\n②一次深思熟虑,胜过百次________行动。\n③缺乏艺术力量和文笔情趣,文学功能就________受到影响。',
+                options: ["镇静　轻率　未免", "镇定　轻率　未免", "镇定　草率　难免", "镇静　草率　难免"],
+                answer: 2,
+                explanation: '"镇定"指遇到紧急情况不慌不忙；"草率"比喻做工作不负责任；"难免"表示客观上不容易避免。'
+            },
+            {
+                q: '①当地有关部门固执己见,坚持这种破坏历史文化遗产的“旧城改造”,________拆除了遵义会议会址周围的大片历史建筑。\n②该桥是中国古桥中________工程浩大,雕刻十分精美,造型生动别致,工艺精湛,艺术品位高,至今保存完好的全国罕见的古桥。\n③________我们善于把精读和泛读结合起来,________能取得最佳的读书效果。',
+                options: ["私自　营造　只要/就", "擅自　营造　如果/那么", "擅自　建造　只要/就", "私自　建造　如果/那么"],
+                answer: 2,
+                explanation: '"擅自"指超越职权范围自作主张；古桥应用"建造"（具体事物）；"只要……就……"表条件关系。'
+            },
+            {
+                q: '①在人类的技术发明史上,没有一种技术发明能像信息化技术那样,在几十年的时间内,便________到了各行各业、各个角落,以至使人类的生活发生翻天覆地的变化。\n②新疆安定祥和、繁荣发展的大好局面来之不易,新疆各族人民倍加爱护、倍加珍惜,决不允许美国________黑白、蓄意诋毁新疆人权状况。\n③走向21世纪的中国教育必须有超前意识,所谓“超前”,________是指学校要承担传递人类已有文化的使命,________要承担构建为未来社会培养新人的新型文化使命。',
+                options: ["渗入　颠覆　一方面/另一方面", "渗透　颠倒　不但/而且", "渗透　颠覆　不但/而且", "渗入　颠倒　一方面/另一方面"],
+                answer: 1,
+                explanation: '"渗透"后可加"到"；"颠倒"指上下倒置，"颠倒黑白"是固定搭配；"不但……而且……"表递进关系。'
+            }
+        ];
+
+        // ==================== STATE ====================
+        let currentQuestion = 0;
+        let correctCount = 0;
+        let wrongCount = 0;
+        let answeredQuestions = new Set();
+
+        // ==================== INIT ====================
+        document.addEventListener('DOMContentLoaded', function () {
+            renderCards();
+            renderQuiz();
+            updateStats();
+
+            // Scroll button
+            window.addEventListener('scroll', function () {
+                const btn = document.getElementById('scrollTopBtn');
+                if (window.scrollY > 300) {
+                    btn.classList.add('show');
+                } else {
+                    btn.classList.remove('show');
+                }
+            });
+        });
+
+        // ==================== NAVIGATION ====================
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function () {
+                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                this.classList.add('active');
+                document.getElementById(this.dataset.tab).classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        // ==================== CARDS ====================
+        function renderCards() {
+            const grid = document.getElementById('cardsGrid');
+            grid.innerHTML = '';
+            wordPairs.forEach((pair, i) => {
+                const card = document.createElement('div');
+                card.className = 'word-card';
+                card.dataset.category = pair.category;
+                card.dataset.words = pair.wordA + pair.wordB;
+                card.onclick = () => toggleCard(card);
+
+                const catLabel = { meaning: '词义辨析', emotion: '感情色彩', usage: '搭配用法', scope: '范围程度' }[pair.category];
+
+                card.innerHTML = `
+            <span class="word-category">${catLabel}</span>
+            <div class="word-pair">
+                <span class="word-tag a">${pair.wordA}</span>
+                <span class="word-vs">VS</span>
+                <span class="word-tag b">${pair.wordB}</span>
+            </div>
+            <div class="word-def">
+                <div class="def-item"><strong>${pair.wordA}：</strong>${pair.defA}</div>
+                <div class="def-item"><strong>${pair.wordB}：</strong>${pair.defB}</div>
+            </div>
+            <span class="card-toggle">📌 点击查看记忆技巧</span>
+            <div class="card-detail">
+                <div class="word-def">
+                    <p><strong>💡 记忆技巧：</strong><span class="highlight">${pair.tip}</span></p>
+                    ${pair.example ? `<p style="margin-top:8px"><strong>📝 例句：</strong>${pair.example}</p>` : ''}
+                </div>
+            </div>
+        `;
+                grid.appendChild(card);
+            });
+        }
+
+        function toggleCard(card) {
+            card.classList.toggle('expanded');
+            const toggle = card.querySelector('.card-toggle');
+            if (card.classList.contains('expanded')) {
+                toggle.textContent = '📌 收起';
+            } else {
+                toggle.textContent = '📌 点击查看记忆技巧';
+            }
+        }
+
+        function filterByCategory(category, btn) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            document.querySelectorAll('.word-card').forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+        function filterCards() {
+            const query = document.getElementById('searchInput').value.trim().toLowerCase();
+            document.querySelectorAll('.word-card').forEach(card => {
+                if (!query || card.dataset.words.toLowerCase().includes(query) || card.textContent.toLowerCase().includes(query)) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+
+            // Reset category filter
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            document.querySelector('.filter-btn[data-filter="all"]').classList.add('active');
+        }
+
+        // ==================== QUIZ ====================
+        function renderQuiz() {
+            showQuestion(currentQuestion);
+        }
+
+        function showQuestion(index) {
+            const container = document.getElementById('quizContainer');
+            const data = quizData[index];
+
+            const lines = data.q.split('\n').map(line => {
+                // 修改了这里，原来内有'______'会导致双重下划线，现在清空内部
+                return line.replace(/________/g, '<span class="blank"></span>');
+            }).join('<br>');
+
+            container.innerHTML = `
+        <div class="quiz-card">
+            <span class="quiz-number">${index + 1}</span>
+            <div class="quiz-question">依次填入下列各句横线处的词语，最恰当的一组是：<br><br>${lines}</div>
+            <div class="quiz-options">
+                ${data.options.map((opt, i) => `
+                    <div class="quiz-option ${answeredQuestions.has(index) ? 'disabled' : ''} ${getOptionClass(index, i)}" 
+                         onclick="selectOption(${index}, ${i})" data-index="${i}">
+                        <span class="option-letter">${'ABCD'[i]}</span>
+                        <span>${opt}</span>
+                    </div>
+                `).join('')}
+            </div>
+            <div class="quiz-explanation ${answeredQuestions.has(index) ? 'show' : ''}" id="explanation-${index}">
+                <h4>📖 解析</h4>
+                <p>${data.explanation}</p>
+            </div>
+        </div>
+    `;
+
+            // Update progress
+            document.getElementById('progressText').textContent = `第 ${index + 1}/${quizData.length} 题`;
+            document.getElementById('progressBar').style.width = `${((index + 1) / quizData.length) * 100}%`;
+
+            // Update nav buttons
+            document.getElementById('prevBtn').disabled = index === 0;
+            document.getElementById('nextBtn').textContent = index === quizData.length - 1 ? '查看结果' : '下一题 →';
+        }
+
+        function getOptionClass(qIndex, optIndex) {
+            if (!answeredQuestions.has(qIndex)) return '';
+            const data = quizData[qIndex];
+            if (optIndex === data.answer) return 'correct';
+            if (optIndex === data.selectedAnswer && optIndex !== data.answer) return 'wrong';
+            return '';
+        }
+
+        function selectOption(qIndex, optIndex) {
+            if (answeredQuestions.has(qIndex)) return;
+
+            const data = quizData[qIndex];
+            data.selectedAnswer = optIndex;
+            answeredQuestions.add(qIndex);
+
+            if (optIndex === data.answer) {
+                correctCount++;
+            } else {
+                wrongCount++;
+            }
+
+            document.getElementById('correctCount').textContent = correctCount;
+            document.getElementById('wrongCount').textContent = wrongCount;
+
+            showQuestion(qIndex);
+            updateStats();
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < quizData.length - 1) {
+                currentQuestion++;
+                showQuestion(currentQuestion);
+                window.scrollTo({ top: document.querySelector('.quiz-progress').offsetTop - 80, behavior: 'smooth' });
+            } else {
+                showResult();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion(currentQuestion);
+                window.scrollTo({ top: document.querySelector('.quiz-progress').offsetTop - 80, behavior: 'smooth' });
+            }
+        }
+
+        function showResult() {
+            document.getElementById('quizContainer').classList.add('hidden');
+            document.getElementById('quizNav').classList.add('hidden');
+            const badge = document.getElementById('resultBadge');
+            badge.classList.add('show');
+
+            const score = correctCount;
+            const total = quizData.length;
+            const pct = Math.round((score / total) * 100);
+
+            let emoji, title;
+            if (pct >= 90) { emoji = '🏆'; title = '太棒了！'; }
+            else if (pct >= 70) { emoji = '👏'; title = '做得不错！'; }
+            else if (pct >= 50) { emoji = '💪'; title = '继续加油！'; }
+            else { emoji = '📚'; title = '需要多复习哦！'; }
+
+            document.getElementById('resultEmoji').textContent = emoji;
+            document.getElementById('resultTitle').textContent = title;
+            document.getElementById('resultDesc').textContent = `你的得分：${score}/${total}（正确率 ${pct}%）`;
+        }
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            correctCount = 0;
+            wrongCount = 0;
+            answeredQuestions.clear();
+            quizData.forEach(d => delete d.selectedAnswer);
+
+            document.getElementById('correctCount').textContent = 0;
+            document.getElementById('wrongCount').textContent = 0;
+            document.getElementById('quizContainer').classList.remove('hidden');
+            document.getElementById('quizNav').classList.remove('hidden');
+            document.getElementById('resultBadge').classList.remove('show');
+
+            showQuestion(0);
+            updateStats();
+        }
+
+        // ==================== STATS ====================
+        function updateStats() {
+            document.getElementById('statCorrect').textContent = correctCount;
+            document.getElementById('statAnswered').textContent = answeredQuestions.size;
+            const pct = answeredQuestions.size > 0 ? Math.round((correctCount / answeredQuestions.size) * 100) : 0;
+            document.getElementById('statAccuracy').textContent = pct + '%';
+        }
+
+        // ==================== SCROLL ====================
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+
+</html>
