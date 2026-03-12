@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>识记现代汉语常用字的字形 — 互动学习</title>
+    <style>
+        :root {
+            --primary: #4a148c;
+            --primary-light: #7c43bd;
+            --accent: #ff6d00;
+            --correct: #2e7d32;
+            --wrong: #c62828;
+            --bg: #f5f0ff;
+            --card: #ffffff;
+            --text: #212121;
+            --text-light: #757575;
+            --border: #e0d6f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        /* ===== Header ===== */
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: #fff;
+            padding: 40px 20px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -30px;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: var(--bg);
+            border-radius: 50% 50% 0 0;
+        }
+
+        .header h1 {
+            font-size: 1.8em;
+            margin-bottom: 6px;
+        }
+
+        .header p {
+            opacity: .85;
+            font-size: .95em;
+        }
+
+        /* ===== Navigation Tabs ===== */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 20px 16px 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tab-btn {
+            padding: 10px 28px;
+            border: 2px solid var(--primary);
+            border-radius: 30px;
+            background: var(--card);
+            color: var(--primary);
+            font-size: .95em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: .25s;
+        }
+
+        .tab-btn.active,
+        .tab-btn:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        /* ===== Container ===== */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px 16px 60px;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        /* ===== Knowledge Section ===== */
+        .knowledge-intro {
+            background: var(--card);
+            border-radius: 14px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 12px rgba(74, 20, 140, .08);
+            border-left: 5px solid var(--accent);
+        }
+
+        .knowledge-intro h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .k-table-wrap {
+            background: var(--card);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(74, 20, 140, .08);
+            margin-bottom: 20px;
+        }
+
+        .k-table-wrap h3 {
+            background: var(--primary);
+            color: #fff;
+            padding: 14px 20px;
+            font-size: 1em;
+        }
+
+        .k-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .k-table th {
+            background: #ede7f6;
+            color: var(--primary);
+            padding: 10px 14px;
+            text-align: left;
+            font-size: .9em;
+        }
+
+        .k-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+            font-size: .92em;
+        }
+
+        .k-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .wrong-char {
+            color: var(--wrong);
+            font-weight: 700;
+            text-decoration: line-through;
+        }
+
+        .right-char {
+            color: var(--correct);
+            font-weight: 700;
+        }
+
+        /* ===== Quiz Section ===== */
+        .score-bar {
+            background: var(--card);
+            border-radius: 14px;
+            padding: 18px 24px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            box-shadow: 0 2px 12px rgba(74, 20, 140, .08);
+        }
+
+        .score-bar .progress-wrap {
+            flex: 1 1 200px;
+            min-width: 200px;
+        }
+
+        .progress-bg {
+            height: 10px;
+            background: #ede7f6;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 6px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 5px;
+            transition: width .4s;
+            width: 0%;
+        }
+
+        .score-nums {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.05em;
+        }
+
+        .score-nums span {
+            margin: 0 4px;
+        }
+
+        .reset-btn {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 20px;
+            background: var(--accent);
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .reset-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .quiz-card {
+            background: var(--card);
+            border-radius: 14px;
+            padding: 24px;
+            margin-bottom: 18px;
+            box-shadow: 0 2px 12px rgba(74, 20, 140, .08);
+            transition: border .3s;
+            border: 2px solid transparent;
+        }
+
+        .quiz-card.answered-correct {
+            border-color: var(--correct);
+        }
+
+        .quiz-card.answered-wrong {
+            border-color: var(--wrong);
+        }
+
+        .q-number {
+            display: inline-block;
+            background: var(--primary);
+            color: #fff;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 32px;
+            font-size: .85em;
+            font-weight: 700;
+            margin-right: 8px;
+        }
+
+        .q-stem {
+            font-weight: 600;
+            font-size: 1.05em;
+            margin-bottom: 14px;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+
+        .opt-btn {
+            display: block;
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            background: #fafafa;
+            text-align: left;
+            font-size: .95em;
+            cursor: pointer;
+            transition: .2s;
+            color: var(--text);
+            font-family: inherit;
+            line-height: 1.6;
+        }
+
+        .opt-btn:hover:not(.disabled) {
+            border-color: var(--primary-light);
+            background: #ede7f6;
+        }
+
+        .opt-btn.disabled {
+            cursor: default;
+            opacity: .85;
+        }
+
+        .opt-btn.selected-correct {
+            border-color: var(--correct);
+            background: #e8f5e9;
+            color: var(--correct);
+            font-weight: 600;
+        }
+
+        .opt-btn.selected-wrong {
+            border-color: var(--wrong);
+            background: #ffebee;
+            color: var(--wrong);
+            font-weight: 600;
+        }
+
+        .opt-btn.show-correct {
+            border-color: var(--correct);
+            background: #e8f5e9;
+        }
+
+        .explanation {
+            margin-top: 14px;
+            padding: 14px 16px;
+            background: #fff8e1;
+            border-radius: 10px;
+            font-size: .9em;
+            border-left: 4px solid var(--accent);
+            display: none;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        .explanation strong {
+            color: var(--accent);
+        }
+
+        /* ===== Responsive ===== */
+        @media (min-width: 600px) {
+            .options {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.35em;
+            }
+
+            .tabs {
+                flex-wrap: wrap;
+            }
+
+            .tab-btn {
+                padding: 8px 18px;
+                font-size: .85em;
+            }
+        }
+
+        /* ===== Search / Filter ===== */
+        .search-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .search-bar input {
+            flex: 1 1 200px;
+            padding: 10px 16px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-size: .95em;
+            outline: none;
+            font-family: inherit;
+        }
+
+        .search-bar input:focus {
+            border-color: var(--primary);
+        }
+
+        /* back to top */
+        .back-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            font-size: 1.4em;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(74, 20, 140, .3);
+            display: none;
+            z-index: 99;
+            transition: .2s;
+        }
+
+        .back-top:hover {
+            transform: scale(1.1);
+        }
+
+        .back-top.visible {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h1>📖 识记现代汉语常用字的字形</h1>
+        <p>第一章 语言知识和语言表达 · 第二节</p>
+    </div>
+
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('knowledge', this)">📚 知识归纳</button>
+        <button class="tab-btn" onclick="switchTab('quiz', this)">✏️ 专项练习</button>
+    </div>
+
+    <div class="container">
+
+        <div id="knowledge" class="section active">
+            <div class="knowledge-intro">
+                <h3>💡 学习要点</h3>
+                <p>汉字字形题是高职高考的常考题型，主要考查对<b>形近字、同音字、义近字</b>的辨析能力。常见错误类型包括：</p>
+                <ul style="margin:10px 0 0 20px;">
+                    <li><b>音同/音近致误</b>：如「竭泽而<span class="wrong-char">鱼</span>」→「竭泽而<span class="right-char">渔</span>」
+                    </li>
+                    <li><b>形近致误</b>：如「<span class="wrong-char">松驰</span>」→「<span class="right-char">松弛</span>」</li>
+                    <li><b>义近致误</b>：如「人情<span class="wrong-char">事</span>故」→「人情<span class="right-char">世</span>故」</li>
+                </ul>
+            </div>
+
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="🔍 搜索易错字词..." oninput="filterTable()">
+            </div>
+
+            <div class="k-table-wrap">
+                <h3>📝 高频易错字词对照表（词语类）</h3>
+                <table class="k-table" id="wordTable">
+                    <thead>
+                        <tr>
+                            <th>错误写法</th>
+                            <th>正确写法</th>
+                            <th>辨析提示</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="wrong-char">严惩不怠</span></td>
+                            <td><span class="right-char">严惩不贷</span></td>
+                            <td>贷：宽恕，非"懈怠"</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">侧隐</span></td>
+                            <td><span class="right-char">恻隐</span></td>
+                            <td>恻：悲伤，带竖心旁</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">家俱</span></td>
+                            <td><span class="right-char">家具</span></td>
+                            <td>具：器具，非"俱"</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">精兵减政</span></td>
+                            <td><span class="right-char">精兵简政</span></td>
+                            <td>简：精简，非"减少"</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">暄宾夺主</span></td>
+                            <td><span class="right-char">喧宾夺主</span></td>
+                            <td>喧：喧哗，口字旁</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">深明大意</span></td>
+                            <td><span class="right-char">深明大义</span></td>
+                            <td>义：道义，非"意思"</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">打腊</span></td>
+                            <td><span class="right-char">打蜡</span></td>
+                            <td>蜡：蜡烛的蜡，虫字旁</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">甘败下风</span></td>
+                            <td><span class="right-char">甘拜下风</span></td>
+                            <td>拜：拜服，非"败"</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">松驰</span></td>
+                            <td><span class="right-char">松弛</span></td>
+                            <td>弛：弓弦松开，弓字旁</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">气势滂礴</span></td>
+                            <td><span class="right-char">气势磅礴</span></td>
+                            <td>磅：石字旁</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">长嘘短叹</span></td>
+                            <td><span class="right-char">长吁短叹</span></td>
+                            <td>吁：叹息，口字旁</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">不孚重望</span></td>
+                            <td><span class="right-char">不孚众望</span></td>
+                            <td>众：众人的期望</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">窥豹一班</span></td>
+                            <td><span class="right-char">窥豹一斑</span></td>
+                            <td>斑：斑纹，非"班级"</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">半途而费</span></td>
+                            <td><span class="right-char">半途而废</span></td>
+                            <td>废：废弃，非"费用"</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">人情事故</span></td>
+                            <td><span class="right-char">人情世故</span></td>
+                            <td>世故：世俗习惯</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">报筹</span></td>
+                            <td><span class="right-char">报酬</span></td>
+                            <td>酬：酬谢，酉字旁</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">辍泣</span></td>
+                            <td><span class="right-char">啜泣</span></td>
+                            <td>啜：小声哭，口字旁</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">沉缅</span></td>
+                            <td><span class="right-char">沉湎</span></td>
+                            <td>湎：沉溺，三点水</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">人才倍出</span></td>
+                            <td><span class="right-char">人才辈出</span></td>
+                            <td>辈：一辈辈地</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">竭泽而鱼</span></td>
+                            <td><span class="right-char">竭泽而渔</span></td>
+                            <td>渔：捕鱼（动词），三点水</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">船泊</span></td>
+                            <td><span class="right-char">船舶</span></td>
+                            <td>舶：大船，舟字旁</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">图文并帽</span></td>
+                            <td><span class="right-char">图文并茂</span></td>
+                            <td>茂：茂盛丰富</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">大才小用</span></td>
+                            <td><span class="right-char">大材小用</span></td>
+                            <td>材：材料、人才</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">别出新裁</span></td>
+                            <td><span class="right-char">别出心裁</span></td>
+                            <td>心裁：心中的设计</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">划地为牢</span></td>
+                            <td><span class="right-char">画地为牢</span></td>
+                            <td>画：画一个圈</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="k-table-wrap">
+                <h3>📝 高频易错字词对照表（成语/熟语类）</h3>
+                <table class="k-table" id="idiomTable">
+                    <thead>
+                        <tr>
+                            <th>错误写法</th>
+                            <th>正确写法</th>
+                            <th>辨析提示</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="wrong-char">调虫小技</span></td>
+                            <td><span class="right-char">雕虫小技</span></td>
+                            <td>雕：雕刻</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">闻过饰非</span></td>
+                            <td><span class="right-char">文过饰非</span></td>
+                            <td>文：掩饰，非"听闻"</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">改斜归正</span></td>
+                            <td><span class="right-char">改邪归正</span></td>
+                            <td>邪：邪恶</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">功亏一匮</span></td>
+                            <td><span class="right-char">功亏一篑</span></td>
+                            <td>篑：盛土的竹筐</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">剑拔驽张</span></td>
+                            <td><span class="right-char">剑拔弩张</span></td>
+                            <td>弩：弓弩，弓字旁</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">走头无路</span></td>
+                            <td><span class="right-char">走投无路</span></td>
+                            <td>投：投奔</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">梳装打扮</span></td>
+                            <td><span class="right-char">梳妆打扮</span></td>
+                            <td>妆：化妆的妆</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">独挡一面</span></td>
+                            <td><span class="right-char">独当一面</span></td>
+                            <td>当：担当</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">合盘托出</span></td>
+                            <td><span class="right-char">和盘托出</span></td>
+                            <td>和盘：连同盘子</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">名列前矛</span></td>
+                            <td><span class="right-char">名列前茅</span></td>
+                            <td>茅：茅草，古代军前标志</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">凭心而论</span></td>
+                            <td><span class="right-char">平心而论</span></td>
+                            <td>平心：心平气和</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">众品栎金</span></td>
+                            <td><span class="right-char">众口铄金</span></td>
+                            <td>铄：熔化，金字旁</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">再所不惜</span></td>
+                            <td><span class="right-char">在所不惜</span></td>
+                            <td>在所：在某范围内</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">名门旺族</span></td>
+                            <td><span class="right-char">名门望族</span></td>
+                            <td>望：声望</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">拾人牙惠</span></td>
+                            <td><span class="right-char">拾人牙慧</span></td>
+                            <td>慧：智慧</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">发号司令</span></td>
+                            <td><span class="right-char">发号施令</span></td>
+                            <td>施：施行</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">鞠躬尽悴</span></td>
+                            <td><span class="right-char">鞠躬尽瘁</span></td>
+                            <td>瘁：劳累，病字头</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">要言不繁</span></td>
+                            <td><span class="right-char">要言不烦</span></td>
+                            <td>烦：烦琐</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">金壁辉煌</span></td>
+                            <td><span class="right-char">金碧辉煌</span></td>
+                            <td>碧：碧绿，石字底</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">无计于事</span></td>
+                            <td><span class="right-char">无济于事</span></td>
+                            <td>济：帮助</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">饱经苍桑</span></td>
+                            <td><span class="right-char">饱经沧桑</span></td>
+                            <td>沧：沧海，三点水</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">理曲词穷</span></td>
+                            <td><span class="right-char">理屈词穷</span></td>
+                            <td>屈：理亏</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">金榜提名</span></td>
+                            <td><span class="right-char">金榜题名</span></td>
+                            <td>题：题写</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">草管人命</span></td>
+                            <td><span class="right-char">草菅人命</span></td>
+                            <td>菅：一种野草</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">直接了当</span></td>
+                            <td><span class="right-char">直截了当</span></td>
+                            <td>截：干脆</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">察颜观色</span></td>
+                            <td><span class="right-char">察言观色</span></td>
+                            <td>言：言语</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">礼上往来</span></td>
+                            <td><span class="right-char">礼尚往来</span></td>
+                            <td>尚：崇尚</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">义气用事</span></td>
+                            <td><span class="right-char">意气用事</span></td>
+                            <td>意气：主观情绪</td>
+                        </tr>
+                        <tr>
+                            <td><span class="wrong-char">涣然一新</span></td>
+                            <td><span class="right-char">焕然一新</span></td>
+                            <td>焕：光彩焕发，火字旁</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="quiz" class="section">
+            <div class="score-bar">
+                <div class="progress-wrap">
+                    <span id="progressText">已答 0 / 30 题</span>
+                    <div class="progress-bg">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                </div>
+                <div class="score-nums">
+                    ✅ <span id="correctNum">0</span> &nbsp; ❌ <span id="wrongNum">0</span>
+                </div>
+                <button class="reset-btn" onclick="resetQuiz()">🔄 重做</button>
+            </div>
+            <div id="quizContainer"></div>
+        </div>
+
+    </div>
+
+    <button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆</button>
+
+    <script>
+        // ===== Tab Switch =====
+        function switchTab(id, btnElement) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            if (btnElement) btnElement.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ===== Search Filter =====
+        function filterTable() {
+            const q = document.getElementById('searchInput').value.trim().toLowerCase();
+            document.querySelectorAll('.k-table tbody tr').forEach(row => {
+                row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+            });
+        }
+
+        // ===== Back to Top =====
+        window.addEventListener('scroll', () => {
+            document.getElementById('backTop').classList.toggle('visible', window.scrollY > 400);
+        });
+
+        // ===== Quiz Data =====
+        const quizData = [
+            {
+                id: 1,
+                stem: "下列各组词语中，没有错别字的一组是",
+                options: [
+                    "A．震撼　严惩不怠　名副其实　雄才大略",
+                    "B．蜚声　烟飞云散　匪夷所思　芳草菲菲",
+                    "C．馋害　相辅相成　人情事故　穷形尽相",
+                    "D．侧隐　以逸待劳　草木凋零　按部就班"
+                ],
+                answer: 1,
+                explain: 'A项"严惩不怠"应为"严惩不贷"；C项"人情事故"应为"人情世故"；D项"侧隐"应为"恻隐"。'
+            },
+            {
+                id: 2,
+                stem: "下列各组词语中，没有错别字的一组是",
+                options: [
+                    "A．家俱　厉兵秣马　精兵减政　一筹莫展",
+                    "B．渲染　暄宾夺主　迫不及待　脍炙人口",
+                    "C．踏勘　死心塌地　一如既往　心力交瘁",
+                    "D．搬弄　深明大意　班门弄斧　一诺千金"
+                ],
+                answer: 2,
+                explain: 'A项"家俱"应为"家具"，"精兵减政"应为"精兵简政"；B项"暄宾夺主"应为"喧宾夺主"；D项"深明大意"应为"深明大义"。'
+            },
+            {
+                id: 3,
+                stem: "下列各组词语中，没有错别字的一组是",
+                options: [
+                    "A．打腊　真知灼见　疾风劲草　甘败下风",
+                    "B．松驰　销声匿迹　相形见绌　气势滂礴",
+                    "C．冒犯　贸然行动　细水常流　长嘘短叹",
+                    "D．辐射　淡泊明志　不胫而走　心猿意马"
+                ],
+                answer: 3,
+                explain: 'A项"打腊"应为"打蜡"，"甘败下风"应为"甘拜下风"；B项"松驰"应为"松弛"，"气势滂礴"应为"气势磅礴"；C项"细水常流"应为"细水长流"，"长嘘短叹"应为"长吁短叹"。'
+            },
+            {
+                id: 4,
+                stem: "下列各组词语中，没有错别字的一组是",
+                options: [
+                    "A．抉择　雕沏　附庸风雅　不孚重望",
+                    "B．辍学　洽商　刮目相看　窥豹一班",
+                    "C．好像　题词　防患未然　一筹莫展",
+                    "D．矜持　赋予　半途而费　恰如其分"
+                ],
+                answer: 2,
+                explain: 'A项"雕沏"应为"雕砌"，"不孚重望"应为"不孚众望"；B项"窥豹一班"应为"窥豹一斑"；D项"半途而费"应为"半途而废"。'
+            },
+            {
+                id: 5,
+                stem: "下列各组词语中，没有错别字的一组是",
+                options: [
+                    "A．裹胁　宣泄　丰功伟绩　坐收渔利",
+                    "B．凋敝　报筹　不纠既往　张灯结彩",
+                    "C．事态　辍泣　墨守成规　反璞归真",
+                    "D．沉缅　收讫　人才倍出　出人头地"
+                ],
+                answer: 0,
+                explain: 'B项"报筹"应为"报酬"，"不纠既往"应为"不咎既往"；C项"辍泣"应为"啜泣"，"反璞归真"应为"返璞归真"；D项"沉缅"应为"沉湎"，"人才倍出"应为"人才辈出"。'
+            },
+            {
+                id: 6,
+                stem: "下列各组词语中，没有错别字的一组是",
+                options: [
+                    "A．公仆　远大抱负　加官进爵　食不果腹",
+                    "B．竣工　天之骄子　天翻地覆　竭泽而鱼",
+                    "C．船泊　同仇敌忾　有错必究　前仆后继",
+                    "D．膨胀　图文并帽　两全其美　雍容华贵"
+                ],
+                answer: 0,
+                explain: 'B项"竭泽而鱼"应为"竭泽而渔"；C项"有错必究"应为"有错必纠"，"船泊"应为"船舶"；D项"图文并帽"应为"图文并茂"。'
+            },
+            {
+                id: 7,
+                stem: "下列各组词语中，没有错别字的一组是",
+                options: [
+                    "A．两全齐美　富丽堂皇　委曲求全　大才小用",
+                    "B．臭名昭著　覆水难收　老态龙钟　别出新裁",
+                    "C．关怀备至　真知灼见　防患未然　心心相印",
+                    "D．蓬荜生辉　令人发指　划地为牢　地大物博"
+                ],
+                answer: 2,
+                explain: 'A项"两全齐美"应为"两全其美"，"大才小用"应为"大材小用"；B项"别出新裁"应为"别出心裁"；D项"划地为牢"应为"画地为牢"。'
+            },
+            {
+                id: 8,
+                stem: "下列各组词语中，没有错别字的一组是",
+                options: [
+                    "A．贸然　诀窍　调虫小技　闻过饰非",
+                    "B．荟萃　诡计　改斜归正　功亏一匮",
+                    "C．厮杀　通宵　销声匿迹　剑拔驽张",
+                    "D．按摩　推诿　铤而走险　祖传秘方"
+                ],
+                answer: 3,
+                explain: 'A项"调虫小技"应为"雕虫小技"，"闻过饰非"应为"文过饰非"；B项"改斜归正"应为"改邪归正"，"功亏一匮"应为"功亏一篑"；C项"剑拔驽张"应为"剑拔弩张"。'
+            },
+            {
+                id: 9,
+                stem: "下列各组词语中，没有错别字的一组是",
+                options: [
+                    "A．申冤　走头无路　励精图治　欲加之罪，何患无辞",
+                    "B．妨碍　养尊处优　矢口否认　道不同不相为谋",
+                    "C．编辑　梳装打扮　气宇轩昂　醉翁之意不在酒",
+                    "D．厮守　混淆视听　咎由自取　麻雀虽小，肝胆具全"
+                ],
+                answer: 1,
+                explain: 'A项"走头无路"应为"走投无路"；C项"梳装打扮"应为"梳妆打扮"；D项"肝胆具全"应为"肝胆俱全"。'
+            },
+            {
+                id: 10,
+                stem: "下列各组词语中，没有错别字的一组是",
+                options: [
+                    "A．抱负　良晨美景　储藏　出奇制胜",
+                    "B．名片　祸国殃民　赈济　附庸风雅",
+                    "C．范畴　终身大事　吉详　得不偿失",
+                    "D．就犯　断章取义　恬淡　眼花缭乱"
+                ],
+                answer: 1,
+                explain: 'A项"良晨美景"应为"良辰美景"（晨→辰）；C项"吉详"应为"吉祥"（详→祥）；D项"就犯"应为"就范"（犯→范）。'
+            },
+            {
+                id: 11,
+                stem: "下列各组词语中，没有错别字的一组是",
+                options: [
+                    "A．隐秘　黯然失色　独挡一面　化干戈为玉帛",
+                    "B．涵养　合盘托出　惺惺相惜　反其道而行之",
+                    "C．鼓噪　出神入化　难辞其咎　不登大雅之堂",
+                    "D．膨涨　抑扬顿挫　不绝如缕　如坠五里雾中"
+                ],
+                answer: 2,
+                explain: 'A项"独挡一面"应为"独当一面"；B项"合盘托出"应为"和盘托出"；D项"膨涨"应为"膨胀"。'
+            },
+            {
+                id: 12,
+                stem: "下列各组词语中，没有错别字的一组是",
+                options: [
+                    "A．风靡一时　名列前矛　痉挛　部署",
+                    "B．推心置腹　各行其是　对弈　怄气",
+                    "C．大庭广众　一枕黄粱　煤气　朗颂",
+                    "D．唉声叹气　济济一堂　锻练　蛰伏"
+                ],
+                answer: 1,
+                explain: 'A项"名列前矛"应为"名列前茅"；C项"朗颂"应为"朗诵"；D项"锻练"应为"锻炼"。'
+            },
+            {
+                id: 13,
+                stem: "下列各组词语中，<b>有</b>错别字的一组是",
+                options: [
+                    "A．战栗　凭心而论　众品栎金　心有灵犀一点通",
+                    "B．溜达　门可罗雀　原形毕露　置之死地而后生",
+                    "C．纰漏　贻笑大方　恼羞成怒　冒天下之大不韪",
+                    "D．吞噬　重整旗鼓　共商国是　一年之计在于春"
+                ],
+                answer: 0,
+                explain: '注意本题问的是"有错别字"的一组。A项"凭心而论"应为"平心而论"，"众品栎金"应为"众口铄金"。'
+            },
+            {
+                id: 14,
+                stem: "下列各组词语中，<b>有</b>错别字的一组是",
+                options: [
+                    "A．籍贯　筹划　更迭　百废待兴",
+                    "B．翔实　瞭望　保障　坚韧不拔",
+                    "C．肖像　白皙　修葺　能言善辫",
+                    "D．迁徙　戳穿　竣工　如愿以偿"
+                ],
+                answer: 2,
+                explain: 'C项"能言善辫"应为"能言善辩"。'
+            },
+            {
+                id: 15,
+                stem: "下列各组词语中，没有错别字的一组是",
+                options: [
+                    "A．精粹　勤俭　再所不惜　莫名其妙",
+                    "B．诙谐　好像　欲盖弥彰　易如翻掌",
+                    "C．梳妆　赋予　名门旺族　破涕为笑",
+                    "D．毗邻　针砭　明察暗访　论功行赏"
+                ],
+                answer: 3,
+                explain: 'A项"再所不惜"应为"在所不惜"；B项"易如翻掌"应为"易如反掌"；C项"名门旺族"应为"名门望族"。'
+            },
+            {
+                id: 16,
+                stem: "下列各组词语中，没有错别字的一组是",
+                options: [
+                    "A．淤积　绿菌场　回光返照　独占鳌头",
+                    "B．联结　抠字眼　蝉联冠军　拾人牙惠",
+                    "C．融资　殊不知　处心积虑　委曲求全",
+                    "D．繁衍　冠名权　独具慧眼　发号司令"
+                ],
+                answer: 2,
+                explain: 'A项"绿菌场"应为"绿茵场"；B项"拾人牙惠"应为"拾人牙慧"；D项"发号司令"应为"发号施令"。'
+            },
+            {
+                id: 17,
+                stem: "下列各组词语中，没有错别字的一组是",
+                options: [
+                    "A．临摹　度假　作客他乡　螳螂捕蝉，黄雀在后",
+                    "B．荫庇　频律　涣然冰释　鞠躬尽悴，死而后已",
+                    "C．磋商　寂寥　要言不繁　人为刀俎，我为鱼肉",
+                    "D．协迫　邂逅　珠联璧合　老骥伏枥，志在千里"
+                ],
+                answer: 0,
+                explain: 'B项"频律"应为"频率"，"鞠躬尽悴"应为"鞠躬尽瘁"；C项"要言不繁"应为"要言不烦"；D项"协迫"应为"胁迫"。'
+            },
+            {
+                id: 18,
+                stem: "下列各组词语中，有<b>两个</b>错别字的一组是",
+                options: [
+                    "A．蓝球　笑靥　秣马厉兵　篷荜生辉",
+                    "B．脉搏　涣散　耳濡目染　汗流夹背",
+                    "C．喝彩　炽热　哀声叹气　恼羞成怒",
+                    "D．副刊　伫立　青出于兰　调虎离山"
+                ],
+                answer: 0,
+                explain: 'A项"蓝球"应为"篮球"，"篷荜生辉"应为"蓬荜生辉"——有两个错别字。B项"汗流夹背"应为"汗流浃背"（1个）；C项"哀声叹气"应为"唉声叹气"（1个）；D项"青出于兰"应为"青出于蓝"（1个）。'
+            },
+            {
+                id: 19,
+                stem: "下列各组词语中，<b>有</b>错别字的一组是",
+                options: [
+                    "A．追溯　九州　金壁辉煌　寒冬腊月",
+                    "B．迁徙　偶尔　世事变幻　朝代更迭",
+                    "C．精粹　赃款　急功近利　九霄云外",
+                    "D．经典　严峻　声名鹊起　鼎力相助"
+                ],
+                answer: 0,
+                explain: 'A项"金壁辉煌"应为"金碧辉煌"。'
+            },
+            {
+                id: 20,
+                stem: "下列各组词语中，没有错别字的一组是",
+                options: [
+                    "A．举一反三　鞠躬尽瘁　无计于事　辟谣",
+                    "B．夙兴夜寐　江天寥阔　饱经苍桑　战栗",
+                    "C．理曲词穷　修茸一新　幅员辽阔　诀别",
+                    "D．神志不清　有目共睹　以毒攻毒　羁绊"
+                ],
+                answer: 3,
+                explain: 'A项"无计于事"应为"无济于事"；B项"江天寥阔"应为"江天寥廓"，"饱经苍桑"应为"饱经沧桑"；C项"理曲词穷"应为"理屈词穷"，"修茸一新"应为"修葺一新"。'
+            },
+            {
+                id: 21,
+                stem: "下列各组词语中，没有错别字的一组是",
+                options: [
+                    "A．鸿鹄之志　神采奕奕　仓海桑田　归纳演译",
+                    "B．冥思苦想　自行其事　风姿潇洒　烟波浩荡",
+                    "C．气喘吁吁　相辅相成　匪夷所思　疾言厉色",
+                    "D．蛊惑人心　厉厉在目　鼎力相助　面容安详"
+                ],
+                answer: 2,
+                explain: 'A项"仓海桑田"应为"沧海桑田"，"归纳演译"应为"归纳演绎"；B项"自行其事"应为"自行其是"；D项"厉厉在目"应为"历历在目"。'
+            },
+            {
+                id: 22,
+                stem: "下列各组词语中都有错别字，其中只有<b>一个</b>错别字的一组是",
+                options: [
+                    "A．蓬头诟面　一丘之貉　烜赫一时　不见经传",
+                    "B．人迹罕至　虚无漂缈　呐呐半晌　暮天席地",
+                    "C．明察秋毫　了了无几　磕然长逝　衣衫褴缕",
+                    "D．别出新裁　瘁不及防　分道扬镳　忐忑不安"
+                ],
+                answer: 0,
+                explain: 'A项仅"诟"应为"垢"（1处）；B项有三处错误；C项有三处错误；D项有两处错误（"新"→"心"，"瘁"→"猝"）。'
+            },
+            {
+                id: 23,
+                stem: "下列各组词语中，有<b>两个</b>错别字的一组是",
+                options: [
+                    "A．勘误　明信片　层峦迭嶂　再接再厉",
+                    "B．文身　挖墙角　悬梁刺股　计日成功",
+                    "C．凑和　水蒸汽　犄角之势　平心而论",
+                    "D．简练　水龙头　一如继往　三缄其口"
+                ],
+                answer: 1,
+                explain: 'B项"挖墙角"应为"挖墙脚"，"计日成功"应为"计日程功"——有两个错别字。A项1处（层峦叠嶂）；C项3处；D项1处（一如既往）。'
+            },
+            {
+                id: 24,
+                stem: "下列各组词语中，没有错别字的一组是",
+                options: [
+                    "A．渡假　草管人命　曲径通幽　萎靡不振",
+                    "B．觉悟　墨守成规　随声附和　迫不及待",
+                    "C．入场卷　异彩纷呈　珠丝马迹　不落窠臼",
+                    "D．粗犷　闻名遐迩　直接了当　谈笑风生"
+                ],
+                answer: 1,
+                explain: 'A项"渡假"→"度假"，"草管人命"→"草菅人命"；C项"入场卷"→"入场券"，"珠丝马迹"→"蛛丝马迹"；D项"直接了当"→"直截了当"。'
+            },
+            {
+                id: 25,
+                stem: "下列各组词语中，没有错别字的一组是",
+                options: [
+                    "A．既使　连锁店　察颜观色　暗无天日",
+                    "B．坐落　炒鱿鱼　青山绿水　百炼成钢",
+                    "C．苍桑　下马威　渡过难关　安分守己",
+                    "D．影碟　歌午厅　偃旗息鼓　大有裨益"
+                ],
+                answer: 1,
+                explain: 'A项"既使"→"即使"，"察颜观色"→"察言观色"；C项"苍桑"→"沧桑"；D项"歌午厅"→"歌舞厅"。'
+            },
+            {
+                id: 26,
+                stem: "下列各组词语中，没有错别字的一组是",
+                options: [
+                    "A．阑珊　显象管　常年累月　出奇不意",
+                    "B．皱文　候车室　涣然一新　礼上往来",
+                    "C．燥热　坐标系　老生常谈　道貌岸然",
+                    "D．延申　主旋律　食不裹腹　兵荒马乱"
+                ],
+                answer: 2,
+                explain: 'A项"显象管"→"显像管"，"常年累月"→"长年累月"，"出奇不意"→"出其不意"；B项"皱文"→"皱纹"，"涣然一新"→"焕然一新"，"礼上往来"→"礼尚往来"；D项"延申"→"延伸"，"食不裹腹"→"食不果腹"。'
+            },
+            {
+                id: 27,
+                stem: "下列各组词语中，没有错别字的一组是",
+                options: [
+                    "A．偏袒　金榜提名　轻歌曼舞　文武之道，一张一弛",
+                    "B．低毁　拈轻怕重　坐收渔利　不见棺材，不落泪",
+                    "C．反诘　洗耳恭听　断线风筝　多行不义必自毖",
+                    "D．讥诮　诲人不倦　泾渭分明　言者无罪，闻者足戒"
+                ],
+                answer: 3,
+                explain: 'A项"金榜提名"→"金榜题名"；B项"低毁"→"诋毁"；C项"多行不义必自毖"→"多行不义必自毙"。'
+            },
+            {
+                id: 28,
+                stem: "下列各组词语中，<b>有</b>错别字的一组是",
+                options: [
+                    "A．赝品　鬼鬼祟祟　蓝天白云　貌合神离",
+                    "B．重叠　浩如烟海　沧海一粟　罄竹难书",
+                    "C．气慨　怄心沥血　挑肥拣瘦　站稳脚跟",
+                    "D．谜团　出类拔萃　黄粱美梦　洁白无瑕"
+                ],
+                answer: 2,
+                explain: 'C项"气慨"应为"气概"，"怄心沥血"应为"呕心沥血"。'
+            },
+            {
+                id: 29,
+                stem: "下列各组词语中，<b>有</b>错别字的一组是",
+                options: [
+                    "A．心酸　辛酸往事　迷团　寓义深刻",
+                    "B．一般　略见一斑　过度　旁征博引",
+                    "C．才华　无私无畏　家世　山洪暴发",
+                    "D．明智　彬彬有礼　灌注　全神贯注"
+                ],
+                answer: 0,
+                explain: 'A项"迷团"应为"谜团"，"寓义深刻"应为"寓意深刻"。'
+            },
+            {
+                id: 30,
+                stem: "下列各组词语中，<b>有</b>错别字的一组是",
+                options: [
+                    "A．翔实　词不达意　冷漠　励精图治",
+                    "B．痉挛　信誓旦旦　偏僻　义气用事",
+                    "C．风靡　孽根祸种　攀缘　始作俑者",
+                    "D．倾轧　挥斥方遒　弘扬　扑朔迷离"
+                ],
+                answer: 1,
+                explain: 'B项"义气用事"应为"意气用事"。'
+            }
+        ];
+
+        // ===== Render Quiz =====
+        let answered = 0, correct = 0, wrong = 0;
+        const states = new Array(quizData.length).fill(null); // null = unanswered
+
+        function renderQuiz() {
+            const c = document.getElementById('quizContainer');
+            c.innerHTML = '';
+            quizData.forEach((q, qi) => {
+                const card = document.createElement('div');
+                card.className = 'quiz-card';
+                card.id = 'q' + qi;
+                let optHtml = q.options.map((o, oi) =>
+                    `<button class="opt-btn" data-q="${qi}" data-o="${oi}" onclick="selectOption(${qi},${oi})">${o}</button>`
+                ).join('');
+                card.innerHTML = `
+      <div class="q-stem"><span class="q-number">${q.id}</span>${q.stem}</div>
+      <div class="options">${optHtml}</div>
+      <div class="explanation" id="exp${qi}"><strong>【解析】</strong> ${q.explain}</div>
+    `;
+                c.appendChild(card);
+            });
+        }
+
+        function selectOption(qi, oi) {
+            if (states[qi] !== null) return; // already answered
+            states[qi] = oi;
+            const q = quizData[qi];
+            const card = document.getElementById('q' + qi);
+            const btns = card.querySelectorAll('.opt-btn');
+            btns.forEach(b => b.classList.add('disabled'));
+
+            if (oi === q.answer) {
+                btns[oi].classList.add('selected-correct');
+                card.classList.add('answered-correct');
+                correct++;
+            } else {
+                btns[oi].classList.add('selected-wrong');
+                btns[q.answer].classList.add('show-correct');
+                card.classList.add('answered-wrong');
+                wrong++;
+            }
+            answered++;
+            document.getElementById('exp' + qi).classList.add('show');
+            updateScore();
+        }
+
+        function updateScore() {
+            document.getElementById('correctNum').textContent = correct;
+            document.getElementById('wrongNum').textContent = wrong;
+            document.getElementById('progressText').textContent = `已答 ${answered} / ${quizData.length} 题`;
+            document.getElementById('progressFill').style.width = (answered / quizData.length * 100) + '%';
+        }
+
+        function resetQuiz() {
+            answered = 0; correct = 0; wrong = 0;
+            states.fill(null);
+            renderQuiz();
+            updateScore();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Init
+        renderQuiz();
+    </script>
+</body>
+
+</html>
