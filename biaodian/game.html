@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🎮 标点闯关王 · 自动同步版</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* 游戏专属样式补丁 */
+    .game-container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(255, 107, 53, 0.2);
+    }
+
+    .game-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .progress-bar {
+      height: 8px;
+      background: #FFE5B4;
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 20px 0;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #FF6B35, #FF9E44);
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+
+    .timer {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #FF6B35;
+      text-align: center;
+      margin: 12px 0;
+    }
+
+    .question-box {
+      background: #FFF9F0;
+      padding: 24px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+      min-height: 180px;
+    }
+
+    .question-text {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .option-btn {
+      background: white;
+      border: 2px solid #FFD6B2;
+      border-radius: 10px;
+      padding: 16px 12px;
+      text-align: left;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .option-btn:hover {
+      border-color: #FF9E44;
+      background: #FFF5E6;
+    }
+
+    .option-btn.selected {
+      border-color: #FF6B35;
+      background: #FFECE0;
+      font-weight: 600;
+    }
+
+    .option-btn.correct::after {
+      content: "✓";
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      color: #4CAF50;
+      font-weight: bold;
+    }
+
+    .option-btn.incorrect::after {
+      content: "✗";
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      color: #F44336;
+      font-weight: bold;
+    }
+
+    .btn-control {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .btn {
+      padding: 12px 28px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .btn-primary {
+      background: #FF6B35;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #FF5722;
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: #E0E0E0;
+      color: #333;
+    }
+
+    .btn-secondary:hover {
+      background: #CCCCCC;
+    }
+
+    .result-page {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .score-display {
+      font-size: 4rem;
+      font-weight: 700;
+      color: #FF6B35;
+      margin: 20px 0;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .summary {
+      background: #F8F8F8;
+      padding: 20px;
+      border-radius: 12px;
+      margin: 25px 0;
+    }
+
+    .wrong-list {
+      text-align: left;
+      margin-top: 16px;
+    }
+
+    .wrong-item {
+      padding: 8px 0;
+      border-bottom: 1px dashed #EEE;
+    }
+
+    @media (max-width: 600px) {
+      .options-grid {
+        grid-template-columns: 1fr;
+      }
+      .score-display {
+        font-size: 3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <h1 class="logo">🎯 标点闯关王</h1>
+      <ul class="nav-links">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="#" class="active">闯关</a></li>
+        <li><a href="#explanations">解析</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="game-container">
+    <div class="game-header">
+      <h2>标点符号闯关挑战</h2>
+      <p>共 <span id="total-count">23</span> 题 | 目标：100% 正确率！</p>
+    </div>
+
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+
+    <div class="timer" id="timer">30s</div>
+
+    <div class="question-box" id="question-box">
+      <div class="question-text" id="question-text"></div>
+      <div class="options-grid" id="options-grid"></div>
+    </div>
+
+    <div class="btn-control">
+      <button class="btn btn-secondary" id="prev-btn" disabled>← 上一题</button>
+      <button class="btn btn-primary" id="next-btn">下一题 →</button>
+    </div>
+
+    <!-- 结果页（初始隐藏） -->
+    <div class="result-page" id="result-page" style="display:none;">
+      <h2>🎉 闯关完成！</h2>
+      <div class="score-display" id="final-score">0</div>
+      <p id="score-desc">你的得分： <span id="score-text"></span></p>
+
+      <div class="summary">
+        <h3>📊 成绩分析</h3>
+        <p>正确：<span id="correct-count">0</span> / <span id="total-count-result">23</span></p>
+        <p>正确率：<span id="accuracy">0%</span></p>
+        <div class="wrong-list" id="wrong-list">
+          <h4>❌ 错题回顾：</h4>
+          <!-- 动态填充 -->
+        </div>
+      </div>
+
+      <div class="btn-control">
+        <button class="btn btn-secondary" onclick="restartGame()">再试一次</button>
+        <button class="btn btn-primary" onclick="goToIndex()">返回首页</button>
+      </div>
+    </div>
+  </main>
+
+  <script src="questions.js"></script>
+  <script>
+    // 游戏状态
+    const QUESTIONS = window.QUESTIONS || [];
+    let currentIndex = 0;
+    let score = 0;
+    let timeLeft = 30;
+    let timerInterval;
+    let userAnswers = {}; // id → answer
+
+    const els = {
+      questionText: document.getElementById('question-text'),
+      optionsGrid: document.getElementById('options-grid'),
+      nextBtn: document.getElementById('next-btn'),
+      prevBtn: document.getElementById('prev-btn'),
+      timer: document.getElementById('timer'),
+      progressFill: document.getElementById('progress-fill'),
+      totalCount: document.getElementById('total-count'),
+      totalCountResult: document.getElementById('total-count-result'),
+      correctCount: document.getElementById('correct-count'),
+      accuracy: document.getElementById('accuracy'),
+      finalScore: document.getElementById('final-score'),
+      scoreText: document.getElementById('score-text'),
+      wrongList: document.getElementById('wrong-list'),
+      resultPage: document.getElementById('result-page')
+    };
+
+    // 初始化
+    document.addEventListener('DOMContentLoaded', () => {
+      if (QUESTIONS.length === 0) {
+        els.questionText.innerHTML = "<p style='color:#e74c3c'>⚠️ 错误：未加载到题目数据，请检查 questions.js！</p>";
+        return;
+      }
+
+      els.totalCount.textContent = QUESTIONS.length;
+      els.totalCountResult.textContent = QUESTIONS.length;
+
+      showQuestion(currentIndex);
+      startTimer();
+    });
+
+    function showQuestion(index) {
+      const q = QUESTIONS[index];
+      if (!q) return;
+
+      els.questionText.innerHTML = `<strong>Q${q.id}．</strong> ${q.stem}`;
+      els.optionsGrid.innerHTML = '';
+
+      const options = ['A', 'B', 'C', 'D'];
+      options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.dataset.option = opt;
+        btn.innerHTML = `<strong>${opt}.</strong> ${q.options[opt]}`;
+        btn.onclick = () => selectOption(opt);
+        els.optionsGrid.appendChild(btn);
+      });
+
+      // 更新进度条
+      const percent = ((index + 1) / QUESTIONS.length) * 100;
+      els.progressFill.style.width = `${percent}%`;
+
+      // 更新按钮状态
+      els.prevBtn.disabled = index === 0;
+      els.nextBtn.textContent = index === QUESTIONS.length - 1 ? '提交答卷' : '下一题 →';
+
+      // 重置计时器
+      clearInterval(timerInterval);
+      timeLeft = 30;
+      updateTimer();
+      startTimer();
+    }
+
+    function selectOption(opt) {
+      // 清除之前选择
+      document.querySelectorAll('.option-btn').forEach(el => {
+        el.classList.remove('selected');
+      });
+      // 设置新选择
+      const btn = document.querySelector(`.option-btn[data-option="${opt}"]`);
+      btn.classList.add('selected');
+
+      // 记录答案
+      userAnswers[QUESTIONS[currentIndex].id] = opt;
+    }
+
+    function startTimer() {
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        updateTimer();
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          handleAnswer();
+        }
+      }, 1000);
+    }
+
+    function updateTimer() {
+      els.timer.textContent = `${timeLeft}s`;
+      if (timeLeft <= 10) {
+        els.timer.style.color = '#e74c3c';
+        els.timer.style.fontWeight = 'bold';
+      } else {
+        els.timer.style.color = '#FF6B35';
+        els.timer.style.fontWeight = 'normal';
+      }
+    }
+
+    function handleAnswer() {
+      const q = QUESTIONS[currentIndex];
+      const userAns = userAnswers[q.id] || '';
+      const isCorrect = userAns === q.answer;
+
+      // 反馈视觉
+      document.querySelectorAll('.option-btn').forEach(btn => {
+        const opt = btn.dataset.option;
+        if (opt === q.answer) {
+          btn.classList.add('correct');
+        }
+        if (opt === userAns && !isCorrect) {
+          btn.classList.add('incorrect');
+        }
+      });
+
+      // 加分
+      if (isCorrect) score += 10;
+
+      // 延迟跳转（让用户看清反馈）
+      setTimeout(() => {
+        if (currentIndex < QUESTIONS.length - 1) {
+          currentIndex++;
+          showQuestion(currentIndex);
+        } else {
+          finishGame();
+        }
+      }, 1200);
+    }
+
+    function finishGame() {
+      clearInterval(timerInterval);
+
+      // 计算统计
+      const correct = Object.entries(userAnswers).filter(
+        ([id, ans]) => QUESTIONS.find(q => q.id == id)?.answer === ans
+      ).length;
+
+      els.finalScore.textContent = score;
+      els.scoreText.textContent = `${score} 分`;
+      els.correctCount.textContent = correct;
+      els.accuracy.textContent = Math.round((correct / QUESTIONS.length) * 100) + '%';
+
+      // 填充错题列表
+      els.wrongList.innerHTML = '<h4>❌ 错题回顾：</h4>';
+      QUESTIONS.forEach(q => {
+        const userAns = userAnswers[q.id];
+        if (userAns && userAns !== q.answer) {
+          const item = document.createElement('div');
+          item.className = 'wrong-item';
+          item.innerHTML = `
+            <strong>Q${q.id}</strong>：<br>
+            你的答案：${userAns}｜正确答案：${q.answer}<br>
+            <small>${q.stem.substring(0, 50)}…</small>
+          `;
+          els.wrongList.appendChild(item);
+        }
+      });
+
+      // 显示结果页
+      document.querySelector('.game-container').style.display = 'none';
+      els.resultPage.style.display = 'block';
+    }
+
+    // 事件绑定
+    els.nextBtn.onclick = () => {
+      if (currentIndex === QUESTIONS.length - 1) {
+        handleAnswer(); // 最后一题 → 提交
+      } else {
+        if (userAnswers[QUESTIONS[currentIndex].id]) {
+          currentIndex++;
+          showQuestion(currentIndex);
+        } else {
+          alert('请先选择一个答案！');
+        }
+      }
+    };
+
+    els.prevBtn.onclick = () => {
+      if (currentIndex > 0) {
+        currentIndex--;
+        showQuestion(currentIndex);
+      }
+    };
+
+    // 工具函数
+    function restartGame() {
+      currentIndex = 0;
+      score = 0;
+      userAnswers = {};
+      els.resultPage.style.display = 'none';
+      document.querySelector('.game-container').style.display = 'block';
+      showQuestion(0);
+    }
+
+    function goToIndex() {
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>
