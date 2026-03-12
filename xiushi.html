@@ -1,0 +1,2129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>辨析并运用常见修辞手法 - 学习页面</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans GB', sans-serif;
+            background: #f0f2f5;
+            color: #333;
+            line-height: 1.8;
+        }
+
+        /* 顶部导航 */
+        .top-bar {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .top-bar h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+            letter-spacing: 3px;
+        }
+
+        .top-bar .subtitle {
+            font-size: 14px;
+            opacity: 0.8;
+            letter-spacing: 2px;
+        }
+
+        /* 导航标签 */
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            background: #16213e;
+            padding: 0;
+            flex-wrap: wrap;
+        }
+
+        .nav-tab {
+            padding: 12px 28px;
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 15px;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+            letter-spacing: 1px;
+        }
+
+        .nav-tab:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-tab.active {
+            color: #e94560;
+            border-bottom-color: #e94560;
+            background: rgba(233, 69, 96, 0.1);
+        }
+
+        /* 主内容区 */
+        .main-content {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        /* 知识卡片 */
+        .knowledge-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .knowledge-card {
+            background: white;
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border-left: 5px solid;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .knowledge-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .knowledge-card .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: white;
+        }
+
+        .knowledge-card h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .knowledge-card .definition {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .knowledge-card .example-tag {
+            font-size: 12px;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+
+        .knowledge-card .example {
+            font-size: 14px;
+            color: #444;
+            padding: 10px 15px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #f8f9ff 100%);
+            border-radius: 8px;
+            margin-bottom: 8px;
+            border-left: 3px solid;
+            position: relative;
+        }
+
+        .knowledge-card .example .highlight {
+            font-weight: bold;
+            padding: 0 3px;
+            border-radius: 3px;
+        }
+
+        .knowledge-card .detail {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #ddd;
+        }
+
+        .knowledge-card.expanded .detail {
+            display: block;
+        }
+
+        .expand-btn {
+            font-size: 12px;
+            color: #e94560;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 10px;
+            padding: 5px 12px;
+            background: #fff0f3;
+            border-radius: 20px;
+            border: none;
+            transition: all 0.3s;
+        }
+
+        .expand-btn:hover {
+            background: #ffe0e6;
+        }
+
+        /* 颜色方案 */
+        .card-biyu {
+            border-left-color: #e94560;
+        }
+
+        .card-biyu .card-icon {
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
+        }
+
+        .card-biyu .example-tag {
+            background: #e94560;
+        }
+
+        .card-biyu .example {
+            border-left-color: #e94560;
+        }
+
+        .card-biyu .example .highlight {
+            color: #e94560;
+            background: #fff0f3;
+        }
+
+        .card-niren {
+            border-left-color: #0f3460;
+        }
+
+        .card-niren .card-icon {
+            background: linear-gradient(135deg, #0f3460, #1a73e8);
+        }
+
+        .card-niren .example-tag {
+            background: #0f3460;
+        }
+
+        .card-niren .example {
+            border-left-color: #0f3460;
+        }
+
+        .card-niren .example .highlight {
+            color: #0f3460;
+            background: #e8f0fe;
+        }
+
+        .card-jiedai {
+            border-left-color: #00b4d8;
+        }
+
+        .card-jiedai .card-icon {
+            background: linear-gradient(135deg, #00b4d8, #48cae4);
+        }
+
+        .card-jiedai .example-tag {
+            background: #00b4d8;
+        }
+
+        .card-jiedai .example {
+            border-left-color: #00b4d8;
+        }
+
+        .card-jiedai .example .highlight {
+            color: #00b4d8;
+            background: #e0f7fa;
+        }
+
+        .card-kuazhang {
+            border-left-color: #ff6d00;
+        }
+
+        .card-kuazhang .card-icon {
+            background: linear-gradient(135deg, #ff6d00, #ff9e40);
+        }
+
+        .card-kuazhang .example-tag {
+            background: #ff6d00;
+        }
+
+        .card-kuazhang .example {
+            border-left-color: #ff6d00;
+        }
+
+        .card-kuazhang .example .highlight {
+            color: #ff6d00;
+            background: #fff3e0;
+        }
+
+        .card-paib {
+            border-left-color: #7b2ff7;
+        }
+
+        .card-paib .card-icon {
+            background: linear-gradient(135deg, #7b2ff7, #a855f7);
+        }
+
+        .card-paib .example-tag {
+            background: #7b2ff7;
+        }
+
+        .card-paib .example {
+            border-left-color: #7b2ff7;
+        }
+
+        .card-paib .example .highlight {
+            color: #7b2ff7;
+            background: #f3e8ff;
+        }
+
+        .card-duiou {
+            border-left-color: #059669;
+        }
+
+        .card-duiou .card-icon {
+            background: linear-gradient(135deg, #059669, #34d399);
+        }
+
+        .card-duiou .example-tag {
+            background: #059669;
+        }
+
+        .card-duiou .example {
+            border-left-color: #059669;
+        }
+
+        .card-duiou .example .highlight {
+            color: #059669;
+            background: #ecfdf5;
+        }
+
+        .card-shewen {
+            border-left-color: #d946ef;
+        }
+
+        .card-shewen .card-icon {
+            background: linear-gradient(135deg, #d946ef, #e879f9);
+        }
+
+        .card-shewen .example-tag {
+            background: #d946ef;
+        }
+
+        .card-shewen .example {
+            border-left-color: #d946ef;
+        }
+
+        .card-shewen .example .highlight {
+            color: #d946ef;
+            background: #fdf4ff;
+        }
+
+        .card-fanwen {
+            border-left-color: #dc2626;
+        }
+
+        .card-fanwen .card-icon {
+            background: linear-gradient(135deg, #dc2626, #f87171);
+        }
+
+        .card-fanwen .example-tag {
+            background: #dc2626;
+        }
+
+        .card-fanwen .example {
+            border-left-color: #dc2626;
+        }
+
+        .card-fanwen .example .highlight {
+            color: #dc2626;
+            background: #fef2f2;
+        }
+
+        .card-fanfu {
+            border-left-color: #0891b2;
+        }
+
+        .card-fanfu .card-icon {
+            background: linear-gradient(135deg, #0891b2, #22d3ee);
+        }
+
+        .card-fanfu .example-tag {
+            background: #0891b2;
+        }
+
+        .card-fanfu .example {
+            border-left-color: #0891b2;
+        }
+
+        .card-fanfu .example .highlight {
+            color: #0891b2;
+            background: #ecfeff;
+        }
+
+        .card-duibi {
+            border-left-color: #b45309;
+        }
+
+        .card-duibi .card-icon {
+            background: linear-gradient(135deg, #b45309, #f59e0b);
+        }
+
+        .card-duibi .example-tag {
+            background: #b45309;
+        }
+
+        .card-duibi .example {
+            border-left-color: #b45309;
+        }
+
+        .card-duibi .example .highlight {
+            color: #b45309;
+            background: #fffbeb;
+        }
+
+        .card-yinyong {
+            border-left-color: #6366f1;
+        }
+
+        .card-yinyong .card-icon {
+            background: linear-gradient(135deg, #6366f1, #818cf8);
+        }
+
+        .card-yinyong .example-tag {
+            background: #6366f1;
+        }
+
+        .card-yinyong .example {
+            border-left-color: #6366f1;
+        }
+
+        .card-yinyong .example .highlight {
+            color: #6366f1;
+            background: #eef2ff;
+        }
+
+        /* 易混辨析区 */
+        .compare-section {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-top: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .compare-section h2 {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: #1a1a2e;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+
+        .compare-table th {
+            background: linear-gradient(135deg, #1a1a2e, #0f3460);
+            color: white;
+            padding: 14px 18px;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        .compare-table td {
+            padding: 14px 18px;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+            vertical-align: top;
+        }
+
+        .compare-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .compare-table tr:hover {
+            background: #e8f4fd;
+        }
+
+        .vs-badge {
+            display: inline-block;
+            background: #e94560;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* 练习区域 */
+        .quiz-container {
+            margin-top: 20px;
+        }
+
+        .quiz-progress {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding: 15px 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+        }
+
+        .progress-bar-bg {
+            flex: 1;
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #e94560, #ff6b6b);
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-text {
+            font-size: 14px;
+            color: #666;
+            white-space: nowrap;
+        }
+
+        .score-display {
+            font-size: 14px;
+            color: #059669;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .quiz-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+
+        .quiz-card .question-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            color: white;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 16px;
+            margin-right: 12px;
+        }
+
+        .quiz-card .question-text {
+            font-size: 17px;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .quiz-card .question-poems {
+            margin: 12px 0 18px 0;
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            font-size: 15px;
+            line-height: 2;
+        }
+
+        .quiz-card .question-poems .poem-line {
+            margin-bottom: 5px;
+        }
+
+        .options-grid {
+            display: grid;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .option-btn {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border: 2px solid transparent;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 15px;
+            text-align: left;
+            line-height: 1.6;
+        }
+
+        .option-btn:hover {
+            background: #e8f4fd;
+            border-color: #90cdf4;
+        }
+
+        .option-btn .option-label {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 30px;
+            height: 30px;
+            background: #e2e8f0;
+            color: #666;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .option-btn.selected {
+            background: #e8f4fd;
+            border-color: #3b82f6;
+        }
+
+        .option-btn.selected .option-label {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .option-btn.correct {
+            background: #ecfdf5;
+            border-color: #059669;
+        }
+
+        .option-btn.correct .option-label {
+            background: #059669;
+            color: white;
+        }
+
+        .option-btn.wrong {
+            background: #fef2f2;
+            border-color: #dc2626;
+        }
+
+        .option-btn.wrong .option-label {
+            background: #dc2626;
+            color: white;
+        }
+
+        .option-btn.disabled {
+            cursor: default;
+            opacity: 0.7;
+        }
+
+        .explanation-box {
+            margin-top: 18px;
+            padding: 18px 22px;
+            border-radius: 12px;
+            display: none;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .explanation-box.correct-bg {
+            background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+            border: 1px solid #a7f3d0;
+        }
+
+        .explanation-box.wrong-bg {
+            background: linear-gradient(135deg, #fef2f2, #fde8e8);
+            border: 1px solid #fecaca;
+        }
+
+        .explanation-box .result-icon {
+            font-size: 20px;
+            margin-right: 8px;
+        }
+
+        .explanation-box .explanation-title {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .explanation-box .explanation-text {
+            font-size: 14px;
+            color: #444;
+            line-height: 1.8;
+        }
+
+        /* 按钮 */
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(233, 69, 96, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: #475569;
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8f0;
+        }
+
+        /* 统计卡片 */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 14px;
+            padding: 22px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+        }
+
+        .stat-card .stat-number {
+            font-size: 36px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-card .stat-label {
+            font-size: 14px;
+            color: #999;
+            margin-top: 5px;
+        }
+
+        /* 技巧提示 */
+        .tip-box {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border: 1px solid #f59e0b;
+            border-radius: 12px;
+            padding: 18px 22px;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .tip-box .tip-title {
+            font-weight: bold;
+            color: #92400e;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tip-box .tip-content {
+            color: #78350f;
+            line-height: 1.8;
+        }
+
+        /* 结果页面 */
+        .result-page {
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .result-page .result-circle {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            box-shadow: 0 10px 40px rgba(233, 69, 96, 0.3);
+        }
+
+        .result-page .result-circle .score-num {
+            font-size: 48px;
+            font-weight: bold;
+        }
+
+        .result-page .result-circle .score-label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .result-page h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .result-page .result-msg {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+
+        /* 搜索和筛选 */
+        .filter-bar {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .filter-chip {
+            padding: 8px 18px;
+            border-radius: 25px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.3s;
+            color: #666;
+        }
+
+        .filter-chip:hover {
+            border-color: #e94560;
+            color: #e94560;
+        }
+
+        .filter-chip.active {
+            background: #e94560;
+            border-color: #e94560;
+            color: white;
+        }
+
+        /* 回到顶部 */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            box-shadow: 0 4px 15px rgba(233, 69, 96, 0.4);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            z-index: 99;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-3px);
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .top-bar h1 {
+                font-size: 20px;
+            }
+
+            .nav-tab {
+                padding: 10px 16px;
+                font-size: 13px;
+            }
+
+            .knowledge-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .main-content {
+                padding: 15px 12px;
+            }
+
+            .quiz-card {
+                padding: 20px;
+            }
+
+            .compare-table {
+                font-size: 12px;
+            }
+
+            .compare-table th,
+            .compare-table td {
+                padding: 10px 12px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* 动画 */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        /* 标签 */
+        .tag {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .tag-key {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .tag-diff {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        /* 分隔标题 */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .section-header h2 {
+            font-size: 24px;
+            color: #1a1a2e;
+        }
+
+        .section-header .line {
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(90deg, #e94560, transparent);
+        }
+
+        /* 弹窗 */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 35px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: #1a1a2e;
+        }
+
+        .modal-close {
+            float: right;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+            padding: 5px;
+        }
+
+        .modal-close:hover {
+            color: #333;
+        }
+
+        .key-point {
+            padding: 12px 16px;
+            background: #f0f9ff;
+            border-left: 4px solid #0ea5e9;
+            border-radius: 0 8px 8px 0;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="top-bar">
+        <h1>📝 辨析并运用常见修辞手法</h1>
+        <div class="subtitle">第一章 语言知识和语言表达 · 第七节</div>
+    </div>
+
+    <div class="nav-tabs">
+        <div class="nav-tab active" onclick="switchSection('knowledge', this)">📚 知识讲解</div>
+        <div class="nav-tab" onclick="switchSection('compare', this)">🔍 易混辨析</div>
+        <div class="nav-tab" onclick="switchSection('quiz', this)">✏️ 专项练习</div>
+    </div>
+
+    <div class="main-content">
+        <div id="section-knowledge" class="section active">
+            <div class="section-header">
+                <h2>常见修辞手法</h2>
+                <div class="line"></div>
+            </div>
+
+            <div class="filter-bar">
+                <div class="filter-chip active" onclick="filterCards('all', this)">全部</div>
+                <div class="filter-chip" onclick="filterCards('biyu', this)">比喻</div>
+                <div class="filter-chip" onclick="filterCards('niren', this)">拟人</div>
+                <div class="filter-chip" onclick="filterCards('jiedai', this)">借代</div>
+                <div class="filter-chip" onclick="filterCards('kuazhang', this)">夸张</div>
+                <div class="filter-chip" onclick="filterCards('paib', this)">排比</div>
+                <div class="filter-chip" onclick="filterCards('duiou', this)">对偶</div>
+                <div class="filter-chip" onclick="filterCards('shewen', this)">设问</div>
+                <div class="filter-chip" onclick="filterCards('fanwen', this)">反问</div>
+                <div class="filter-chip" onclick="filterCards('fanfu', this)">反复</div>
+                <div class="filter-chip" onclick="filterCards('duibi', this)">对比</div>
+                <div class="filter-chip" onclick="filterCards('yinyong', this)">引用</div>
+            </div>
+
+            <div class="knowledge-grid" id="knowledgeGrid">
+                <div class="knowledge-card card-biyu" data-type="biyu" onclick="toggleCard(this)">
+                    <div class="card-icon">喻</div>
+                    <h3>比喻 <span class="tag tag-key">高频考点</span></h3>
+                    <div class="definition">
+                        用一种事物或情景来比作另一种事物或情景。可分为<strong>明喻、暗喻、借喻</strong>三种。比喻必须具备<strong>本体、喻体和相似点</strong>，且本体和喻体必须是本质不同的事物。
+                    </div>
+                    <span class="example-tag">经典例句</span>
+                    <div class="example">
+                        黑色的天空上布满了<span class="highlight">像宝石一样的</span>星星。
+                    </div>
+                    <div class="example">
+                        <span class="highlight">臣心一片磁针石</span>，不指南方不肯休。——文天祥
+                    </div>
+                    <button class="expand-btn">查看更多 ▼</button>
+                    <div class="detail">
+                        <div class="tip-box" style="margin-top:0">
+                            <div class="tip-title">⚠️ 辨别要点</div>
+                            <div class="tip-content">
+                                含"像""仿佛"等词不一定是比喻！需判断是否有两个<strong>不同本质</strong>的事物之间的比较。<br>
+                                ❌ "我常常以为自己还是妙龄青年，还像那时一样"——这是<strong>想象</strong>，不是比喻。<br>
+                                ❌ "铺户门前的铜牌好像也要晒化"——这是<strong>夸张</strong>，不是比喻。<br>
+                                ❌ "风带着雨星，像在地上寻找什么似的"——这是<strong>拟人</strong>，不是比喻。
+                            </div>
+                        </div>
+                        <div class="example" style="margin-top:12px">
+                            我们之间已经隔了一层可悲的<span class="highlight">厚障壁</span>了。——鲁迅（暗喻）
+                        </div>
+                        <div class="example">
+                            <span class="highlight">淡磨明镜</span>照檐楹。——刘攽（比喻水面平静如镜）
+                        </div>
+                    </div>
+                </div>
+
+                <div class="knowledge-card card-niren" data-type="niren" onclick="toggleCard(this)">
+                    <div class="card-icon">拟</div>
+                    <h3>拟人 <span class="tag tag-key">高频考点</span></h3>
+                    <div class="definition">
+                        把物当做人来写，赋予物以人的动作、行为、思想、感情等。使描写更加生动形象，增强文章的感染力。
+                    </div>
+                    <span class="example-tag">经典例句</span>
+                    <div class="example">
+                        只恐夜深<span class="highlight">花睡去</span>，故烧高烛照红妆。——苏轼
+                    </div>
+                    <div class="example">
+                        秋便以翩跹之姿<span class="highlight">踏碎了</span>夏天的流言。
+                    </div>
+                    <button class="expand-btn">查看更多 ▼</button>
+                    <div class="detail">
+                        <div class="example">
+                            毛竹青了又黄，黄了又青，<span class="highlight">不向残暴低头，不向敌人弯腰</span>。
+                        </div>
+                        <div class="example">
+                            蜡烛有心还<span class="highlight">惜别</span>，替人<span class="highlight">垂泪</span>到天明。——杜牧
+                        </div>
+                        <div class="example">
+                            这棵树使小屋<span class="highlight">含蓄而有风度</span>。
+                        </div>
+                    </div>
+                </div>
+
+                <div class="knowledge-card card-jiedai" data-type="jiedai" onclick="toggleCard(this)">
+                    <div class="card-icon">代</div>
+                    <h3>借代 <span class="tag tag-diff">易混淆</span></h3>
+                    <div class="definition">
+                        不直接说出所要表达的人或事物，借用与它密切相关的人或事物来代替。借代的本体和借体之间有<strong>相关性</strong>（非相似性）。
+                    </div>
+                    <span class="example-tag">经典例句</span>
+                    <div class="example">
+                        沙鸥翔集，<span class="highlight">锦鳞</span>游泳。（用"鳞"代指鱼）
+                    </div>
+                    <div class="example">
+                        终岁不闻<span class="highlight">丝竹</span>声。（用"丝竹"代指音乐）
+                    </div>
+                    <button class="expand-btn">查看更多 ▼</button>
+                    <div class="detail">
+                        <div class="example">
+                            千里莺啼<span class="highlight">绿</span>映<span class="highlight">红</span>。——杜牧（用颜色代指草木与花朵）
+                        </div>
+                        <div class="example">
+                            知否？应是<span class="highlight">绿肥红瘦</span>。——李清照（用颜色代叶和花）
+                        </div>
+                        <div class="example">
+                            <span class="highlight">五星红旗</span>，你是我的骄傲。（用"五星红旗"代指国家）
+                        </div>
+                        <div class="example">
+                            <span class="highlight">落红</span>不是无情物，化作春泥更护花。——龚自珍（用颜色代花）
+                        </div>
+                        <div class="example">
+                            你教的"<span class="highlight">子曰诗云</span>"么？（代指旧教育的读物/论语一类的书籍）
+                        </div>
+                        <div class="tip-box" style="margin-top:12px">
+                            <div class="tip-title">💡 借代的常见类型</div>
+                            <div class="tip-content">
+                                ① 特征代本体：锦鳞→鱼<br>
+                                ② 材料代本体：丝竹→音乐<br>
+                                ③ 颜色代本体：绿→叶，红→花<br>
+                                ④ 标志代本体：五星红旗→国家
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="knowledge-card card-kuazhang" data-type="kuazhang" onclick="toggleCard(this)">
+                    <div class="card-icon">夸</div>
+                    <h3>夸张</h3>
+                    <div class="definition">
+                        对事物的某些方面着意夸大或缩小进行描述。可分为<strong>扩大夸张、缩小夸张、超前夸张</strong>三种。
+                    </div>
+                    <span class="example-tag">经典例句</span>
+                    <div class="example">
+                        燕山雪花<span class="highlight">大如席</span>，片片吹落轩辕台。——李白
+                    </div>
+                    <div class="example">
+                        <span class="highlight">白发三千丈</span>，缘愁似个长。——李白
+                    </div>
+                    <button class="expand-btn">查看更多 ▼</button>
+                    <div class="detail">
+                        <div class="example">
+                            这块地方<span class="highlight">没有巴掌大</span>，怎么能盖房子呢？（缩小夸张）
+                        </div>
+                        <div class="example">
+                            静到要<span class="highlight">听出静的声音</span>来。（扩大夸张）
+                        </div>
+                        <div class="example">
+                            听得<span class="highlight">耳朵起茧</span>了的。（扩大夸张）
+                        </div>
+                        <div class="example">
+                            他的声音难听极了，简直能<span class="highlight">振碎人的耳膜</span>。
+                        </div>
+                    </div>
+                </div>
+
+                <div class="knowledge-card card-paib" data-type="paib" onclick="toggleCard(this)">
+                    <div class="card-icon">排</div>
+                    <h3>排比</h3>
+                    <div class="definition">
+                        把三个或以上结构相同或相似、语气一致、意思密切关联的句子或短语排列起来使用，增强语势，加强表达效果。
+                    </div>
+                    <span class="example-tag">经典例句</span>
+                    <div class="example">
+                        漓江的水<span class="highlight">真静啊</span>……漓江的水<span class="highlight">真清啊</span>……漓江的水<span
+                            class="highlight">真绿啊</span>……
+                    </div>
+                    <button class="expand-btn">查看更多 ▼</button>
+                    <div class="detail">
+                        <div class="example">
+                            梦中<span class="highlight">有欢乐，也有痛苦；有亲情，也有离别；有成功，也有失落</span>。
+                        </div>
+                        <div class="example">
+                            愚蠢<span class="highlight">是一种</span>天生的无奈，<span class="highlight">是一种</span>后天的懒惰，<span
+                                class="highlight">是一种</span>自己种下的恶果，<span class="highlight">是一种</span>好果实中的蛀虫。
+                        </div>
+                    </div>
+                </div>
+
+                <div class="knowledge-card card-duiou" data-type="duiou" onclick="toggleCard(this)">
+                    <div class="card-icon">偶</div>
+                    <h3>对偶 <span class="tag tag-diff">易混淆</span></h3>
+                    <div class="definition">
+                        用字数相等、结构相同、意义对称的一对短语或句子来表达两个相对应或相近意思。要求<strong>字数相等、结构相同、意义相关</strong>。
+                    </div>
+                    <span class="example-tag">经典例句</span>
+                    <div class="example">
+                        <span class="highlight">无边落木萧萧下，不尽长江滚滚来</span>。——杜甫
+                    </div>
+                    <div class="example">
+                        <span class="highlight">横眉冷对千夫指，俯首甘为孺子牛</span>。——鲁迅
+                    </div>
+                    <button class="expand-btn">查看更多 ▼</button>
+                    <div class="detail">
+                        <div class="example">
+                            墙上芦苇，<span class="highlight">头重脚轻根底浅</span>；山间竹笋，<span class="highlight">嘴尖皮厚腹中空</span>。
+                        </div>
+                        <div class="example">
+                            <span class="highlight">残星几点雁横塞，长笛一声人倚楼</span>。
+                        </div>
+                    </div>
+                </div>
+
+                <div class="knowledge-card card-shewen" data-type="shewen" onclick="toggleCard(this)">
+                    <div class="card-icon">设</div>
+                    <h3>设问 <span class="tag tag-diff">易混淆</span></h3>
+                    <div class="definition">
+                        为了引起注意，故意先提出问题，然后<strong>自己回答</strong>。即"自问自答"，目的是引导读者注意和思考。
+                    </div>
+                    <span class="example-tag">经典例句</span>
+                    <div class="example">
+                        <span class="highlight">问君能有几多愁？恰似一江春水向东流</span>。——李煜
+                    </div>
+                    <div class="example">
+                        <span class="highlight">丞相祠堂何处寻？锦官城外柏森森</span>。——杜甫
+                    </div>
+                    <button class="expand-btn">查看更多 ▼</button>
+                    <div class="detail">
+                        <div class="example">
+                            <span class="highlight">晓来谁染霜林醉？总是离人泪</span>。——王实甫
+                        </div>
+                        <div class="tip-box" style="margin-top:12px">
+                            <div class="tip-title">💡 设问 vs 反问</div>
+                            <div class="tip-content">
+                                设问：<strong>自问自答</strong>，问后有答案。<br>
+                                反问：<strong>只问不答</strong>，答案隐含在问句中。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="knowledge-card card-fanwen" data-type="fanwen" onclick="toggleCard(this)">
+                    <div class="card-icon">反</div>
+                    <h3>反问 <span class="tag tag-diff">易混淆</span></h3>
+                    <div class="definition">
+                        用疑问的形式表达确定的意思，<strong>只问不答</strong>，问题的答案隐含在句子中。用以加强语气，表达强烈感情。
+                    </div>
+                    <span class="example-tag">经典例句</span>
+                    <div class="example">
+                        人与山的关系日益密切，<span class="highlight">怎能不</span>使我们感到亲切与舒服呢？
+                    </div>
+                    <div class="example">
+                        江东弟子今虽在，<span class="highlight">肯为</span>君王卷土来？——王安石
+                    </div>
+                    <button class="expand-btn">查看更多 ▼</button>
+                    <div class="detail">
+                        <div class="example">
+                            在人类古老的历史长河中，<span class="highlight">有哪一个</span>民族能像中华民族这样拥有如此丰富的书法瑰宝？
+                        </div>
+                        <div class="example">
+                            老板"怕"顾客，<span class="highlight">何愁</span>服务不周到？
+                        </div>
+                    </div>
+                </div>
+
+                <div class="knowledge-card card-fanfu" data-type="fanfu" onclick="toggleCard(this)">
+                    <div class="card-icon">复</div>
+                    <h3>反复</h3>
+                    <div class="definition">
+                        为了强调某个意思，表达某种感情，有意重复某个词语或句子。可分为<strong>连续反复和间隔反复</strong>。
+                    </div>
+                    <span class="example-tag">经典例句</span>
+                    <div class="example">
+                        两人对酌山花开，<span class="highlight">一杯一杯复一杯</span>。——李白
+                    </div>
+                </div>
+
+                <div class="knowledge-card card-duibi" data-type="duibi" onclick="toggleCard(this)">
+                    <div class="card-icon">比</div>
+                    <h3>对比 <span class="tag tag-diff">易混淆</span></h3>
+                    <div class="definition">
+                        把两个相反、相对的事物或同一事物相反、相对的两个方面放在一起，用比较的方法加以描述，使形象更鲜明，感受更强烈。
+                    </div>
+                    <span class="example-tag">经典例句</span>
+                    <div class="example">
+                        <span class="highlight">战士军前半死生，美人帐下犹歌舞</span>。——高适
+                    </div>
+                    <div class="example">
+                        <span class="highlight">四海无闲田，农夫犹饿死</span>。——李绅
+                    </div>
+                    <button class="expand-btn">查看更多 ▼</button>
+                    <div class="detail">
+                        <div class="tip-box" style="margin-top:0">
+                            <div class="tip-title">💡 对比 vs 对偶</div>
+                            <div class="tip-content">
+                                对比：强调<strong>意义上的对照</strong>，不要求字数和结构对称。<br>
+                                对偶：强调<strong>形式上的对称</strong>，要求字数相等、结构相同。<br>
+                                有些句子既是对偶又含对比（如"战士军前半死生，美人帐下犹歌舞"）。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="knowledge-card card-yinyong" data-type="yinyong" onclick="toggleCard(this)">
+                    <div class="card-icon">引</div>
+                    <h3>引用</h3>
+                    <div class="definition">
+                        引用现成的话（如成语、诗句、格言、典故等）来表达自己的意思，使语言简洁凝练，增添文采和说服力。
+                    </div>
+                    <span class="example-tag">经典例句</span>
+                    <div class="example">
+                        对于共产党员来说，个人地位，只是<span class="highlight">"大海中之一滴"</span>罢了。（引用+比喻）
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="section-compare" class="section">
+            <div class="section-header">
+                <h2>易混修辞辨析</h2>
+                <div class="line"></div>
+            </div>
+
+            <div class="compare-section">
+                <h2>🔄 比喻 vs 借代</h2>
+                <table class="compare-table">
+                    <tr>
+                        <th style="width:15%">对比项</th>
+                        <th style="width:42%">比喻</th>
+                        <th style="width:42%">借代</th>
+                    </tr>
+                    <tr>
+                        <td><strong>关系</strong></td>
+                        <td>本体与喻体之间有<strong>相似性</strong></td>
+                        <td>本体与借体之间有<strong>相关性</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>标志词</strong></td>
+                        <td>常有"像""如""仿佛""似的"等</td>
+                        <td>通常没有比喻标志词</td>
+                    </tr>
+                    <tr>
+                        <td><strong>能否互换</strong></td>
+                        <td>本体和喻体<strong>可以互换</strong></td>
+                        <td>本体和借体<strong>不能互换</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>举例</strong></td>
+                        <td>洱海，这面光洁的<strong>梳妆镜</strong>（用镜子比喻湖面的平静光滑）</td>
+                        <td><strong>锦鳞</strong>游泳（用"鳞"代指鱼，鳞是鱼身上的部分）</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="compare-section">
+                <h2>🔄 设问 vs 反问</h2>
+                <table class="compare-table">
+                    <tr>
+                        <th style="width:15%">对比项</th>
+                        <th style="width:42%">设问</th>
+                        <th style="width:42%">反问</th>
+                    </tr>
+                    <tr>
+                        <td><strong>特点</strong></td>
+                        <td><strong>自问自答</strong>，明知故问再给出答案</td>
+                        <td><strong>只问不答</strong>，答案隐含在问句中</td>
+                    </tr>
+                    <tr>
+                        <td><strong>目的</strong></td>
+                        <td>引起注意，引导思考</td>
+                        <td>加强语气，强调观点</td>
+                    </tr>
+                    <tr>
+                        <td><strong>举例</strong></td>
+                        <td>问君能有几多愁？<strong>恰似一江春水向东流。</strong>（有回答）</td>
+                        <td>人与山的关系日益密切，<strong>怎能不</strong>使我们感到亲切？（无回答，答案已明确）</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="compare-section">
+                <h2>🔄 对偶 vs 对比</h2>
+                <table class="compare-table">
+                    <tr>
+                        <th style="width:15%">对比项</th>
+                        <th style="width:42%">对偶</th>
+                        <th style="width:42%">对比</th>
+                    </tr>
+                    <tr>
+                        <td><strong>重点</strong></td>
+                        <td>注重<strong>形式对称</strong>，字数相等、结构相同</td>
+                        <td>注重<strong>意义对照</strong>，突出差异</td>
+                    </tr>
+                    <tr>
+                        <td><strong>要求</strong></td>
+                        <td>必须字数相等、结构相同</td>
+                        <td>不要求字数和结构对称</td>
+                    </tr>
+                    <tr>
+                        <td><strong>举例</strong></td>
+                        <td><strong>无边落木萧萧下，不尽长江滚滚来</strong>（字数对等、结构对称）</td>
+                        <td><strong>四海无闲田，农夫犹饿死</strong>（意义对照，突出矛盾）</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="compare-section">
+                <h2>🔄 比喻中的"像" vs 非比喻中的"像"</h2>
+                <table class="compare-table">
+                    <tr>
+                        <th style="width:15%">类型</th>
+                        <th style="width:42%">是比喻</th>
+                        <th style="width:42%">不是比喻</th>
+                    </tr>
+                    <tr>
+                        <td><strong>判断标准</strong></td>
+                        <td>有两个<strong>不同本质</strong>的事物进行相似性比较</td>
+                        <td>同类事物比较 / 表示想象猜测 / 表示举例</td>
+                    </tr>
+                    <tr>
+                        <td><strong>示例1</strong></td>
+                        <td>各种想法在脑子里<strong>像火花似的</strong>一个个爆发 ✅</td>
+                        <td>我还<strong>像</strong>那时一样戴着墨色眼镜 ❌（表想象）</td>
+                    </tr>
+                    <tr>
+                        <td><strong>示例2</strong></td>
+                        <td>星星<strong>像宝石一样</strong> ✅</td>
+                        <td>铺户门前的铜牌<strong>好像</strong>也要晒化 ❌（表夸张）</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="tip-box" style="margin-top:25px">
+                <div class="tip-title">🎯 考试答题策略</div>
+                <div class="tip-content">
+                    1. 先看有无比喻词（像、如、仿佛），再判断是否为真正的比喻<br>
+                    2. 看是否赋予物以人的特征→拟人<br>
+                    3. 看是否用部分代整体、特征代本体→借代<br>
+                    4. 看是否故意放大或缩小→夸张<br>
+                    5. 看问句后是否有自己的回答→设问（有答案）/ 反问（无答案但答案已隐含）<br>
+                    6. 看是否有三个及以上结构类似的并列→排比<br>
+                    7. 看上下句是否字数相等、结构对称→对偶
+                </div>
+            </div>
+        </div>
+
+        <div id="section-quiz" class="section">
+            <div class="section-header">
+                <h2>专项练习</h2>
+                <div class="line"></div>
+            </div>
+
+            <div class="stats-grid" id="statsGrid">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalQuestions">23</div>
+                    <div class="stat-label">总题数</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="correctCount">0</div>
+                    <div class="stat-label">正确数</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="wrongCount">0</div>
+                    <div class="stat-label">错误数</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="accuracy">0%</div>
+                    <div class="stat-label">正确率</div>
+                </div>
+            </div>
+
+            <div class="quiz-progress">
+                <span class="progress-text">进度：<span id="currentQ">0</span> / <span id="totalQ">23</span></span>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="progressBar" style="width: 0%"></div>
+                </div>
+                <span class="score-display">得分：<span id="scoreDisplay">0</span></span>
+            </div>
+
+            <div id="quizContainer"></div>
+
+            <div class="btn-group" style="margin-top:30px">
+                <button class="btn btn-secondary" onclick="resetQuiz()">🔄 重新开始</button>
+                <button class="btn btn-primary" onclick="showAllAnswers()">📋 查看所有解析</button>
+            </div>
+
+            <div id="resultPage" class="result-page" style="display:none">
+                <div class="result-circle">
+                    <div class="score-num" id="finalScore">0</div>
+                    <div class="score-label">/ 23</div>
+                </div>
+                <h2 id="resultTitle">练习完成！</h2>
+                <p class="result-msg" id="resultMsg"></p>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="resetQuiz()">🔄 再练一次</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+        <div class="modal-content" id="modalContent"></div>
+    </div>
+
+    <script>
+        // ========== 题目数据 ==========
+        // 修复：将所有内部含有双引号的字符串外层替换为反引号 (`) 或进行合理的转义，避免语法错误
+        const quizData = [
+            {
+                id: 1,
+                question: "下列各句中，没有运用比喻的一项是",
+                options: [
+                    "A. 黑色的天空上布满了像宝石一样的星星。",
+                    "B. 仿佛一张极大极大的荷叶铺着，满是奇异的绿呀。",
+                    "C. 树缝里也漏着一两点路灯光，没精打采的，是渴睡人的眼。",
+                    "D. 叶子和花仿佛在牛乳中洗过一样。"
+                ],
+                answer: 3,
+                explanation: `D项中"仿佛在牛乳中洗过一样"只是描写叶子和花的颜色白净，用"牛乳"来形容颜色效果，虽然有"仿佛"一词，但这里没有构成完整的比喻（本体和喻体本质不同的比较）。A项以"宝石"比喻"星星"，B项以"荷叶"比喻水面，C项以"渴睡人的眼"比喻"路灯光"。`
+            },
+            {
+                id: 2,
+                question: "对下列诗句所运用的修辞手法的判断，正确的一项是",
+                poems: [
+                    "①臣心一片磁针石，不指南方不肯休。（文天祥《扬子江》）",
+                    "②千里莺啼绿映红，水村山郭酒旗风。（杜牧《江南春》）",
+                    "③燕山雪花大如席，片片吹落轩辕台。（李白《北风行》）"
+                ],
+                options: [
+                    "A. 拟人　比喻　夸张",
+                    "B. 比喻　借代　夸张",
+                    "C. 拟人　借代　拟人",
+                    "D. 比喻　比喻　拟人"
+                ],
+                answer: 1,
+                explanation: `①用了比喻，以"磁针石"比喻忠于宋朝的一片丹心；②"绿"与"红"用了借代修辞手法，将草木与花朵的颜色用来代称草木与花朵；③"燕山雪花大如席"用的是夸张的修辞手法，意思是燕山的雪花其大如席。`
+            },
+            {
+                id: 3,
+                question: "下列各句中，运用了借代的一项是",
+                options: [
+                    "A. 我就知道，我们班获得的成绩是麦场上一堆尖尖的谷物。",
+                    "B. 沙鸥翔集，锦鳞游泳。",
+                    "C. 这海滨的小小侨村呵，简直是喧腾的海洋。",
+                    "D. 洱海，这面光洁的梳妆镜，南北长百余里，东西宽十余里。"
+                ],
+                answer: 1,
+                explanation: `B项"锦鳞"用了借代，用鱼的鳞片代指鱼。A、C、D项都用了比喻。A项把成绩比作谷物，C项把侨村比作海洋，D项把洱海比作梳妆镜。`
+            },
+            {
+                id: 4,
+                question: "下列各句中，在修辞运用上与其他三句不同的一项是",
+                options: [
+                    "A. 有的松树像一顶墨绿大伞，支开了等你。",
+                    "B. 船只能缓缓行进，像一个在崇山峻岭之间慢步前进的旅人。",
+                    "C. 紧十八盘仿佛一条灰白大蟒，匍匐在山峡当中。",
+                    "D. 塑像塑得精致、细腻，一个个都像活的。"
+                ],
+                answer: 3,
+                explanation: `A、B、C项用了比喻：A项把松树比作大伞，B项把船比作旅人，C项把十八盘比作大蟒。D项用了夸张，说塑像"像活的"是夸大其精致程度，并非比喻。`
+            },
+            {
+                id: 5,
+                question: "对下列诗句所运用的修辞手法的判断，正确的一项是",
+                poems: [
+                    "①一雨池塘水面平，淡磨明镜照檐楹。（刘攽《雨后池上》）",
+                    "②只恐夜深花睡去，故烧高烛照红妆。（苏轼《海棠》）",
+                    "③问君能有几多愁？恰似一江春水向东流。（李煜《虞美人》）"
+                ],
+                options: [
+                    "A. 比喻　拟人　设问",
+                    "B. 拟人　借代　设问",
+                    "C. 拟人　比喻　反问",
+                    "D. 比喻　比喻　反问"
+                ],
+                answer: 0,
+                explanation: `①水面如同轻轻磨过的明镜一样，倒映出池塘边的房檐和楹柱，以此表现了雨后池塘水面的平静。用了比喻；②诗人怕花睡去，所以点燃蜡烛来照，以花比人，极富雅趣，用了拟人；③运用设问的手法，先问"愁有多少"，然后自己回答"恰似一江春水"，表达了作者深长的亡国之愁苦。`
+            },
+            {
+                id: 6,
+                question: "下列各句中，使用了比喻修辞手法的一项是",
+                options: [
+                    "A. 铺户门前的铜牌好像也要晒化。",
+                    "B. 血雨腥风里，毛竹青了又黄，黄了又青，不向残暴低头，不向敌人弯腰。",
+                    "C. 风带着雨星，像在地上寻找什么似的，东一头西一头地乱撞。",
+                    "D. 我似乎打了一个寒噤；我就知道，我们之间已经隔了一层可悲的厚障壁了。"
+                ],
+                answer: 3,
+                explanation: `D项用"厚障壁"比喻人与人之间的隔阂，是比喻。A项用了夸张（铜牌不可能真的被晒化）；B项用了拟人（毛竹"不向残暴低头，不向敌人弯腰"）；C项用了拟人（风"像在地上寻找什么似的"，赋予风以人的行为）。`
+            },
+            {
+                id: 7,
+                question: "对下列句子所运用的修辞手法的判断，正确的一项是",
+                poems: [
+                    "①小河清澈见底，如同一条透明的蓝绸子，静静地躺在大地的怀抱里。",
+                    "②秋便以翩跹之姿踏碎了夏天的流言。",
+                    "③漓江的水真静啊……漓江的水真清啊……漓江的水真绿啊……"
+                ],
+                options: [
+                    "A. 拟人　比喻　排比",
+                    "B. 比喻　拟人　排比",
+                    "C. 排比　比喻　拟人",
+                    "D. 拟人　排比　比喻"
+                ],
+                answer: 1,
+                explanation: `①用了比喻，把小河比作蓝绸子；②用了拟人，赋予"秋"以人的动作"踏碎"；③用了排比，三个"漓江的水真……啊"构成排比句式。`
+            },
+            {
+                id: 8,
+                question: "下列各句中，属于运用比喻修辞手法的一项是",
+                options: [
+                    "A. 我常常以为自己还是妙龄青年，还像那时一样戴着墨色眼镜观察世界。",
+                    "B. 各种想法在脑子里像火花似的一个个爆发，然后又熄灭了。",
+                    "C. 登高远望，泰山的松树像是和狂风乌云争夺天日，又像是和清风白云游戏。",
+                    "D. 我时常告诫自己，不要像小时候那样，一味贪玩，好动。"
+                ],
+                answer: 1,
+                explanation: `B项把"想法"比作"火花"，两个不同本质的事物之间有相似性比较，是比喻。A、D项的"像"表示想象、回忆，不是比喻；C项把松树拟人化（与风"争夺""游戏"），用了拟人。`
+            },
+            {
+                id: 9,
+                question: "下列各句中，没有运用夸张手法的一项是",
+                options: [
+                    "A. 下了一天雪，到深夜还没有止，屋外一切静极了，静到要听出静的声音来。",
+                    `B. 几年来的文治武功，在我犹如幼小时候读过的"子曰诗云"一般，背不上半句了。`,
+                    "C. 大家略有一点兴奋，但又很淡漠，不大相信，因为这一类不甚可靠的传闻，是谁都听得耳朵起茧了的。",
+                    "D. 这块地方没有巴掌大，怎么能盖房子呢？"
+                ],
+                answer: 1,
+                explanation: `B项的"子曰诗云"是借代旧教育的读物，整句用了比喻，没有使用夸张。A项"听出静的声音"是夸张；C项"耳朵起茧"是夸张；D项"没有巴掌大"是缩小夸张。`
+            },
+            {
+                id: 10,
+                question: "对下列句子所运用的修辞手法的判断，正确的一项是",
+                poems: [
+                    "①五星红旗，你是我的骄傲。",
+                    "②……滚滚黄水如万马奔腾携风带雨从西向东狼嚎般呼啸而来，惊心动魄。",
+                    "③人与山的关系日益密切，怎能不使我们感到亲切与舒服呢？"
+                ],
+                options: [
+                    "A. 比喻　拟人　设问",
+                    "B. 比喻　拟人　反问",
+                    "C. 借代　比喻　反问",
+                    "D. 借代　比喻　设问"
+                ],
+                answer: 2,
+                explanation: `①借代，用"五星红旗"代指国家；②比喻，把"滚滚黄水"比喻成"万马奔腾"；③用了反问，"怎能不"表达了肯定的意思，只问不答。`
+            },
+            {
+                id: 11,
+                question: "下列各项中，对句子的修辞手法及其表达作用的解释，不正确的一项是",
+                options: [
+                    'A. "话语轻柔得像一团云……不，像一团松软的棉球"——"棉球"这个喻体贴切，不仅符合医生职业的特点，而且切合患者当时的心态。',
+                    'B. "我是看到了一个更是巴金的巴金"——后一个"巴金"指代巴金的风格和精神，突出了描述对象的特征。',
+                    'C. "对自己的作品进行\'减肥\'"——将作品拟人化，把删削冗繁说成是"减肥"，生动幽默。',
+                    'D. "把自己焊在礁石上"——用拟物的方法夸大听潮观海的痴迷程度，形象生动。'
+                ],
+                answer: 1,
+                explanation: `从B项的意思看，"一个更是巴金的巴金"中，前一个"巴金"当指巴金作品的风格特点，而不是指代"巴金"这个人。题目说"后一个'巴金'指代巴金的风格和精神"是不正确的，应该是前一个"巴金"代表风格和精神。`
+            },
+            {
+                id: 12,
+                question: "对下列句子所运用的修辞手法的判断，正确的一项是",
+                poems: [
+                    "①在北美的沙漠中，我是一株水土不服的故园里的橘树，我的诗篇不过是些苦涩的果实。",
+                    "②在人类古老的历史长河中，有哪一个民族能像中华民族这样拥有如此丰富的书法瑰宝？",
+                    "③五十年间万事空，懒将白发对青铜。"
+                ],
+                options: [
+                    "A. 比喻　反问　借代",
+                    "B. 比喻　设问　对偶",
+                    "C. 借代　反问　借代",
+                    "D. 借代　设问　对偶"
+                ],
+                answer: 0,
+                explanation: `①用了比喻，将自己比作"水土不服的橘树"；②用了反问，"有哪一个民族能……"隐含的答案是没有哪个民族能比得上中华民族；③"青铜"是借代，用青铜镜代指镜子。`
+            },
+            {
+                id: 13,
+                question: "对下列诗句所运用的修辞手法的判断，正确的一项是",
+                poems: [
+                    "①两人对酌山花开，一杯一杯复一杯。（李白《山中与幽人对酌》）",
+                    "②知否，知否？应是绿肥红瘦。（李清照《如梦令》）",
+                    "③蜡烛有心还惜别，替人垂泪到天明。（杜牧《赠别》）"
+                ],
+                options: [
+                    "A. 反复　借代　拟人",
+                    "B. 反复　借代　比喻",
+                    "C. 排比　比喻　拟人",
+                    "D. 排比　拟人　比喻"
+                ],
+                answer: 0,
+                explanation: `①三个"一杯"连用形成反复修辞，极言诗人饮酒之多；②诗用"绿"和"红"两种颜色分别代替叶和花，写叶的茂盛和花的凋零，是借代；③运用了拟人修辞，把蜡烛拟人化了，蜡烛"有心""惜别""垂泪"都是人的行为。`
+            },
+            {
+                id: 14,
+                question: "对下列句子所运用的修辞手法的判断，正确的一项是",
+                poems: [
+                    `①老板"怕"顾客，何愁服务不周到？也许，这就是"怕"的本质。`,
+                    "②倾听是心灵的阳光，能映射出无边无际的美丽。",
+                    "③一棵微不足道的小草都可以毫不自惭形秽地生活着，何况我们万物灵长的人类！"
+                ],
+                options: [
+                    "A. 反问　夸张　拟人",
+                    "B. 设问　夸张　比喻",
+                    "C. 设问　比喻　借代",
+                    "D. 反问　比喻　拟人"
+                ],
+                answer: 3,
+                explanation: `①用了反问，"何愁服务不周到"意即不用担心服务不周到；②用了比喻，把"倾听"比作"心灵的阳光"；③用了拟人，赋予小草以人的行为"自惭形秽地生活"。`
+            },
+            {
+                id: 15,
+                question: `下列各项中，与"终岁不闻丝竹声"一句中运用的修辞手法相同的一项是`,
+                options: [
+                    "A. 在荣誉、利益、艰苦、危险、责任、义务等面前，上前一步或退后一步，往往是检验人的思想品格的试金石。",
+                    "B. 泉声咽危石，日色冷青松。",
+                    'C. "你教的\'子曰诗云\'么？"他惊奇地问。',
+                    "D. 残星几点雁横塞，长笛一声人倚楼。"
+                ],
+                answer: 2,
+                explanation: `"终岁不闻丝竹声"中，"丝竹"寓意音乐，运用了借代的修辞手法。A项运用的是比喻（试金石比喻检验标准），B项是拟人（泉声"咽"，日色"冷"），C项"子曰诗云"借代论语一类的书籍（借代），D项是对偶。所以答案是C。`
+            },
+            {
+                id: 16,
+                question: "对下列句子运用的修辞手法，判断无误的一组是",
+                poems: [
+                    "①墙上芦苇，头重脚轻根底浅；山间竹笋，嘴尖皮厚腹中空。",
+                    "②闭塞眼睛捉麻雀。",
+                    `③对于共产党员来说，个人地位，只是"大海中之一滴"罢了。`,
+                    "④他的头脑就像停在军港里升火待发的一艘军舰，准备一接到通知就开向任何思想的海洋。"
+                ],
+                options: [
+                    "A. ①对偶、比喻　②比喻　③引用、比喻　④比喻",
+                    "B. ①对偶、讽刺　②比喻　③引用、夸张　④比喻",
+                    "C. ①夸张、比喻　②比喻　③引用、比喻　④夸张",
+                    "D. ①对偶、夸张　②夸张　③引用、比喻　④象征"
+                ],
+                answer: 0,
+                explanation: `①运用的是对偶和比喻（用芦苇和竹笋比喻没有真才实学的人），讽刺不是修辞手法；②是比喻（比喻做事盲目）；③既有引用（引用了名言），又有比喻（把个人地位比作大海中的一滴水）；④运用的是比喻（把头脑比作军舰）。`
+            },
+            {
+                id: 17,
+                question: "对下列句子所运用的修辞手法的判断，正确的一项是",
+                poems: [
+                    "①梦中有欢乐，也有痛苦；有亲情，也有离别；有成功，也有失落。",
+                    "②只有山长久地存在着，从而能够客观地聆听狼的嗥叫。",
+                    "③谁言寸草心，报得三春晖。"
+                ],
+                options: [
+                    "A. 排比　拟人　比喻",
+                    "B. 夸张　拟人　对偶",
+                    "C. 排比　比喻　对偶",
+                    "D. 夸张　比喻　比喻"
+                ],
+                answer: 0,
+                explanation: `①用了排比修辞，三个"有……也有……"构成排比；②用了拟人修辞，山能"聆听"是人的行为；③用了比喻修辞，"寸草心"比喻子女的心意，"三春晖"比喻母爱。`
+            },
+            {
+                id: 18,
+                question: "对下列诗句所运用的修辞手法的判断，正确的一项是",
+                poems: [
+                    "①落红不是无情物，化作春泥更护花。（龚自珍《己亥杂诗》）",
+                    "②日出江花红胜火，春来江水绿如蓝。（白居易《忆江南》）",
+                    "③江东弟子今虽在，肯为君王卷土来？（王安石《叠题乌江亭》）"
+                ],
+                options: [
+                    "A. 借代　比喻　反问",
+                    "B. 比喻　借代　反问",
+                    "C. 借代　借代　设问",
+                    "D. 比喻　比喻　设问"
+                ],
+                answer: 0,
+                explanation: `①用了借代修辞，"落红"是用颜色借代花（落花）；②用了比喻的修辞手法，"红胜火"把花的颜色比作火，"绿如蓝"把水的颜色比作蓝草；③用了反问修辞，"肯为君王卷土来？"意思是不会再为君王卷土重来，只问不答，答案隐含其中。`
+            },
+            {
+                id: 19,
+                question: "对下列诗句所运用的修辞手法的判断，正确的一项是",
+                poems: [
+                    "①战士军前半死生，美人帐下犹歌舞。（高适《燕歌行》）",
+                    "②丞相祠堂何处寻？锦官城外柏森森。（杜甫《蜀相》）",
+                    "③白发三千丈，缘愁似个长。（李白《秋浦歌十七首》）"
+                ],
+                options: [
+                    "A. 对偶　反问　比喻",
+                    "B. 对比　设问　夸张",
+                    "C. 对比　反问　比喻",
+                    "D. 对偶　设问　夸张"
+                ],
+                answer: 1,
+                explanation: `①以战士死在沙场与将帅纵情声色进行对比，形象鲜明，揭露深刻；②运用了设问修辞，设问即故作无疑之问（"何处寻？"），然后自己回答（"锦官城外柏森森"）；③运用了夸张修辞，诗人用夸张的手法写白发竟有"三千丈"那么长，可见愁思的深重。`
+            },
+            {
+                id: 20,
+                question: "下列语句中运用的比喻，不妥的一句是",
+                options: [
+                    "A. 他提着两个沉甸甸的大包，气喘吁吁地走着，像踩在棉花上似的深一脚、浅一脚。",
+                    "B. 小战士斜挎着冲锋枪，在崎岖的小路上向前猛冲，脚步像踩在棉花上一般的轻快。",
+                    "C. 一群仙女，踩在棉花似的云朵上，随着隐隐传来的仙乐，冉冉地向远方飘去。",
+                    "D. 她突然看见山路中央盘着一条大蛇，蛇头昂起，张着大口，她顿时感到两脚像踩在棉花上似的……"
+                ],
+                answer: 1,
+                explanation: `B项比喻不妥。小战士在崎岖小路上向前猛冲，应该是脚步沉重有力，而踩在棉花上给人的感觉是松软无力、脚步虚浮，与"猛冲""轻快"的语境矛盾。A项形容负重行走脚步虚浮，C项形容云朵柔软，D项形容害怕时两腿发软，都是恰当的比喻。`
+            },
+            {
+                id: 21,
+                question: "对下列句子所运用的修辞手法的判断，正确的一项是",
+                poems: [
+                    "①芦苇，一片片，一簇簇，远看犹如一朵朵绿色的轻云在地平线上飘拂着。",
+                    "②横眉冷对千夫指，俯首甘为孺子牛。",
+                    "③他的声音难听极了，简直能振碎人的耳膜。"
+                ],
+                options: [
+                    "A. 比喻　对偶　拟人",
+                    "B. 比喻　对偶　夸张",
+                    "C. 拟人　比喻　夸张",
+                    "D. 拟人　对比　夸张"
+                ],
+                answer: 1,
+                explanation: `①用了比喻修辞，把"芦苇"比喻成"绿色的轻云"；②用了对偶修辞，"横眉冷对千夫指"与"俯首甘为孺子牛"字数相等、结构对称；③用了夸张修辞，"能振碎人的耳膜"夸大了声音难听的程度。`
+            },
+            {
+                id: 22,
+                question: "对下列诗句所运用的修辞手法的判断，正确的一项是",
+                poems: [
+                    "①无边落木萧萧下，不尽长江滚滚来。（杜甫《登高》）",
+                    "②晓来谁染霜林醉？总是离人泪。（王实甫《西厢记·长亭送别》）",
+                    "③四海无闲田，农夫犹饿死。（李绅《悯农二首》）"
+                ],
+                options: [
+                    "A. 对偶　反问　对比",
+                    "B. 对比　设问　对偶",
+                    "C. 对比　反问　对偶",
+                    "D. 对偶　设问　对比"
+                ],
+                answer: 3,
+                explanation: `①运用了对偶修辞，上下句字数相等、结构对称；②运用了设问修辞，先问"谁染霜林醉？"再自答"总是离人泪"；③运用了对比修辞，"无闲田"（田地没有荒废的）与"犹饿死"（农夫却饿死）形成惊人的对比，揭露出尖锐的阶级矛盾。`
+            },
+            {
+                id: 23,
+                question: "对下列句子所运用的修辞手法的判断，正确的一项是",
+                poems: [
+                    "①老爷子小心，别顾着说话——看掉下来把屁股摔成两半！",
+                    "②愚蠢是一种天生的无奈，是一种后天的懒惰，是一种自己种下的恶果，是一种好果实中的蛀虫。",
+                    "③这棵树使小屋给予人另一种印象，使小屋含蓄而有风度。"
+                ],
+                options: [
+                    "A. 比喻　排比　拟人",
+                    "B. 比喻　对偶　拟人",
+                    "C. 夸张　排比　拟人",
+                    "D. 夸张　对比　比喻"
+                ],
+                answer: 2,
+                explanation: `①用了夸张修辞，"摔成两半"明显夸大了摔跤的后果；②用了排比修辞，四个"是一种……"构成排比句式；③用了拟人修辞，说小屋"含蓄而有风度"是赋予小屋以人的品质。`
+            }
+        ];
+
+        // ========== 状态管理 ==========
+        let answeredQuestions = {};
+        let correctTotal = 0;
+        let wrongTotal = 0;
+
+        // ========== 页面切换 ==========
+        function switchSection(section, element) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            document.getElementById('section-' + section).classList.add('active');
+
+            if (element) {
+                element.classList.add('active');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ========== 知识卡片 ==========
+        function toggleCard(card) {
+            card.classList.toggle('expanded');
+            const btn = card.querySelector('.expand-btn');
+            if (btn) {
+                btn.textContent = card.classList.contains('expanded') ? '收起 ▲' : '查看更多 ▼';
+            }
+        }
+
+        function filterCards(type, chip) {
+            document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+
+            document.querySelectorAll('.knowledge-card').forEach(card => {
+                if (type === 'all' || card.dataset.type === type) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // ========== 题目渲染 ==========
+        function renderQuiz() {
+            const container = document.getElementById('quizContainer');
+            container.innerHTML = '';
+
+            quizData.forEach((q, index) => {
+                const card = document.createElement('div');
+                card.className = 'quiz-card fade-in';
+                card.id = 'quiz-' + q.id;
+                card.style.animationDelay = (index * 0.05) + 's';
+
+                let poemsHtml = '';
+                if (q.poems) {
+                    poemsHtml = '<div class="question-poems">' +
+                        q.poems.map(p => '<div class="poem-line">' + p + '</div>').join('') +
+                        '</div>';
+                }
+
+                let optionsHtml = q.options.map((opt, i) =>
+                    `<button class="option-btn" onclick="selectAnswer(${q.id}, ${i})" id="opt-${q.id}-${i}">
+                        <span class="option-label">${String.fromCharCode(65 + i)}</span>
+                        <span>${opt.substring(3)}</span>
+                    </button>`
+                ).join('');
+
+                card.innerHTML = `
+                    <div class="question-text">
+                        <span class="question-number">${q.id}</span>
+                        <span>${q.question}</span>
+                    </div>
+                    ${poemsHtml}
+                    <div class="options-grid">${optionsHtml}</div>
+                    <div class="explanation-box" id="exp-${q.id}">
+                        <div class="explanation-title"><span class="result-icon" id="icon-${q.id}"></span><span id="result-text-${q.id}"></span></div>
+                        <div class="explanation-text">${q.explanation}</div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function selectAnswer(qId, optIndex) {
+            if (answeredQuestions[qId] !== undefined) return;
+
+            answeredQuestions[qId] = optIndex;
+            const q = quizData.find(item => item.id === qId);
+            const isCorrect = optIndex === q.answer;
+
+            // 标记选项
+            q.options.forEach((_, i) => {
+                const btn = document.getElementById(`opt-${qId}-${i}`);
+                btn.classList.add('disabled');
+                if (i === q.answer) {
+                    btn.classList.add('correct');
+                }
+                if (i === optIndex && !isCorrect) {
+                    btn.classList.add('wrong');
+                }
+                if (i === optIndex) {
+                    btn.classList.add('selected');
+                }
+            });
+
+            // 显示解析
+            const expBox = document.getElementById(`exp-${qId}`);
+            const icon = document.getElementById(`icon-${qId}`);
+            const resultText = document.getElementById(`result-text-${qId}`);
+
+            if (isCorrect) {
+                correctTotal++;
+                expBox.className = 'explanation-box correct-bg';
+                icon.textContent = '✅';
+                resultText.textContent = '回答正确！';
+            } else {
+                wrongTotal++;
+                expBox.className = 'explanation-box wrong-bg';
+                icon.textContent = '❌';
+                resultText.textContent = `回答错误！正确答案是 ${String.fromCharCode(65 + q.answer)}`;
+            }
+            expBox.style.display = 'block';
+
+            updateStats();
+        }
+
+        function updateStats() {
+            const answered = Object.keys(answeredQuestions).length;
+            const total = quizData.length;
+
+            document.getElementById('currentQ').textContent = answered;
+            document.getElementById('totalQ').textContent = total;
+            document.getElementById('progressBar').style.width = (answered / total * 100) + '%';
+            document.getElementById('scoreDisplay').textContent = correctTotal;
+            document.getElementById('correctCount').textContent = correctTotal;
+            document.getElementById('wrongCount').textContent = wrongTotal;
+            document.getElementById('accuracy').textContent = answered > 0 ? Math.round(correctTotal / answered * 100) + '%' : '0%';
+
+            if (answered === total) {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            const resultPage = document.getElementById('resultPage');
+            resultPage.style.display = 'block';
+            document.getElementById('finalScore').textContent = correctTotal;
+
+            const rate = correctTotal / quizData.length;
+            const title = document.getElementById('resultTitle');
+            const msg = document.getElementById('resultMsg');
+
+            if (rate >= 0.9) {
+                title.textContent = '🎉 太棒了！';
+                msg.textContent = '你对修辞手法的掌握非常扎实，继续保持！';
+            } else if (rate >= 0.7) {
+                title.textContent = '👍 不错！';
+                msg.textContent = '基础掌握良好，建议重点复习易混淆的修辞手法。';
+            } else if (rate >= 0.5) {
+                title.textContent = '💪 加油！';
+                msg.textContent = '还需要多加练习，建议回到知识讲解板块重新学习。';
+            } else {
+                title.textContent = '📖 需要加强学习';
+                msg.textContent = '建议先仔细学习每种修辞手法的定义和特征，再来练习。';
+            }
+        }
+
+        function resetQuiz() {
+            answeredQuestions = {};
+            correctTotal = 0;
+            wrongTotal = 0;
+            document.getElementById('resultPage').style.display = 'none';
+            renderQuiz();
+            updateStats();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showAllAnswers() {
+            quizData.forEach(q => {
+                if (answeredQuestions[q.id] === undefined) {
+                    // 自动显示正确答案
+                    answeredQuestions[q.id] = -1; // 标记为未作答
+
+                    q.options.forEach((_, i) => {
+                        const btn = document.getElementById(`opt-${q.id}-${i}`);
+                        btn.classList.add('disabled');
+                        if (i === q.answer) {
+                            btn.classList.add('correct');
+                        }
+                    });
+
+                    const expBox = document.getElementById(`exp-${q.id}`);
+                    const icon = document.getElementById(`icon-${q.id}`);
+                    const resultText = document.getElementById(`result-text-${q.id}`);
+
+                    expBox.className = 'explanation-box correct-bg';
+                    icon.textContent = '📝';
+                    resultText.textContent = `正确答案：${String.fromCharCode(65 + q.answer)}`;
+                    expBox.style.display = 'block';
+                }
+            });
+        }
+
+        // ========== 弹窗 ==========
+        function closeModal(e) {
+            if (e.target === document.getElementById('modalOverlay')) {
+                document.getElementById('modalOverlay').classList.remove('show');
+            }
+        }
+
+        // ========== 回到顶部 ==========
+        window.addEventListener('scroll', () => {
+            const btn = document.getElementById('backToTop');
+            if (window.scrollY > 300) {
+                btn.style.display = 'flex';
+            } else {
+                btn.style.display = 'none';
+            }
+        });
+
+        // ========== 初始化 ==========
+        document.addEventListener('DOMContentLoaded', () => {
+            renderQuiz();
+        });
+    </script>
+</body>
+
+</html>
