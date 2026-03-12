@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📝 正确使用标点符号 — 高职高考语文</title>
+<style>
+:root{
+  --primary:#FF6B35;--primary-dark:#E85D26;--primary-light:#FF8C42;
+  --primary-lighter:#FFB347;--primary-lightest:#FFF3E6;--bg:#FFFAF5;
+  --card:#FFF;--text:#3D2C22;--text-light:#7A6B63;
+  --success:#43A047;--success-bg:#E8F5E9;--error:#E53935;--error-bg:#FFEBEE;
+  --border:#FFD9BE;--shadow:0 6px 24px rgba(255,107,53,.12);
+  --shadow-hover:0 8px 32px rgba(255,107,53,.2);
+  --r:18px;--rs:12px;--rx:8px;--t:all .3s cubic-bezier(.4,0,.2,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh;overflow-x:hidden}
+body::before{content:"";position:fixed;top:-120px;right:-120px;width:400px;height:400px;background:radial-gradient(circle,rgba(255,107,53,.08) 0%,transparent 70%);border-radius:50%;z-index:0;pointer-events:none}
+.container{max-width:960px;margin:0 auto;padding:20px 16px 40px;position:relative;z-index:1}
+.header{text-align:center;padding:36px 20px 24px;background:linear-gradient(135deg,var(--primary),var(--primary-light),var(--primary-lighter));border-radius:var(--r);color:#fff;box-shadow:0 8px 32px rgba(255,107,53,.25);position:relative;overflow:hidden}
+.header::before{content:"📝";position:absolute;top:-10px;left:20px;font-size:80px;opacity:.15}
+.header::after{content:"✏️";position:absolute;bottom:-5px;right:30px;font-size:60px;opacity:.15}
+.header h1{font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800;margin-bottom:6px;text-shadow:0 2px 8px rgba(0,0,0,.12)}
+.header p{font-size:1rem;opacity:.92}
+.header .badge{display:inline-block;background:rgba(255,255,255,.25);padding:4px 16px;border-radius:20px;font-size:.85rem;margin-top:8px;backdrop-filter:blur(4px)}
+.tab-nav{display:flex;gap:0;background:var(--card);border-radius:0 0 var(--r) var(--r);box-shadow:var(--shadow);overflow-x:auto;position:sticky;top:0;z-index:100}
+.tab-nav::-webkit-scrollbar{height:0}
+.tab-btn{flex:1;min-width:90px;padding:14px 8px;border:none;background:0 0;font-size:.88rem;font-weight:600;color:var(--text-light);cursor:pointer;transition:var(--t);position:relative;white-space:nowrap;display:flex;flex-direction:column;align-items:center;gap:3px}
+.tab-btn .ti{font-size:1.3rem}
+.tab-btn::after{content:"";position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:0;height:3px;background:var(--primary);border-radius:3px 3px 0 0;transition:var(--t)}
+.tab-btn:hover{color:var(--primary);background:var(--primary-lightest)}
+.tab-btn.active{color:var(--primary)}
+.tab-btn.active::after{width:60%}
+.tab-panel{display:none;animation:fadeUp .4s ease}
+.tab-panel.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.st{font-size:1.4rem;font-weight:700;margin:28px 0 16px;padding-left:14px;border-left:4px solid var(--primary);color:var(--text)}
+.card{background:var(--card);border-radius:var(--rs);padding:22px;margin-bottom:16px;box-shadow:var(--shadow);border:1px solid var(--border);transition:var(--t)}
+.card:hover{box-shadow:var(--shadow-hover);transform:translateY(-2px)}
+.card h3{font-size:1.1rem;margin-bottom:10px;color:var(--primary-dark)}
+.card p,.card li{font-size:.95rem;line-height:1.8}
+.card ul{padding-left:20px}
+.tip-box{background:linear-gradient(135deg,var(--primary-lightest),#FFF8F0);border-left:4px solid var(--primary);border-radius:var(--rx);padding:16px 18px;margin:12px 0}
+.tip-box strong{color:var(--primary-dark)}
+.warning-box{background:var(--error-bg);border-left:4px solid var(--error);border-radius:var(--rx);padding:16px 18px;margin:12px 0}
+.success-box{background:var(--success-bg);border-left:4px solid var(--success);border-radius:var(--rx);padding:16px 18px;margin:12px 0}
+.punct-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px;margin:16px 0}
+.punct-card{background:var(--card);border-radius:var(--rs);padding:18px 12px;text-align:center;box-shadow:var(--shadow);border:2px solid transparent;cursor:pointer;transition:var(--t)}
+.punct-card:hover{border-color:var(--primary);transform:translateY(-4px) scale(1.03)}
+.punct-card .symbol{font-size:2rem;display:block;margin-bottom:6px;color:var(--primary)}
+.punct-card .name{font-weight:700;font-size:.95rem;margin-bottom:4px}
+.punct-card .desc{font-size:.78rem;color:var(--text-light)}
+.accordion{margin:12px 0}
+.accordion-item{background:var(--card);border-radius:var(--rs);margin-bottom:10px;box-shadow:var(--shadow);overflow:hidden;border:1px solid var(--border)}
+.accordion-header{padding:16px 20px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;font-weight:700;font-size:1rem;transition:var(--t);user-select:none}
+.accordion-header:hover{background:var(--primary-lightest)}
+.accordion-header .arrow{transition:transform .3s;font-size:.9rem;color:var(--primary)}
+.accordion-item.open .accordion-header{background:var(--primary-lightest);color:var(--primary-dark)}
+.accordion-item.open .arrow{transform:rotate(180deg)}
+.accordion-body{max-height:0;overflow:hidden;transition:max-height .4s ease;padding:0 20px}
+.accordion-item.open .accordion-body{max-height:2000px;padding:0 20px 18px}
+.accordion-body p{margin:8px 0;font-size:.93rem}
+.example{background:#FFF8F0;border-radius:var(--rx);padding:10px 14px;margin:8px 0;font-size:.9rem;border-left:3px solid var(--primary-lighter)}
+.example em{color:var(--primary-dark);font-style:normal;font-weight:700}
+.compare-table{width:100%;border-collapse:separate;border-spacing:0;border-radius:var(--rs);overflow:hidden;margin:12px 0;box-shadow:var(--shadow)}
+.compare-table th{background:var(--primary);color:#fff;padding:12px 16px;font-weight:600;font-size:.92rem;text-align:left}
+.compare-table td{padding:12px 16px;font-size:.9rem;border-bottom:1px solid var(--border);background:var(--card)}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table td:first-child{font-weight:600;color:var(--primary-dark);white-space:nowrap}
+.game-container{background:var(--card);border-radius:var(--r);padding:32px 28px;box-shadow:var(--shadow);border:2px solid var(--border);min-height:400px}
+.game-login{text-align:center}
+.game-login h2{font-size:1.6rem;margin-bottom:6px}
+.game-login .gs{color:var(--text-light);margin-bottom:24px}
+.mascot{font-size:4rem;margin-bottom:16px;display:block;animation:bounce 2s infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.form-group{margin-bottom:18px;text-align:left;max-width:340px;margin-left:auto;margin-right:auto}
+.form-group label{display:block;font-weight:600;margin-bottom:6px;font-size:.95rem}
+.form-group input{width:100%;padding:12px 16px;border:2px solid var(--border);border-radius:var(--rx);font-size:1rem;transition:var(--t);outline:none}
+.form-group input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(255,107,53,.15)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 36px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border:none;border-radius:50px;font-size:1.05rem;font-weight:700;cursor:pointer;transition:var(--t);box-shadow:0 4px 16px rgba(255,107,53,.3)}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(255,107,53,.4)}
+.btn:active{transform:translateY(0)}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.btn-secondary{background:linear-gradient(135deg,#78909C,#90A4AE);box-shadow:0 4px 16px rgba(120,144,156,.3)}
+.btn-success{background:linear-gradient(135deg,var(--success),#66BB6A);box-shadow:0 4px 16px rgba(67,160,71,.3)}
+.game-quiz{display:none}
+.progress-area{margin-bottom:24px}
+.progress-info{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:.9rem}
+.progress-info span{font-weight:600}
+.progress-bar-bg{height:12px;background:#F0E0D0;border-radius:20px;overflow:hidden}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--primary),var(--primary-lighter));border-radius:20px;transition:width .5s ease}
+.question-card{background:var(--primary-lightest);border-radius:var(--rs);padding:24px;margin-bottom:20px}
+.question-num{display:inline-block;background:var(--primary);color:#fff;padding:4px 14px;border-radius:20px;font-size:.85rem;font-weight:700;margin-bottom:12px}
+.question-text{font-size:1.05rem;font-weight:600;line-height:1.8}
+.options-list{list-style:none;margin:16px 0}
+.option-item{background:var(--card);border:2px solid var(--border);border-radius:var(--rx);padding:14px 18px;margin-bottom:10px;cursor:pointer;transition:var(--t);display:flex;align-items:flex-start;gap:10px;font-size:.95rem;line-height:1.6}
+.option-item:hover:not(.disabled){border-color:var(--primary);background:var(--primary-lightest)}
+.option-item.selected{border-color:var(--primary);background:var(--primary-lightest);font-weight:600}
+.option-item.disabled{cursor:not-allowed;opacity:.85}
+.option-item.correct{border-color:var(--success)!important;background:var(--success-bg)!important}
+.option-item.wrong{border-color:var(--error)!important;background:var(--error-bg)!important}
+.option-radio{width:20px;height:20px;border:2px solid #CCC;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-top:2px;transition:var(--t)}
+.option-item.selected .option-radio{border-color:var(--primary);background:var(--primary)}
+.option-item.correct .option-radio{border-color:var(--success);background:var(--success)}
+.option-item.wrong .option-radio{border-color:var(--error);background:var(--error)}
+.radio-dot{width:8px;height:8px;border-radius:50%;background:#fff;display:none}
+.option-item.selected .radio-dot,.option-item.correct .radio-dot,.option-item.wrong .radio-dot{display:block}
+.feedback{margin:16px 0;padding:18px;border-radius:var(--rs);display:none;animation:fadeUp .3s ease}
+.feedback.show{display:block}
+.feedback.correct{background:var(--success-bg);border:1px solid var(--success)}
+.feedback.wrong{background:var(--error-bg);border:1px solid var(--error)}
+.feedback-title{font-weight:700;font-size:1.05rem;margin-bottom:6px}
+.feedback.correct .feedback-title{color:var(--success)}
+.feedback.wrong .feedback-title{color:var(--error)}
+.feedback-explain{font-size:.92rem;line-height:1.7;color:var(--text)}
+.btn-group{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:20px}
+.game-result{display:none;text-align:center}
+.result-circle{width:160px;height:160px;border-radius:50%;margin:20px auto;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:2.4rem;font-weight:800;color:#fff;box-shadow:0 8px 32px rgba(255,107,53,.3)}
+.result-circle.excellent{background:linear-gradient(135deg,#43A047,#66BB6A)}
+.result-circle.good{background:linear-gradient(135deg,var(--primary),var(--primary-lighter))}
+.result-circle.fair{background:linear-gradient(135deg,#FB8C00,#FFB74D)}
+.result-circle.poor{background:linear-gradient(135deg,#E53935,#EF5350)}
+.result-circle small{font-size:.85rem;font-weight:400;opacity:.9}
+.result-msg{font-size:1.2rem;font-weight:700;margin:16px 0;color:var(--text)}
+.result-detail{font-size:.95rem;color:var(--text-light);margin-bottom:24px}
+.result-detail span{font-weight:700;color:var(--primary)}
+.footer{text-align:center;padding:24px;color:var(--text-light);font-size:.82rem;margin-top:20px}
+@media(max-width:600px){
+  .container{padding:10px 8px 30px}.header{padding:26px 16px 18px}
+  .tab-btn{padding:10px 6px;font-size:.78rem;min-width:64px}.tab-btn .ti{font-size:1.1rem}
+  .game-container{padding:20px 14px}.punct-grid{grid-template-columns:repeat(auto-fill,minmax(100px,1fr))}
+  .question-card{padding:16px}.option-item{padding:12px 14px}
+  .result-circle{width:130px;height:130px;font-size:2rem}
+}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+.shake{animation:shake .5s}
+@keyframes pop{0%{transform:scale(.8);opacity:0}100%{transform:scale(1);opacity:1}}
+.pop{animation:pop .4s ease}
+.confetti-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;overflow:hidden}
+.confetti{position:absolute;width:10px;height:10px;top:-20px;animation:confettiFall 3s ease-in forwards}
+@keyframes confettiFall{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+/* modal */
+.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.4);z-index:999;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.show{display:flex}
+.modal-box{background:#fff;border-radius:var(--r);padding:28px;max-width:500px;width:100%;max-height:80vh;overflow-y:auto;position:relative;animation:pop .3s ease}
+.modal-close{position:absolute;top:12px;right:16px;background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--text-light)}
+.modal-close:hover{color:var(--primary)}
+</style>
+</head>
+<body>
+<div class="container">
+  <header class="header">
+    <h1>📝 正确使用标点符号</h1>
+    <p>高职高考语文 · 第一章 语言知识和语言表达 · 第三节</p>
+    <span class="badge">📖 广东省高职高考复习丛书</span>
+  </header>
+
+  <nav class="tab-nav" id="tabNav">
+    <button class="tab-btn active" data-tab="overview"><span class="ti">📚</span>知识总览</button>
+    <button class="tab-btn" data-tab="classify"><span class="ti">🏷️</span>标点分类</button>
+    <button class="tab-btn" data-tab="detail"><span class="ti">📖</span>用法详解</button>
+    <button class="tab-btn" data-tab="mistakes"><span class="ti">⚠️</span>易错辨析</button>
+    <button class="tab-btn" data-tab="game"><span class="ti">🎮</span>闯关游戏</button>
+  </nav>
+
+  <!-- TAB1 知识总览 -->
+  <div class="tab-panel active" id="panel-overview">
+    <h2 class="st">🎯 考纲要求</h2>
+    <div class="card">
+      <p>根据广东省高职高考语文考试大纲，要求考生能够<strong>正确使用常见的标点符号</strong>，主要考查：</p>
+      <ul>
+        <li>✅ 掌握常用标点符号的<strong>基本用法</strong></li>
+        <li>✅ 辨析容易<strong>混淆</strong>的标点符号</li>
+        <li>✅ 在具体语境中<strong>正确运用</strong>标点符号</li>
+      </ul>
+      <div class="tip-box"><strong>💡 考试提示：</strong>标点符号题通常以选择题形式出现，要求判断标点符号使用正确或有误的选项。属于基础分，务必拿下！</div>
+    </div>
+    <h2 class="st">🗺️ 知识导图</h2>
+    <div class="card">
+      <p>标点符号共分为<strong>两大类</strong>，共<strong>16种</strong>：</p>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:12px">
+        <div style="flex:1;min-width:200px;background:linear-gradient(135deg,#FFF3E0,#FFE0B2);padding:18px;border-radius:12px">
+          <h3 style="color:var(--primary);margin-bottom:8px">📌 点号（7种）</h3>
+          <p>表示语言中的各种<strong>停顿</strong></p>
+          <p style="font-size:.9rem;color:var(--text-light);margin-top:6px">句号、问号、叹号、逗号、顿号、分号、冒号</p>
+        </div>
+        <div style="flex:1;min-width:200px;background:linear-gradient(135deg,#E8F5E9,#C8E6C9);padding:18px;border-radius:12px">
+          <h3 style="color:var(--success);margin-bottom:8px">🔖 标号（9种）</h3>
+          <p>标明语句的<strong>性质和作用</strong></p>
+          <p style="font-size:.9rem;color:var(--text-light);margin-top:6px">引号、括号、破折号、省略号、着重号、连接号、间隔号、书名号、专名号</p>
+        </div>
+      </div>
+    </div>
+    <h2 class="st">🔑 必背口诀</h2>
+    <div class="card" style="background:linear-gradient(135deg,var(--primary-lightest),#FFF)">
+      <p style="font-size:1.05rem;line-height:2;text-align:center;font-weight:600">
+        🎵 点号七兄弟，停顿各不同；<br>句号最完整，问号表疑问；<br>叹号抒感情，逗号句中停；<br>顿号并列词，分号并列句；<br>冒号提示语，标号九种记。<br>引号分直引，括号作注释；<br>破折解释转，省略表未尽；<br>书名标题目，用法要分清！ 🎵
+      </p>
+    </div>
+  </div>
+
+  <!-- TAB2 标点分类 -->
+  <div class="tab-panel" id="panel-classify">
+    <h2 class="st">📌 点号（7种）——表停顿</h2>
+    <div class="punct-grid" id="punctGrid1"></div>
+    <h2 class="st">🔖 标号（9种）——标性质</h2>
+    <div class="punct-grid" id="punctGrid2"></div>
+    <div class="modal-overlay" id="punctModal">
+      <div class="modal-box pop"><button class="modal-close" onclick="closePunctModal()">✕</button><div id="punctModalContent"></div></div>
+    </div>
+  </div>
+
+  <!-- TAB3 用法详解 -->
+  <div class="tab-panel" id="panel-detail">
+    <h2 class="st">📖 常考标点用法详解</h2>
+    <p style="color:var(--text-light);margin-bottom:16px">👆 点击展开查看详细解释和例句</p>
+    <div class="accordion" id="accordionList"></div>
+  </div>
+
+  <!-- TAB4 易错辨析 -->
+  <div class="tab-panel" id="panel-mistakes">
+    <h2 class="st">🔥 高频易错点（来自原题总结）</h2>
+    <div class="card"><h3>❌ 易错点一：选择问句的问号</h3>
+      <table class="compare-table"><tr><th>类型</th><th>标点方式</th><th>示例</th></tr><tr><td>选择问句</td><td>中间逗号，末尾问号</td><td>你是参加<strong>，</strong>还是不参加<strong>？</strong></td></tr><tr><td>连续问句</td><td>每个问句后都用问号</td><td>怎么可能不来<strong>？</strong>谁决定的<strong>？</strong></td></tr></table>
+      <div class="tip-box"><strong>🔑 辨别技巧：</strong>选择问句有"还是"连接两个选项，只需一个问号；连续问句是多个独立的疑问，各自用问号。（见第4、10、16题）</div>
+    </div>
+    <div class="card"><h3>❌ 易错点二：陈述语气误用问号</h3>
+      <div class="warning-box"><p>⚠️ 句中虽有疑问词（谁、什么、哪里、怎么），但整句是<strong>陈述语气</strong>时，<strong>不能用问号</strong>。</p></div>
+      <div class="example"><em>❌</em> 但人们还在关注着检察机关对那些行贿者将如何处置<em>？</em><br><em>✅</em> 但人们还在关注着检察机关对那些行贿者将如何处置<em>。</em><br><br><em>❌</em> 面对父母的殷切期待，我不知道怎么办才好<em>？</em><br><em>✅</em> 面对父母的殷切期待，我不知道怎么办才好<em>。</em></div>
+      <p style="font-size:.88rem;color:var(--text-light)">（见第1、3、6、12题）</p>
+    </div>
+    <div class="card"><h3>❌ 易错点三：引号内外的标点位置</h3>
+      <table class="compare-table"><tr><th>引用方式</th><th>标点位置</th><th>示例</th></tr><tr><td>完整引用（独立）</td><td>标点在引号<strong>内</strong></td><td>"变动犹鬼神，不可端倪<strong>。</strong>"</td></tr><tr><td>部分引用（作成分）</td><td>标点在引号<strong>外</strong></td><td>"一寸光阴一寸金，寸金难买寸光阴"的真正含义<strong>。</strong></td></tr></table>
+      <p style="font-size:.88rem;color:var(--text-light)">（见第1、4、5、13、15题）</p>
+    </div>
+    <div class="card"><h3>❌ 易错点四：省略号与"等""等等"重复</h3>
+      <div class="warning-box"><p>⚠️ <strong>省略号（……）</strong>和<strong>"等""等等"</strong>功能相同，<strong>不能同时使用</strong>！</p></div>
+      <div class="success-box"><p>✅ 正确：有迎春、月季、桂花、梅花<strong>等</strong><br>✅ 正确：有迎春、月季、桂花、梅花<strong>……</strong><br>❌ 错误：有迎春、月季、桂花、梅花<strong>……等</strong></p></div>
+      <p style="font-size:.88rem;color:var(--text-light)">（见第4、19题）</p>
+    </div>
+    <div class="card"><h3>❌ 易错点五：概数之间误用顿号</h3>
+      <table class="compare-table"><tr><th>类型</th><th>是否用顿号</th><th>示例</th></tr><tr><td>概数（约数）</td><td>❌ 不用</td><td>十四五岁、三十二三岁、一二十只</td></tr><tr><td>确指（并列）</td><td>✅ 要用</td><td>三、四年级</td></tr></table>
+      <p style="font-size:.88rem;color:var(--text-light)">（见第5、18、20、22题）</p>
+    </div>
+    <div class="card"><h3>❌ 易错点六：说话人位置与冒号/逗号</h3>
+      <table class="compare-table"><tr><th>说话人位置</th><th>标点</th><th>示例</th></tr><tr><td>在前面</td><td>用<strong>冒号</strong></td><td>他说<strong>：</strong>"……"</td></tr><tr><td>在中间</td><td>用<strong>逗号</strong></td><td>"……"他说<strong>，</strong>"……"</td></tr><tr><td>在后面</td><td>用<strong>句号</strong></td><td>"……"他说<strong>。</strong></td></tr></table>
+      <p style="font-size:.88rem;color:var(--text-light)">（见第11、13、18、21题）</p>
+    </div>
+    <div class="card"><h3>❌ 易错点七：书名号的滥用</h3>
+      <div class="warning-box"><p>⚠️ 以下情况<strong>不能</strong>使用书名号：</p>
+      <ul><li>❌ 活动主题名称：~~《健康秩序、健康生活》~~ → "健康秩序、健康生活"</li><li>✅ 歌曲名应该用书名号：~~"最炫民族风"~~ → 《最炫民族风》</li></ul></div>
+      <p style="font-size:.88rem;color:var(--text-light)">（见第3、18题）</p>
+    </div>
+  </div>
+
+  <!-- TAB5 闯关游戏 -->
+  <div class="tab-panel" id="panel-game">
+    <div class="game-container">
+      <div class="game-login" id="gameLogin">
+        <span class="mascot">🏆</span>
+        <h2>标点符号闯关挑战</h2>
+        <p class="gs">共 24 道原题，每题答完即时反馈解析，快来测试你的实力吧！</p>
+        <div class="form-group"><label for="studentId">📋 学号</label><input type="text" id="studentId" placeholder="请输入你的学号" maxlength="20"></div>
+        <div class="form-group"><label for="studentName">👤 姓名</label><input type="text" id="studentName" placeholder="请输入你的姓名" maxlength="10"></div>
+        <p id="loginError" style="color:var(--error);font-size:.9rem;margin-bottom:12px;display:none">⚠️ 请填写学号和姓名！</p>
+        <button class="btn" onclick="startGame()">🚀 开始闯关</button>
+      </div>
+      <div class="game-quiz" id="gameQuiz">
+        <div class="progress-area">
+          <div class="progress-info"><span id="progressText">第 1 / 24 题</span><span id="progressScore">当前得分：0</span></div>
+          <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressBar" style="width:0%"></div></div>
+        </div>
+        <div class="question-card" id="questionCard"><span class="question-num" id="questionNum">第 1 题</span><p class="question-text" id="questionText"></p></div>
+        <ul class="options-list" id="optionsList"></ul>
+        <div class="feedback" id="feedback"><p class="feedback-title" id="feedbackTitle"></p><p class="feedback-explain" id="feedbackExplain"></p></div>
+        <div class="btn-group">
+          <button class="btn" id="submitBtn" onclick="submitAnswer()" disabled>✅ 确认提交</button>
+          <button class="btn btn-success" id="nextBtn" onclick="nextQuestion()" style="display:none">➡️ 下一题</button>
+          <button class="btn btn-success" id="finishBtn" onclick="showResults()" style="display:none">🏁 查看成绩</button>
+        </div>
+      </div>
+      <div class="game-result" id="gameResult">
+        <h2 style="margin-bottom:4px">🎊 闯关完成！</h2>
+        <p id="resultName" style="color:var(--text-light)"></p>
+        <div class="result-circle" id="resultCircle"><span id="resultScore"></span><small id="resultTotal"></small></div>
+        <p class="result-msg" id="resultMsg"></p>
+        <p class="result-detail" id="resultDetail"></p>
+        <div class="btn-group">
+          <button class="btn" id="retryWrongBtn" onclick="retryWrong()">🔄 错题重练</button>
+          <button class="btn btn-secondary" onclick="restartGame()">🔁 重新闯关</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="footer">📖 高职高考语文专题训练 · 正确使用标点符号 | 广东省高职高考复习丛书</footer>
+</div>
+
+<script src="questions.js"></script>
+<script>
+/* ===== Tab 切换 ===== */
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-'+btn.dataset.tab).classList.add('active');
+  });
+});
+
+/* ===== 标点分类数据 ===== */
+const punctData={
+  dots:[
+    {s:'。',n:'句号',d:'陈述句末尾',detail:'<h3>。句号</h3><p><b>用法：</b>用于陈述句末尾，表示一句话说完。</p><div class="example">今天天气真好。<br>他是一名教师。</div><p><b>注意：</b>语气舒缓的祈使句末尾也可用句号。</p>'},
+    {s:'？',n:'问号',d:'疑问句末尾',detail:'<h3>？问号</h3><p><b>用法：</b>用于疑问句、反问句末尾。</p><p><b>重点：</b>①选择问句只在最后用一个问号 ②陈述语气不用问号 ③倒装句问号放末尾 ④反问句用问号不用叹号</p>'},
+    {s:'！',n:'叹号',d:'感叹句末尾',detail:'<h3>！叹号</h3><p><b>用法：</b>用于感叹句、语气强烈的祈使句末尾。</p><p><b>注意：</b>反问句应该用问号，不能用叹号。</p>'},
+    {s:'，',n:'逗号',d:'句中一般停顿',detail:'<h3>，逗号</h3><p><b>用法：</b>表示句中一般性停顿，是使用频率最高的标点。</p><p><b>注意：</b>说话人在引文中间时，"说"后面用逗号而非冒号。</p>'},
+    {s:'、',n:'顿号',d:'并列词语之间',detail:'<h3>、顿号</h3><p><b>用法：</b>用于并列词语之间。</p><p><b>重点：</b>①概数之间不用顿号 ②并列词语带语气词"呀"时用逗号 ③连词"和"前不用顿号 ④并列补语之间用逗号</p>'},
+    {s:'；',n:'分号',d:'并列分句之间',detail:'<h3>；分号</h3><p><b>用法：</b>用于并列分句之间，比逗号停顿更大。</p><div class="example">骨骼完整匀称，人才能身姿挺拔；结构井然有序，文章才能立得起来。</div>'},
+    {s:'：',n:'冒号',d:'提示下文/总结',detail:'<h3>：冒号</h3><p><b>用法：</b>用在提示语后面，引出下文或总结上文。</p><p><b>重点：</b>①冒号管辖范围到句末 ②说话人在中间时不用冒号 ③引用内容只是句子成分时不用冒号</p>'}
+  ],
+  marks:[
+    {s:'" "',n:'引号',d:'引用/特殊含义',detail:'<h3>" " 引号</h3><p><b>用法：</b>①直接引用 ②特殊含义 ③讽刺反语 ④特定称谓</p><p><b>重点：</b>完整引用标点在引号内，部分引用标点在引号外。引号内还有引号时，外双内单。</p>'},
+    {s:'（ ）',n:'括号',d:'注释说明',detail:'<h3>（ ）括号</h3><p><b>用法：</b>用于注释说明性文字。</p><p><b>重点：</b>句内括号紧跟被注释词语。如"七月初七（乞巧节）"括号应跟在"七月初七"后面。</p>'},
+    {s:'——',n:'破折号',d:'解释/转折/延长',detail:'<h3>—— 破折号</h3><p><b>用法：</b>①解释说明 ②话题转换 ③声音延长</p><div class="example">"压迫止痛法"——用茶壶盖、烟嘴……顶住疼痛部位。</div>'},
+    {s:'……',n:'省略号',d:'省略/未尽',detail:'<h3>…… 省略号</h3><p><b>用法：</b>①列举省略 ②话语中断 ③沉默思考</p><p><b>重点：</b>不能与"等""等等"同时使用！</p>'},
+    {s:'．',n:'着重号',d:'强调重点',detail:'<h3>．着重号</h3><p>标在需要强调的文字下方，引起注意。</p>'},
+    {s:'—',n:'连接号',d:'连接相关内容',detail:'<h3>— 连接号</h3><p>连接相关的时间、地点、数字等。</p>'},
+    {s:'·',n:'间隔号',d:'分隔并列名称',detail:'<h3>· 间隔号</h3><p>①外国人名各部分之间 ②书名与篇名之间</p><div class="example">《千秋岁·咏夏景》《旧约·创世纪》</div>'},
+    {s:'《 》',n:'书名号',d:'书名/篇名等',detail:'<h3>《 》书名号</h3><p><b>用法：</b>标示书名、篇名、报刊名、歌曲名、影视名等。</p><p><b>重点：</b>活动主题名不用书名号！歌曲名要用书名号！</p>'},
+    {s:'____',n:'专名号',d:'专有名词',detail:'<h3>____ 专名号</h3><p>用在人名、地名等专有名词下方的横线。主要用于古籍或文史类书籍。</p>'}
+  ]
+};
+
+function renderPunctGrid(){
+  const g1=document.getElementById('punctGrid1'),g2=document.getElementById('punctGrid2');
+  punctData.dots.forEach(p=>{g1.innerHTML+=`<div class="punct-card" onclick="showPunctDetail(this)" data-detail="${encodeURIComponent(p.detail)}"><span class="symbol">${p.s}</span><div class="name">${p.n}</div><div class="desc">${p.d}</div></div>`});
+  punctData.marks.forEach(p=>{g2.innerHTML+=`<div class="punct-card" onclick="showPunctDetail(this)" data-detail="${encodeURIComponent(p.detail)}"><span class="symbol">${p.s}</span><div class="name">${p.n}</div><div class="desc">${p.d}</div></div>`});
+}
+renderPunctGrid();
+
+function showPunctDetail(el){
+  document.getElementById('punctModalContent').innerHTML=decodeURIComponent(el.dataset.detail);
+  document.getElementById('punctModal').classList.add('show');
+}
+function closePunctModal(){document.getElementById('punctModal').classList.remove('show')}
+document.getElementById('punctModal').addEventListener('click',function(e){if(e.target===this)closePunctModal()});
+
+/* ===== 折叠面板数据 ===== */
+const accData=[
+  {title:'❓ 问号的用法与易错点',body:'<p><b>基本用法：</b>用于疑问句和反问句的末尾。</p><p><b>⚡ 高频考点：</b></p><p>① <b>选择问句</b>只在最后用一个问号，中间用逗号。</p><div class="example"><em>✅</em> 你是参加<em>，</em>还是不参加<em>？</em><br><em>❌</em> 你是参加<em>？</em>还是不参加<em>？</em></div><p>② <b>陈述语气</b>中虽有疑问词，不用问号。</p><div class="example"><em>✅</em> 但人们还在关注着检察机关对那些行贿者将如何处置<em>。</em><br><em>❌</em> …将如何处置<em>？</em></div><p>③ <b>反问句</b>用问号，不用叹号。</p><div class="example"><em>✅</em> 难道还不能照料自己么<em>？</em><br><em>❌</em> 难道还不能照料自己么<em>！</em></div><p>④ <b>倒装问句</b>问号放全句末尾。</p><div class="example"><em>✅</em> 怎么了<em>，</em>你<em>？</em><br><em>❌</em> 怎么了<em>？</em>你<em>。</em></div>'},
+  {title:'📍 顿号的用法与易错点',body:'<p><b>基本用法：</b>用于句中并列词语之间的停顿。</p><p><b>⚡ 高频考点：</b></p><p>① <b>概数之间</b>不用顿号。</p><div class="example"><em>✅</em> 十四五岁 / 三十二三岁 / 一二十只<br><em>❌</em> 十四<em>、</em>五岁 / 一<em>、</em>二十只</div><p>② 并列词语带<b>语气词</b>（呀、啊等）时，用逗号不用顿号。</p><div class="example"><em>✅</em> 数学呀<em>，</em>物理呀<em>，</em>化学呀<br><em>❌</em> 数学呀<em>、</em>物理呀<em>、</em>化学呀</div><p>③ <b>"和"</b>等连词前不用顿号。</p><div class="example"><em>✅</em> 能诗、能画、能写<em>和</em>能制印<br><em>❌</em> 能诗、能画、能写<em>、</em>和能制印</div><p>④ <b>并列补语</b>之间用逗号不用顿号。</p><div class="example"><em>✅</em> 讲得清楚<em>，</em>明白<br><em>❌</em> 讲得清楚<em>、</em>明白</div>'},
+  {title:'💬 引号的用法与易错点',body:'<p><b>⚡ 高频考点：引号与句末标点的位置关系</b></p><p>① <b>完整引用</b>（独立使用）：标点在引号<b>内</b>。</p><div class="example"><em>✅</em> 他说："主一无适便是敬<em>。</em>"<br><em>❌</em> "变动犹鬼神，不可端倪"<em>。</em></div><p>② <b>部分引用</b>（作句子成分）：标点在引号<b>外</b>。</p><div class="example"><em>✅</em> "一寸光阴一寸金，寸金难买寸光阴"这句话的真正含义<em>。</em><br><em>❌</em> "一寸光阴一寸金，寸金难买寸光阴<em>。</em>"这句话的真正含义。</div><p>③ <b>间接转述</b>（第三人称）不用引号。</p><div class="example"><em>✅</em> 吴名早上跟我说，他脚崴了一下。<br><em>❌</em> 吴名早上跟我说，"他脚崴了一下。"</div>'},
+  {title:'🔶 冒号的用法与易错点',body:'<p><b>⚡ 高频考点：</b></p><p>① <b>说话人在中间</b>时，"说"后面用<b>逗号</b>，不用冒号。</p><div class="example"><em>✅</em> "还愣着干嘛？"妈妈训斥我<em>，</em>"还不快去……"<br><em>❌</em> "还愣着干嘛？"妈妈训斥我<em>：</em>"还不快去……"</div><p>② 冒号的<b>管辖范围</b>到句末。引用的内容只是句子成分时不用冒号。</p><div class="example"><em>❌</em> 《地质灾害防治条例》正式确立了<em>：</em>"……"的原则。<br><em>✅</em> 《地质灾害防治条例》正式确立了"……"的原则。</div>'},
+  {title:'⏳ 省略号的用法与易错点',body:'<p><b>⚡ 核心考点：省略号和"等""等等"不能同时使用！</b></p><div class="example"><em>✅</em> 有迎春、月季、桂花、梅花<em>等</em><br><em>✅</em> 有迎春、月季、桂花、梅花<em>……</em><br><em>❌</em> 有迎春、月季、桂花、梅花<em>……等</em><br><em>❌</em> 不尊重老师<em>等等……</em></div>'},
+  {title:'📕 书名号的用法与易错点',body:'<p><b>⚡ 高频考点：</b></p><p>① <b>歌曲名</b>应该用书名号，不能用引号。</p><div class="example"><em>✅</em> 歌曲<em>《最炫民族风》</em><br><em>❌</em> 歌曲<em>"最炫民族风"</em></div><p>② <b>活动主题名</b>不能用书名号，应该用引号。</p><div class="example"><em>✅</em> 以<em>"健康秩序、健康生活"</em>为主题<br><em>❌</em> 以<em>《健康秩序、健康生活》</em>为主题</div>'},
+  {title:'📎 分号的用法与易错点',body:'<p><b>基本用法：</b>用于并列分句之间，分句内部已有逗号时使用。</p><div class="example"><em>✅</em> 理想是罗盘，给船舶导引方向<em>；</em>理想是船舶，载你出海远行。</div><p><b>注意：</b>并列关系的分句才用分号；如果语义发生转换（不再并列），应用句号。</p>'},
+  {title:'（ ）括号的用法与易错点',body:'<p><b>⚡ 高频考点：括号位置</b></p><p>句内括号紧跟在<b>被注释的词语</b>后面。</p><div class="example"><em>✅</em> "七月初七"<em>（乞巧节）</em>是传统的民间节日<br><em>❌</em> "七月初七"是传统的民间节日<em>（乞巧节）</em><br><br><em>✅</em> 房屋<em>（包括新房和二手房）</em>销售价格<br><em>❌</em> 房屋销售价格<em>（包括新房和二手房）</em></div>'}
+];
+function renderAccordion(){
+  const list=document.getElementById('accordionList');
+  accData.forEach(a=>{list.innerHTML+=`<div class="accordion-item"><div class="accordion-header" onclick="toggleAcc(this)"><span>${a.title}</span><span class="arrow">▼</span></div><div class="accordion-body">${a.body}</div></div>`});
+}
+renderAccordion();
+function toggleAcc(h){const it=h.parentElement,op=it.classList.contains('open');it.parentElement.querySelectorAll('.accordion-item').forEach(i=>i.classList.remove('open'));if(!op)it.classList.add('open')}
+
+/* ===== 闯关游戏 ===== */
+const G={sid:'',sname:'',idx:0,qs:[],ans:{},res:{},score:0,mode:'full',done:false};
+
+function startGame(){
+  const sid=document.getElementById('studentId').value.trim(),sn=document.getElementById('studentName').value.trim();
+  if(!sid||!sn){document.getElementById('loginError').style.display='block';return}
+  document.getElementById('loginError').style.display='none';
+  G.sid=sid;G.sname=sn;G.idx=0;G.ans={};G.res={};G.score=0;G.mode='full';G.done=false;
+  G.qs=[...quizQuestions];
+  document.getElementById('gameLogin').style.display='none';
+  document.getElementById('gameResult').style.display='none';
+  document.getElementById('gameQuiz').style.display='block';
+  renderQ();
+}
+function renderQ(){
+  const q=G.qs[G.idx],total=G.qs.length,n=G.idx+1;
+  document.getElementById('questionNum').textContent='第 '+n+' 题';
+  document.getElementById('questionText').textContent=q.question;
+  document.getElementById('progressText').textContent='第 '+n+' / '+total+' 题';
+  document.getElementById('progressScore').textContent='当前得分：'+G.score;
+  document.getElementById('progressBar').style.width=((n-1)/total*100)+'%';
+  const list=document.getElementById('optionsList');list.innerHTML='';
+  q.options.forEach(opt=>{
+    const letter=opt.charAt(0);
+    const li=document.createElement('li');li.className='option-item';li.dataset.letter=letter;
+    li.innerHTML='<div class="option-radio"><div class="radio-dot"></div></div><span>'+escH(opt)+'</span>';
+    li.addEventListener('click',()=>selectOpt(li,letter));list.appendChild(li);
+  });
+  G.done=false;
+  document.getElementById('submitBtn').disabled=true;
+  document.getElementById('submitBtn').style.display='';
+  document.getElementById('nextBtn').style.display='none';
+  document.getElementById('finishBtn').style.display='none';
+  document.getElementById('feedback').classList.remove('show','correct','wrong');
+}
+function escH(t){const d=document.createElement('div');d.textContent=t;return d.innerHTML}
+function selectOpt(li,l){if(G.done)return;document.querySelectorAll('.option-item').forEach(o=>o.classList.remove('selected'));li.classList.add('selected');G.ans[G.qs[G.idx].id]=l;document.getElementById('submitBtn').disabled=false}
+function submitAnswer(){
+  if(G.done)return;const q=G.qs[G.idx],sel=G.ans[q.id];if(!sel)return;
+  G.done=true;const ok=sel===q.answer;G.res[q.id]=ok;if(ok)G.score++;
+  document.querySelectorAll('.option-item').forEach(o=>{
+    o.classList.add('disabled');const l=o.dataset.letter;
+    if(l===q.answer)o.classList.add('correct');
+    if(l===sel&&!ok)o.classList.add('wrong');
+  });
+  const fb=document.getElementById('feedback');fb.classList.remove('correct','wrong');
+  if(ok){fb.classList.add('correct','show');document.getElementById('feedbackTitle').textContent='✅ 回答正确！太棒了！'}
+  else{fb.classList.add('wrong','show');document.getElementById('feedbackTitle').textContent='❌ 回答错误！正确答案是 '+q.answer;document.getElementById('questionCard').classList.add('shake');setTimeout(()=>document.getElementById('questionCard').classList.remove('shake'),500)}
+  document.getElementById('feedbackExplain').textContent='📝 解析：'+q.explanation;
+  document.getElementById('progressScore').textContent='当前得分：'+G.score;
+  document.getElementById('submitBtn').style.display='none';
+  if(G.idx<G.qs.length-1)document.getElementById('nextBtn').style.display='';
+  else document.getElementById('finishBtn').style.display='';
+}
+function nextQuestion(){G.idx++;renderQ()}
+function showResults(){
+  document.getElementById('gameQuiz').style.display='none';
+  document.getElementById('gameResult').style.display='block';
+  const total=G.qs.length,s=G.score,pct=Math.round(s/total*100);
+  document.getElementById('resultName').textContent=G.sname+'（学号：'+G.sid+'）';
+  document.getElementById('resultScore').textContent=s;
+  document.getElementById('resultTotal').textContent='/ '+total;
+  const c=document.getElementById('resultCircle');c.className='result-circle';
+  let msg='';
+  if(pct===100){c.classList.add('excellent');msg='🎉 完美满分！你就是标点符号大师！';launchConfetti()}
+  else if(pct>=80){c.classList.add('excellent');msg='🌟 非常优秀！继续保持这个状态！';launchConfetti()}
+  else if(pct>=60){c.classList.add('good');msg='👍 不错哦！再加把劲就能更好！'}
+  else if(pct>=40){c.classList.add('fair');msg='💪 加油！多复习知识点再来挑战！'}
+  else{c.classList.add('poor');msg='📚 别灰心！回去看看知识总览和用法详解吧！'}
+  document.getElementById('resultMsg').textContent=msg;
+  document.getElementById('resultDetail').innerHTML='答对 <span>'+s+'</span> 题，答错 <span>'+(total-s)+'</span> 题，正确率 <span>'+pct+'%</span>';
+  const wrongIds=Object.keys(G.res).filter(id=>!G.res[id]);
+  document.getElementById('retryWrongBtn').style.display=wrongIds.length>0?'':'none';
+}
+function retryWrong(){
+  const wIds=Object.keys(G.res).filter(id=>!G.res[id]).map(Number);
+  if(!wIds.length)return;
+  G.mode='retry';G.idx=0;G.score=0;G.done=false;
+  G.qs=quizQuestions.filter(q=>wIds.includes(q.id));
+  wIds.forEach(id=>{delete G.res[id];delete G.ans[id]});
+  document.getElementById('gameResult').style.display='none';
+  document.getElementById('gameQuiz').style.display='block';renderQ();
+}
+function restartGame(){
+  G.idx=0;G.ans={};G.res={};G.score=0;G.mode='full';G.done=false;
+  G.qs=[...quizQuestions];
+  document.getElementById('gameResult').style.display='none';
+  document.getElementById('gameQuiz').style.display='block';renderQ();
+}
+function launchConfetti(){
+  const c=document.createElement('div');c.className='confetti-container';document.body.appendChild(c);
+  const colors=['#FF6B35','#FFB347','#43A047','#2196F3','#E91E63','#FFEB3B','#9C27B0'];
+  for(let i=0;i<60;i++){const p=document.createElement('div');p.className='confetti';p.style.left=Math.random()*100+'%';p.style.background=colors[Math.floor(Math.random()*colors.length)];p.style.animationDelay=Math.random()*2+'s';p.style.animationDuration=(2+Math.random()*2)+'s';p.style.width=(6+Math.random()*8)+'px';p.style.height=(6+Math.random()*8)+'px';p.style.borderRadius=Math.random()>.5?'50%':'2px';c.appendChild(p)}
+  setTimeout(()=>c.remove(),4000);
+}
+</script>
+</body>
+</html>
