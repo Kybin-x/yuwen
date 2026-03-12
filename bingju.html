@@ -1,0 +1,1888 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>辨析并修改病句 - 语文专题学习</title>
+    <style>
+        :root {
+            --primary: #6C5CE7;
+            --primary-light: #A29BFE;
+            --secondary: #00B894;
+            --danger: #E17055;
+            --warning: #FDCB6E;
+            --dark: #2D3436;
+            --light: #F8F9FA;
+            --gray: #636E72;
+            --border: #DFE6E9;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: #F0F2F5;
+            color: var(--dark);
+            line-height: 1.8;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #2D3436 0%, #636E72 100%);
+            color: white;
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-top {
+            background: linear-gradient(135deg, var(--primary) 0%, #8B7CF7 100%);
+            padding: 30px 40px 20px;
+            text-align: center;
+            /* 新增这一行：让内部文本和标签居中 */
+        }
+
+        .header-top h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .header-top .subtitle {
+            font-size: 14px;
+            opacity: 0.85;
+        }
+
+        .header-top .badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 3px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-top: 8px;
+        }
+
+        /* Navigation */
+        .nav {
+            display: flex;
+            justify-content: center;
+            /* 新增这一行：让导航项在主轴上居中 */
+            padding: 0 20px;
+            overflow-x: auto;
+            background: rgba(0, 0, 0, 0.15);
+        }
+
+        .nav-item {
+            padding: 14px 20px;
+            cursor: pointer;
+            font-size: 14px;
+            white-space: nowrap;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .nav-item:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-item.active {
+            color: white;
+            border-bottom-color: var(--warning);
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-hover);
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-title .icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        /* Error Type Cards */
+        .error-type-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .error-type-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+            border-left: 5px solid;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .error-type-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .error-type-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 80px;
+            height: 80px;
+            border-radius: 0 0 0 80px;
+            opacity: 0.08;
+        }
+
+        .error-type-card.type1 {
+            border-left-color: #E17055;
+        }
+
+        .error-type-card.type1::after {
+            background: #E17055;
+        }
+
+        .error-type-card.type2 {
+            border-left-color: #6C5CE7;
+        }
+
+        .error-type-card.type2::after {
+            background: #6C5CE7;
+        }
+
+        .error-type-card.type3 {
+            border-left-color: #00B894;
+        }
+
+        .error-type-card.type3::after {
+            background: #00B894;
+        }
+
+        .error-type-card.type4 {
+            border-left-color: #FDCB6E;
+        }
+
+        .error-type-card.type4::after {
+            background: #FDCB6E;
+        }
+
+        .error-type-card.type5 {
+            border-left-color: #00CEC9;
+        }
+
+        .error-type-card.type5::after {
+            background: #00CEC9;
+        }
+
+        .error-type-card.type6 {
+            border-left-color: #FD79A8;
+        }
+
+        .error-type-card.type6::after {
+            background: #FD79A8;
+        }
+
+        .error-type-card.type7 {
+            border-left-color: #E84393;
+        }
+
+        .error-type-card.type7::after {
+            background: #E84393;
+        }
+
+        .error-type-card h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .error-type-card p {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 12px;
+        }
+
+        .error-type-card .count {
+            font-size: 12px;
+            padding: 3px 10px;
+            border-radius: 12px;
+            display: inline-block;
+        }
+
+        .type1 .count {
+            background: #FFEEE9;
+            color: #E17055;
+        }
+
+        .type2 .count {
+            background: #EDE9FF;
+            color: #6C5CE7;
+        }
+
+        .type3 .count {
+            background: #E0F7F1;
+            color: #00B894;
+        }
+
+        .type4 .count {
+            background: #FFF8E1;
+            color: #E67E22;
+        }
+
+        .type5 .count {
+            background: #E0FFFE;
+            color: #00B5AD;
+        }
+
+        .type6 .count {
+            background: #FFE8F0;
+            color: #E84393;
+        }
+
+        .type7 .count {
+            background: #FFE0ED;
+            color: #E84393;
+        }
+
+        /* Knowledge Detail */
+        .knowledge-detail {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .knowledge-detail h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .sub-type {
+            margin-bottom: 24px;
+            padding: 20px;
+            background: var(--light);
+            border-radius: 12px;
+        }
+
+        .sub-type h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .sub-type .definition {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 12px;
+        }
+
+        .example-box {
+            background: white;
+            border-radius: 10px;
+            padding: 16px;
+            margin-top: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .example-box .label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--danger);
+            margin-bottom: 6px;
+        }
+
+        .example-box .wrong {
+            color: var(--danger);
+            text-decoration: line-through;
+            text-decoration-color: var(--danger);
+        }
+
+        .example-box .correct {
+            color: var(--secondary);
+            font-weight: 600;
+        }
+
+        .example-box .analysis {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed var(--border);
+            font-size: 13px;
+            color: var(--gray);
+        }
+
+        /* Quiz Section */
+        .quiz-container {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            margin-bottom: 24px;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .quiz-header h3 {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .quiz-progress {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .progress-bar {
+            width: 200px;
+            height: 8px;
+            background: var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-text {
+            font-size: 14px;
+            color: var(--gray);
+            font-weight: 600;
+        }
+
+        .question-text {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            padding: 16px 20px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 15px;
+            line-height: 1.7;
+            position: relative;
+        }
+
+        .option:hover {
+            border-color: var(--primary-light);
+            background: #F8F7FF;
+        }
+
+        .option.selected {
+            border-color: var(--primary);
+            background: #F0EEFF;
+        }
+
+        .option.correct-answer {
+            border-color: var(--secondary);
+            background: #E6F9F1;
+        }
+
+        .option.wrong-answer {
+            border-color: var(--danger);
+            background: #FFF0EC;
+        }
+
+        .option .option-label {
+            font-weight: 700;
+            color: var(--primary);
+            margin-right: 8px;
+        }
+
+        /* Analysis Panel */
+        .analysis-panel {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 12px;
+            display: none;
+        }
+
+        .analysis-panel.show {
+            display: block;
+        }
+
+        .analysis-panel.correct-panel {
+            background: linear-gradient(135deg, #E6F9F1, #D4F5E9);
+            border: 1px solid #B8E8CF;
+        }
+
+        .analysis-panel.wrong-panel {
+            background: linear-gradient(135deg, #FFF0EC, #FFE4DC);
+            border: 1px solid #FFCEC0;
+        }
+
+        .analysis-panel h4 {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .analysis-panel p {
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--light);
+            color: var(--dark);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--secondary), #55EFC4);
+            color: white;
+        }
+
+        .quiz-actions {
+            margin-top: 24px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 14px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .stat-card .stat-number {
+            font-size: 36px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-card .stat-label {
+            font-size: 14px;
+            color: var(--gray);
+            margin-top: 4px;
+        }
+
+        /* Mindmap */
+        .mindmap {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            margin-bottom: 24px;
+        }
+
+        .mindmap h3 {
+            text-align: center;
+            font-size: 22px;
+            margin-bottom: 24px;
+        }
+
+        .tree {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .tree-root {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            padding: 14px 32px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .tree-branches {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px;
+            width: 100%;
+        }
+
+        .tree-branch {
+            flex: 1;
+            min-width: 140px;
+            max-width: 200px;
+        }
+
+        .branch-node {
+            padding: 10px 16px;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .branch-node:hover {
+            transform: scale(1.05);
+        }
+
+        .branch-leaves {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .leaf {
+            padding: 6px 12px;
+            background: var(--light);
+            border-radius: 8px;
+            font-size: 12px;
+            text-align: center;
+            color: var(--gray);
+            border: 1px solid var(--border);
+        }
+
+        /* Filter tags */
+        .filter-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .filter-tag {
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            border: 2px solid var(--border);
+            background: white;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .filter-tag:hover {
+            border-color: var(--primary-light);
+        }
+
+        .filter-tag.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Score Circle */
+        .score-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 20px auto;
+            position: relative;
+        }
+
+        .score-circle::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            padding: 6px;
+            background: conic-gradient(var(--primary) var(--score-deg, 0deg), var(--border) 0deg);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+        }
+
+        .score-number {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .score-label {
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        /* Accordion */
+        .accordion-item {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            padding: 18px 24px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .accordion-header:hover {
+            background: var(--light);
+        }
+
+        .accordion-header .q-num {
+            background: var(--primary);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        .accordion-header .arrow {
+            transition: transform 0.3s;
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        .accordion-header.open .arrow {
+            transform: rotate(180deg);
+        }
+
+        .accordion-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .accordion-body.open {
+            max-height: 2000px;
+        }
+
+        .accordion-content {
+            padding: 0 24px 20px;
+        }
+
+        .accordion-content .option-text {
+            padding: 10px 16px;
+            margin: 6px 0;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .accordion-content .option-text.is-answer {
+            background: #E6F9F1;
+            border-left: 4px solid var(--secondary);
+        }
+
+        .accordion-content .analysis-text {
+            margin-top: 16px;
+            padding: 16px;
+            background: #F8F7FF;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-top {
+                padding: 20px;
+            }
+
+            .header-top h1 {
+                font-size: 22px;
+            }
+
+            .main {
+                padding: 16px 12px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .error-type-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .tree-branches {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .tree-branch {
+                max-width: 100%;
+            }
+
+            .nav-item {
+                padding: 12px 14px;
+                font-size: 13px;
+            }
+
+            .progress-bar {
+                width: 120px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.4s ease;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gray);
+        }
+
+        .highlight {
+            background: linear-gradient(transparent 60%, #FDCB6E 60%);
+            padding: 0 2px;
+        }
+
+        .tip-box {
+            background: linear-gradient(135deg, #FFF8E1, #FFF3CD);
+            border: 1px solid #FFE082;
+            border-radius: 12px;
+            padding: 18px 20px;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+
+        .tip-box .tip-title {
+            font-weight: 700;
+            color: #E67E22;
+            margin-bottom: 6px;
+        }
+
+        /* Tab within knowledge */
+        .knowledge-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .knowledge-tab {
+            padding: 8px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+            border: 2px solid var(--border);
+            background: white;
+        }
+
+        .knowledge-tab:hover {
+            border-color: var(--primary-light);
+        }
+
+        .knowledge-tab.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .knowledge-panel {
+            display: none;
+        }
+
+        .knowledge-panel.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.4);
+            transition: all 0.3s;
+            z-index: 99;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-3px);
+        }
+
+        .back-to-top.show {
+            display: flex;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="header-top">
+            <h1>📝 辨析并修改病句</h1>
+            <div class="subtitle">第一章 语言知识和语言表达 · 第六节</div>
+            <span class="badge">高职高考 · 语文专题训练</span>
+        </div>
+        <nav class="nav">
+            <div class="nav-item active" data-section="overview">📊 总览</div>
+            <div class="nav-item" data-section="knowledge">📖 知识精讲</div>
+            <div class="nav-item" data-section="examples">📋 题库浏览</div>
+            <div class="nav-item" data-section="quiz">🎯 在线练习</div>
+            <div class="nav-item" data-section="summary">🧠 思维导图</div>
+        </nav>
+    </header>
+
+    <main class="main">
+
+        <div class="section active" id="overview">
+            <div class="stats-grid fade-in">
+                <div class="stat-card">
+                    <div class="stat-number">7</div>
+                    <div class="stat-label">病句类型</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">38</div>
+                    <div class="stat-label">练习题目</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="correctCount">0</div>
+                    <div class="stat-label">已答对</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="accuracyRate">0%</div>
+                    <div class="stat-label">正确率</div>
+                </div>
+            </div>
+
+            <div class="card fade-in">
+                <div class="card-title">
+                    <div class="icon" style="background:#EDE9FF;color:var(--primary)">📌</div>
+                    常见病句类型速览
+                </div>
+                <div class="error-type-grid">
+                    <div class="error-type-card type1" onclick="showKnowledge('yuxu')">
+                        <h3>🔀 语序不当</h3>
+                        <p>词语或句子成分的排列顺序不合理，包括定语语序、状语语序、关联词语序等。</p>
+                        <span class="count">涉及12+题</span>
+                    </div>
+                    <div class="error-type-card type2" onclick="showKnowledge('dapei')">
+                        <h3>🔗 搭配不当</h3>
+                        <p>句子成分之间不能正确搭配，包括主谓、动宾、主宾搭配不当等。</p>
+                        <span class="count">涉及15+题</span>
+                    </div>
+                    <div class="error-type-card type3" onclick="showKnowledge('canque')">
+                        <h3>🧩 成分残缺</h3>
+                        <p>句子缺少必要的成分，如缺主语、缺谓语、缺宾语中心语等。</p>
+                        <span class="count">涉及18+题</span>
+                    </div>
+                    <div class="error-type-card type4" onclick="showKnowledge('zanyou')">
+                        <h3>📋 成分赘余</h3>
+                        <p>句子中出现多余的、重复的成分，造成语意重复或表达累赘。</p>
+                        <span class="count">涉及8+题</span>
+                    </div>
+                    <div class="error-type-card type5" onclick="showKnowledge('zarou')">
+                        <h3>🔄 句式杂糅</h3>
+                        <p>将两种不同的句式或表达方式混杂在一起，导致句子结构混乱。</p>
+                        <span class="count">涉及8+题</span>
+                    </div>
+                    <div class="error-type-card type6" onclick="showKnowledge('luoji')">
+                        <h3>⚖️ 不合逻辑</h3>
+                        <p>包括否定不当、自相矛盾、两面对一面、范围不清等逻辑错误。</p>
+                        <span class="count">涉及10+题</span>
+                    </div>
+                    <div class="error-type-card type7" onclick="showKnowledge('qiyi')">
+                        <h3>❓ 表意不明</h3>
+                        <p>句子有多种理解方式，存在歧义，导致读者无法确定真正含义。</p>
+                        <span class="count">涉及3+题</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tip-box fade-in">
+                <div class="tip-title">💡 辨析病句的六字口诀</div>
+                <strong>读 · 提 · 析 · 查 · 删 · 换</strong><br>
+                ① <strong>读</strong>：凭语感初步判断；② <strong>提</strong>：提取主干（主谓宾）；③ <strong>析</strong>：分析修饰成分；<br>
+                ④ <strong>查</strong>：检查搭配、逻辑；⑤ <strong>删</strong>：删除多余成分；⑥ <strong>换</strong>：调整语序或替换词语。
+            </div>
+        </div>
+
+        <div class="section" id="knowledge">
+            <div class="knowledge-tabs">
+                <div class="knowledge-tab active" data-panel="yuxu">🔀 语序不当</div>
+                <div class="knowledge-tab" data-panel="dapei">🔗 搭配不当</div>
+                <div class="knowledge-tab" data-panel="canque">🧩 成分残缺</div>
+                <div class="knowledge-tab" data-panel="zanyou">📋 成分赘余</div>
+                <div class="knowledge-tab" data-panel="zarou">🔄 句式杂糅</div>
+                <div class="knowledge-tab" data-panel="luoji">⚖️ 不合逻辑</div>
+                <div class="knowledge-tab" data-panel="qiyi">❓ 表意不明</div>
+            </div>
+
+            <div class="knowledge-panel active" id="panel-yuxu">
+                <div class="knowledge-detail">
+                    <h3>🔀 一、语序不当</h3>
+
+                    <div class="sub-type">
+                        <h4>1. 定语语序不当</h4>
+                        <div class="definition">多项定语排列顺序不合理，或定语修饰对象不正确。正确顺序一般为：属性 → 数量 → 动词性/形容词性短语 → 名词性定语。</div>
+                        <div class="example-box">
+                            <div class="label">❌ 病句</div>
+                            <div>屋里陈列着<span class="wrong">各种各样的</span>烈士生前使用过的东西和杂物。</div>
+                            <div class="label" style="margin-top:8px">✅ 修改</div>
+                            <div>屋里陈列着烈士生前使用过的<span class="correct">各式各样的</span>东西。</div>
+                            <div class="analysis">📝 "各种各样的"应移至"东西"前，且"东西"与"杂物"语意重复。</div>
+                        </div>
+                        <div class="example-box">
+                            <div class="label">❌ 病句</div>
+                            <div><span class="wrong">许多附近的</span>妇女、老人和孩子都跑来看他们。</div>
+                            <div class="label" style="margin-top:8px">✅ 修改</div>
+                            <div><span class="correct">附近的许多</span>妇女、老人和孩子都跑来看他们。</div>
+                            <div class="analysis">📝 "附近的"表示地点范围，应放在"许多"前面。</div>
+                        </div>
+                    </div>
+
+                    <div class="sub-type">
+                        <h4>2. 状语语序不当</h4>
+                        <div class="definition">状语放置的位置不正确，导致修饰对象错误或表意不清。</div>
+                        <div class="example-box">
+                            <div class="label">❌ 病句</div>
+                            <div>中央工艺美术学院的每一个大学生<span class="wrong">将来都</span>希望自己能成为一个出色的美术家。</div>
+                            <div class="label" style="margin-top:8px">✅ 修改</div>
+                            <div>……都希望自己<span class="correct">将来</span>能成为一个出色的美术家。</div>
+                            <div class="analysis">📝 "将来"不是修饰"希望"，而是修饰"成为"，应移至"成为"前。</div>
+                        </div>
+                        <div class="example-box">
+                            <div class="label">❌ 病句</div>
+                            <div>考试大约经过了半个小时，就有人<span class="wrong">陆续</span>交卷了。</div>
+                            <div class="label" style="margin-top:8px">✅ 修改</div>
+                            <div>……就<span class="correct">陆续有人</span>交卷了。</div>
+                            <div class="analysis">📝 "陆续"应修饰"有人"而非"交卷"。</div>
+                        </div>
+                    </div>
+
+                    <div class="sub-type">
+                        <h4>3. 关联词语序不当</h4>
+                        <div class="definition">当上下分句主语相同时，关联词应放在主语之后；主语不同时，关联词应放在主语之前。</div>
+                        <div class="example-box">
+                            <div class="label">❌ 病句</div>
+                            <div><span class="wrong">不仅</span>中药能与一般抗菌素媲美，而且副作用小，成本也较低。</div>
+                            <div class="label" style="margin-top:8px">✅ 修改</div>
+                            <div>中药<span class="correct">不仅</span>能与一般抗菌素媲美，而且副作用小，成本也较低。</div>
+                            <div class="analysis">📝 上下分句主语同为"中药"，关联词"不仅"应放在主语"中药"后面。</div>
+                        </div>
+                    </div>
+
+                    <div class="sub-type">
+                        <h4>4. 动词/并列成分语序不当</h4>
+                        <div class="definition">并列动词或形容词的排列应符合逻辑或时间顺序。</div>
+                        <div class="example-box">
+                            <div class="label">❌ 病句</div>
+                            <div>我国首座自主<span class="wrong">建造、开发、设计</span>的深水半潜式钻井平台……</div>
+                            <div class="label" style="margin-top:8px">✅ 修改</div>
+                            <div>……自主<span class="correct">设计、开发、建造</span>的深水半潜式钻井平台……</div>
+                            <div class="analysis">📝 逻辑顺序应为先设计，再开发，最后建造。</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="knowledge-panel" id="panel-dapei">
+                <div class="knowledge-detail">
+                    <h3>🔗 二、搭配不当</h3>
+
+                    <div class="sub-type">
+                        <h4>1. 主谓搭配不当</h4>
+                        <div class="definition">主语和谓语在意义上不能搭配，无法构成合理的陈述关系。</div>
+                        <div class="example-box">
+                            <div class="label">❌ 病句</div>
+                            <div>他那循循善诱的教导和那么和蔼可亲的音容笑貌，又<span class="wrong">浮现</span>在我眼前。</div>
+                            <div class="analysis">📝 "教导"不能"浮现"在眼前，只有"音容笑貌"可以浮现。主谓搭配不当。</div>
+                        </div>
+                    </div>
+
+                    <div class="sub-type">
+                        <h4>2. 动宾搭配不当</h4>
+                        <div class="definition">动词与宾语在意义上不能搭配。</div>
+                        <div class="example-box">
+                            <div class="label">❌ 病句</div>
+                            <div>公司只录取了我们学校推荐的两个<span class="wrong">名额</span>。</div>
+                            <div class="label" style="margin-top:8px">✅ 修改</div>
+                            <div>公司只录取了我们学校推荐的两个<span class="correct">同学</span>。</div>
+                            <div class="analysis">📝 "录取"的对象应是"人"而非"名额"。</div>
+                        </div>
+                        <div class="example-box">
+                            <div class="label">❌ 病句</div>
+                            <div>解放前，爸爸和哥哥两人挣来的钱还不够<span class="wrong">养活一家人的生活</span>。</div>
+                            <div class="label" style="margin-top:8px">✅ 修改</div>
+                            <div>……还不够<span class="correct">养活一家人</span>。</div>
+                            <div class="analysis">📝 "养活"只能搭配"一家人"，不能搭配"生活"。</div>
+                        </div>
+                    </div>
+
+                    <div class="sub-type">
+                        <h4>3. 主宾搭配不当</h4>
+                        <div class="definition">主语和宾语在意义上不对等，无法构成判断关系。</div>
+                        <div class="example-box">
+                            <div class="label">❌ 病句</div>
+                            <div>今年我省大学招收的自费生，<span class="wrong">是自恢复高考制度以来最多的一年</span>。</div>
+                            <div class="analysis">📝 "自费生"不能是"一年"，主语和宾语不搭配。可改为"今年是……最多的一年"。</div>
+                        </div>
+                    </div>
+
+                    <div class="sub-type">
+                        <h4>4. 一面对两面搭配不当</h4>
+                        <div class="definition">句子一面用肯定（或否定），另一面用两面性词语（如"能否""是否""好不好"等），前后不对应。</div>
+                        <div class="example-box">
+                            <div class="label">❌ 病句</div>
+                            <div><span class="wrong">有没有</span>好的学习方法，<span class="wrong">是</span>提高学习成绩的一个不可少的因素。</div>
+                            <div class="label" style="margin-top:8px">✅ 修改</div>
+                            <div><span class="correct">好的</span>学习方法，是提高学习成绩的一个不可少的因素。</div>
+                            <div class="analysis">📝 "有没有"是两面，"是"是一面，前后不对应。</div>
+                        </div>
+                        <div class="example-box">
+                            <div class="label">❌ 病句</div>
+                            <div>一个地方抗灾能力的<span class="wrong">强弱</span>既取决于当地经济实力的<span class="wrong">雄厚</span>……</div>
+                            <div class="analysis">📝 "强弱"是两面，"雄厚"是一面，前后不搭配。应改为"强弱"对"雄厚与否"。</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="knowledge-panel" id="panel-canque">
+                <div class="knowledge-detail">
+                    <h3>🧩 三、成分残缺</h3>
+
+                    <div class="sub-type">
+                        <h4>1. 缺少主语</h4>
+                        <div class="definition">常见于滥用介词（"由于""通过""随着""在……下"等）导致句子没有主语。</div>
+                        <div class="example-box">
+                            <div class="label">❌ 病句</div>
+                            <div><span class="wrong">由于</span>她这样好的成绩，得到了老师和同学们的赞扬。</div>
+                            <div class="label" style="margin-top:8px">✅ 修改</div>
+                            <div>她这样好的成绩，得到了老师和同学们的赞扬。（去掉"由于"）</div>
+                            <div class="analysis">📝 "由于"使句子没有了主语，应去掉"由于"。</div>
+                        </div>
+                        <div class="example-box">
+                            <div class="label">❌ 病句</div>
+                            <div><span class="wrong">通过</span>使用"电子往来港澳通行证"自助通关，<span class="wrong">使</span>旅客大大缩短了时间。
+                            </div>
+                            <div class="label" style="margin-top:8px">✅ 修改</div>
+                            <div>去掉"通过"或"使"。</div>
+                            <div class="analysis">📝 "通过……使……"两个介词叠用，导致主语缺失。</div>
+                        </div>
+                    </div>
+
+                    <div class="sub-type">
+                        <h4>2. 缺少谓语</h4>
+                        <div class="definition">句子中缺少谓语动词，导致句意不完整。</div>
+                        <div class="example-box">
+                            <div class="label">❌ 病句</div>
+                            <div>今日，桂平市"创先争优学雷锋暨千名干部下基层"志愿服务系列活动启动仪式。</div>
+                            <div class="label" style="margin-top:8px">✅ 修改</div>
+                            <div>今日，桂平市<span class="correct">举行</span>"……"启动仪式。</div>
+                            <div class="analysis">📝 缺少谓语动词"举行"。</div>
+                        </div>
+                    </div>
+
+                    <div class="sub-type">
+                        <h4>3. 缺少宾语（宾语中心语）</h4>
+                        <div class="definition">动词后面缺少必要的宾语或宾语中心语，使句意不完整。这是最常见的残缺类型。</div>
+                        <div class="example-box">
+                            <div class="label">❌ 病句</div>
+                            <div>被皮肤吸收后可以改善面部皮肤营养缺乏<span class="wrong">（缺"的状况"）</span>。</div>
+                        </div>
+                        <div class="example-box">
+                            <div class="label">❌ 病句</div>
+                            <div>我们要尽一切力量使我国农业走上机械化、集体化<span class="wrong">（缺"的道路"）</span>。</div>
+                        </div>
+                        <div class="example-box">
+                            <div class="label">❌ 病句</div>
+                            <div>试图解开关于时空和存在的本质<span class="wrong">（缺"的奥秘"）</span>。</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="knowledge-panel" id="panel-zanyou">
+                <div class="knowledge-detail">
+                    <h3>📋 四、成分赘余（语意重复）</h3>
+
+                    <div class="sub-type">
+                        <h4>常见类型</h4>
+                        <div class="definition">句子中出现意思相同或相近的词语，造成表达重复、累赘。</div>
+                        <div class="example-box">
+                            <div class="label">❌ 病句</div>
+                            <div>迎面吹来的寒风<span class="wrong">不禁</span>使我<span class="wrong">忍不住</span>打了一个寒战。</div>
+                            <div class="analysis">📝 "不禁"和"忍不住"语意重复，保留其一即可。</div>
+                        </div>
+                        <div class="example-box">
+                            <div class="label">❌ 病句</div>
+                            <div>我们要在思想上自觉地抵制<span class="wrong">不良的坏</span>风气。</div>
+                            <div class="analysis">📝 "不良"与"坏"语意重复。</div>
+                        </div>
+                        <div class="example-box">
+                            <div class="label">❌ 病句</div>
+                            <div>不少新能源车的增长在15%到30%<span class="wrong">左右</span>。</div>
+                            <div class="analysis">📝 "15%到30%"已经是一个区间，"左右"多余。</div>
+                        </div>
+                        <div class="example-box">
+                            <div class="label">❌ 病句</div>
+                            <div>家中皆是<span class="wrong">妇孺及孩童</span>。</div>
+                            <div class="analysis">📝 "孺"就是孩子的意思，与"孩童"重复。</div>
+                        </div>
+                        <div class="example-box">
+                            <div class="label">❌ 病句</div>
+                            <div>教师的工资不低于<span class="wrong">或高于</span>国家公务员的工资。</div>
+                            <div class="analysis">📝 "不低于"已包含"等于或高于"的意思，"或高于"多余。</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="knowledge-panel" id="panel-zarou">
+                <div class="knowledge-detail">
+                    <h3>🔄 五、句式杂糅（结构混乱）</h3>
+
+                    <div class="sub-type">
+                        <h4>概念</h4>
+                        <div class="definition">将两种不同的句式结构混杂在一个句子中，造成结构混乱。修改时只需保留其中一种表达即可。</div>
+                        <div class="example-box">
+                            <div class="label">❌ 病句</div>
+                            <div>"双创特区"<span class="wrong">以围绕</span>聚集……四类人才<span class="wrong">为重点</span>。</div>
+                            <div class="label" style="margin-top:8px">✅ 修改方式</div>
+                            <div>方式一：<span class="correct">围绕</span>聚集……四类人才……（去掉"以……为重点"）</div>
+                            <div>方式二：<span class="correct">以</span>聚集……四类人才<span class="correct">为重点</span>……（去掉"围绕"）
+                            </div>
+                            <div class="analysis">📝 "围绕……"和"以……为重点"是两种不同句式，不能混用。</div>
+                        </div>
+                        <div class="example-box">
+                            <div class="label">❌ 病句</div>
+                            <div>感冒退热冲剂的<span class="wrong">主要成分是</span>大青叶、板蓝根、草河车<span class="wrong">配制而成的</span>。
+                            </div>
+                            <div class="label" style="margin-top:8px">✅ 修改方式</div>
+                            <div>方式一：……的<span class="correct">主要成分是</span>大青叶、板蓝根、草河车。</div>
+                            <div>方式二：……<span class="correct">是由</span>大青叶、板蓝根、草河车<span class="correct">配制而成的</span>。
+                            </div>
+                        </div>
+
+                        <div class="tip-box">
+                            <div class="tip-title">⚡ 常见杂糅格式</div>
+                            <ul style="padding-left:18px;font-size:13px;line-height:2">
+                                <li>"围绕……" + "以……为中心"</li>
+                                <li>"靠的是……" + "由……取得的"</li>
+                                <li>"关键问题是……" + "……起着决定性作用"</li>
+                                <li>"原因是……" + "由……造成的"</li>
+                                <li>"主要成分是……" + "由……配制而成"</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="knowledge-panel" id="panel-luoji">
+                <div class="knowledge-detail">
+                    <h3>⚖️ 六、不合逻辑</h3>
+
+                    <div class="sub-type">
+                        <h4>1. 否定不当（否定失当）</h4>
+                        <div class="definition">多重否定导致意思表达相反，或"切忌""防止""避免"等词与否定词连用造成逻辑错误。</div>
+                        <div class="example-box">
+                            <div class="label">❌ 病句</div>
+                            <div>学习打架子鼓……无疑<span class="wrong">不</span>是一个大难题。</div>
+                            <div class="analysis">📝 "无疑不是难题"意为"肯定不是难题"，与后文矛盾。应去掉"不"。</div>
+                        </div>
+                        <div class="example-box">
+                            <div class="label">❌ 病句</div>
+                            <div>几年来，他<span class="wrong">无时无刻不忘</span>收集、整理民歌。</div>
+                            <div class="analysis">📝 "无时无刻不"相当于"每时每刻都"，加上"忘"变成了"每时每刻都忘记"，意思相反。应改"忘"为"在"。</div>
+                        </div>
+                        <div class="example-box">
+                            <div class="label">❌ 病句</div>
+                            <div>好经也要提防<span class="wrong">不</span>被念歪。</div>
+                            <div class="analysis">📝 "提防不被念歪"变成了"提防不被念歪"（不怕被念歪），应去掉"不"。</div>
+                        </div>
+                    </div>
+
+                    <div class="sub-type">
+                        <h4>2. 自相矛盾</h4>
+                        <div class="definition">同一句子中前后意思矛盾，逻辑上不能自洽。</div>
+                        <div class="example-box">
+                            <div class="label">❌ 病句</div>
+                            <div><span class="wrong">凡是</span>在科学和学问研究上有成就的人，<span class="wrong">不少</span>是……获得成功的。
+                            </div>
+                            <div class="analysis">📝 "凡是"表示全部，"不少"表示部分，二者矛盾。应去掉"凡是"。</div>
+                        </div>
+                        <div class="example-box">
+                            <div class="label">❌ 病句</div>
+                            <div>广东参展的出版物<span class="wrong">至少</span>有4500种<span class="wrong">以上</span>。</div>
+                            <div class="analysis">📝 "至少"（最少）和"以上"重复矛盾，应删去其一。</div>
+                        </div>
+                    </div>
+
+                    <div class="sub-type">
+                        <h4>3. 不合事理</h4>
+                        <div class="definition">句子所表述的内容违反客观事实或常理。</div>
+                        <div class="example-box">
+                            <div class="label">❌ 病句</div>
+                            <div>一辆越野车<span class="wrong">像离弦的箭一样</span>，在<span class="wrong">蜿蜒曲折的环山公路上</span>疾驰。</div>
+                            <div class="analysis">📝 蜿蜒曲折的公路上不可能像"离弦的箭"一样走直线。</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="knowledge-panel" id="panel-qiyi">
+                <div class="knowledge-detail">
+                    <h3>❓ 七、表意不明（歧义）</h3>
+
+                    <div class="sub-type">
+                        <h4>常见歧义类型</h4>
+                        <div class="definition">句子可以有两种或多种理解方式，读者无法确定作者的真正意图。</div>
+                        <div class="example-box">
+                            <div class="label">❌ 病句</div>
+                            <div>他背着<span class="wrong">家人和同学</span>偷偷地把压岁钱捐给了灾区。</div>
+                            <div class="analysis">
+                                📝 可理解为：<br>
+                                ① 他瞒着家人<strong>和</strong>同学一起捐款<br>
+                                ② 他瞒着家人<strong>和</strong>同学（独自）捐款<br>
+                                "和"的连接对象不明，造成歧义。
+                            </div>
+                        </div>
+                        <div class="example-box">
+                            <div class="label">❌ 病句</div>
+                            <div>让大家在本月<span class="wrong">15日前去</span>农村信用合作社领取农业补贴。</div>
+                            <div class="analysis">
+                                📝 可理解为：<br>
+                                ① "本月15日前"，去领取<br>
+                                ② "本月15日"，前去领取<br>
+                                断句位置不同，意思不同。
+                            </div>
+                        </div>
+                        <div class="example-box">
+                            <div class="label">❌ 病句</div>
+                            <div>生活中的他不像在银幕上那样，是个性格开朗外向的人。</div>
+                            <div class="analysis">📝 无法判断"性格开朗外向"是指生活中的他还是银幕上的他。</div>
+                        </div>
+                    </div>
+
+                    <div class="tip-box">
+                        <div class="tip-title">💡 常见的连词"和"造成歧义</div>
+                        本校师生员工出入校门一律凭工作证<span class="wrong">和</span>学生证。<br>
+                        📝 师生员工不可能同时持有两种证件，"和"应改为"或"。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="examples">
+            <div class="card">
+                <div class="card-title">
+                    <div class="icon" style="background:#E6F9F1;color:var(--secondary)">📋</div>
+                    全部练习题（38题）
+                </div>
+                <div class="filter-tags">
+                    <div class="filter-tag active" data-filter="all">全部</div>
+                    <div class="filter-tag" data-filter="语序不当">语序不当</div>
+                    <div class="filter-tag" data-filter="搭配不当">搭配不当</div>
+                    <div class="filter-tag" data-filter="成分残缺">成分残缺</div>
+                    <div class="filter-tag" data-filter="成分赘余">成分赘余</div>
+                    <div class="filter-tag" data-filter="句式杂糅">句式杂糅</div>
+                    <div class="filter-tag" data-filter="不合逻辑">不合逻辑</div>
+                    <div class="filter-tag" data-filter="表意不明">表意不明</div>
+                </div>
+                <div id="questionList"></div>
+            </div>
+        </div>
+
+        <div class="section" id="quiz">
+            <div class="quiz-container">
+                <div class="quiz-header">
+                    <h3>🎯 在线练习模式</h3>
+                    <div class="quiz-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="quizProgress" style="width:0%"></div>
+                        </div>
+                        <span class="progress-text" id="quizProgressText">0/38</span>
+                    </div>
+                </div>
+
+                <div id="quizContent">
+                    <div class="question-text" id="questionText"></div>
+                    <div class="options" id="optionsList"></div>
+                    <div class="analysis-panel" id="analysisPanel">
+                        <h4 id="analysisTitle"></h4>
+                        <p id="analysisText"></p>
+                    </div>
+                    <div class="quiz-actions">
+                        <button type="button" class="btn btn-primary" id="submitBtn"
+                            onclick="submitAnswer()">确认答案</button>
+                        <button type="button" class="btn btn-success" id="nextBtn" onclick="nextQuestion()"
+                            style="display:none">下一题 →</button>
+                        <button type="button" class="btn btn-secondary" onclick="resetQuiz()">🔄 重新开始</button>
+                    </div>
+                </div>
+
+                <div id="quizResult" style="display:none;text-align:center;padding:40px 0">
+                    <h3 style="font-size:24px;margin-bottom:20px">🎉 练习完成！</h3>
+                    <div class="score-circle" id="scoreCircle">
+                        <span class="score-number" id="finalScore">0</span>
+                        <span class="score-label">正确率</span>
+                    </div>
+                    <p id="resultMsg" style="font-size:16px;color:var(--gray);margin:20px 0"></p>
+                    <button type="button" class="btn btn-primary" onclick="resetQuiz()">🔄 再来一次</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="summary">
+            <div class="mindmap">
+                <h3>🧠 病句类型知识结构图</h3>
+                <div class="tree">
+                    <div class="tree-root">辨析并修改病句</div>
+                    <div class="tree-branches">
+                        <div class="tree-branch">
+                            <div class="branch-node" style="background:#FFEEE9;color:#E17055">语序不当</div>
+                            <div class="branch-leaves">
+                                <div class="leaf">定语语序不当</div>
+                                <div class="leaf">状语语序不当</div>
+                                <div class="leaf">关联词语序不当</div>
+                                <div class="leaf">并列成分语序不当</div>
+                            </div>
+                        </div>
+                        <div class="tree-branch">
+                            <div class="branch-node" style="background:#EDE9FF;color:#6C5CE7">搭配不当</div>
+                            <div class="branch-leaves">
+                                <div class="leaf">主谓搭配不当</div>
+                                <div class="leaf">动宾搭配不当</div>
+                                <div class="leaf">主宾搭配不当</div>
+                                <div class="leaf">一面对两面</div>
+                            </div>
+                        </div>
+                        <div class="tree-branch">
+                            <div class="branch-node" style="background:#E0F7F1;color:#00B894">成分残缺</div>
+                            <div class="branch-leaves">
+                                <div class="leaf">缺少主语</div>
+                                <div class="leaf">缺少谓语</div>
+                                <div class="leaf">缺少宾语(中心语)</div>
+                            </div>
+                        </div>
+                        <div class="tree-branch">
+                            <div class="branch-node" style="background:#FFF8E1;color:#E67E22">成分赘余</div>
+                            <div class="branch-leaves">
+                                <div class="leaf">语意重复</div>
+                                <div class="leaf">词语多余</div>
+                            </div>
+                        </div>
+                        <div class="tree-branch">
+                            <div class="branch-node" style="background:#E0FFFE;color:#00B5AD">句式杂糅</div>
+                            <div class="branch-leaves">
+                                <div class="leaf">两种句式混用</div>
+                                <div class="leaf">偷换主语</div>
+                            </div>
+                        </div>
+                        <div class="tree-branch">
+                            <div class="branch-node" style="background:#FFE8F0;color:#E84393">不合逻辑</div>
+                            <div class="branch-leaves">
+                                <div class="leaf">否定不当</div>
+                                <div class="leaf">自相矛盾</div>
+                                <div class="leaf">不合事理</div>
+                                <div class="leaf">范围不清</div>
+                            </div>
+                        </div>
+                        <div class="tree-branch">
+                            <div class="branch-node" style="background:#FFE0ED;color:#D63384">表意不明</div>
+                            <div class="branch-leaves">
+                                <div class="leaf">词语歧义</div>
+                                <div class="leaf">句子歧义</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">
+                    <div class="icon" style="background:#FFF8E1;color:#E67E22">📝</div>
+                    辨析病句方法总结
+                </div>
+                <div class="sub-type" style="margin-bottom:16px">
+                    <h4>方法一：语感审读法</h4>
+                    <div class="definition">通过朗读句子，凭借语感初步判断句子是否有问题。读起来别扭、拗口的地方往往就是病灶所在。</div>
+                </div>
+                <div class="sub-type" style="margin-bottom:16px">
+                    <h4>方法二：主干压缩法</h4>
+                    <div class="definition">提取句子的主语、谓语、宾语（主干），检查主干之间搭配是否正确，然后再看修饰成分与被修饰成分的搭配。</div>
+                </div>
+                <div class="sub-type" style="margin-bottom:16px">
+                    <h4>方法三：标志词检查法</h4>
+                    <div class="definition">
+                        看到以下标志词要格外注意：<br>
+                        • <strong>介词</strong>（由于、通过、经过、在……下）→ 检查是否缺主语<br>
+                        • <strong>"是否/能否/好不好"</strong> → 检查是否两面对一面<br>
+                        • <strong>"不/没/无/切忌/防止/避免"</strong> → 检查否定是否正确<br>
+                        • <strong>并列词语</strong>（和、与、及、以及） → 检查是否搭配或范围正确<br>
+                        • <strong>"的"字</strong> → 检查是否有成分缺失
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <button type="button" class="back-to-top" id="backToTop"
+        onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+    <script>
+        // ==================== 题库数据 ====================
+        const questions = [
+            { id: 1, question: "1．下列各句中，没有语病的一句是（　）", options: ["A．我国首座自主建造、开发、设计的第六代深水半潜式钻井平台，在我国南海海域正式开钻，标志着我国海洋石油工业深水战略迈出了实质性步伐。", "B．近年来世界艺术品拍卖价格屡创新高，许多有眼光的国际大商人纷纷购买、收藏有价值的艺术品，希望以这种投资方式实现资产保值和增值。", "C．1999～2011年间，我国造林6643.36万公顷，人工林面积位居世界第一，但是土地沙漠化、植被覆盖率和森林病虫害等依然十分严重，令人担忧。", "D．我们平时所用的调味品醋，含有氨基酸、钙、磷、铁和维生素B等成分，被皮肤吸收后可以改善面部皮肤营养缺乏。"], answer: 1, analysis: "A项语序不当，\"建造、开发、设计\"改为\"设计、开发、建造\"。C项搭配不当，\"植被覆盖率\"与\"十分严重\"不搭配，关联词\"但是\"使用不当。D项\"改善\"后缺少宾语中心语，可在句末补上\"的状况\"。", types: ["语序不当", "搭配不当", "成分残缺"] },
+            { id: 2, question: "2．下列各句中，没有语病的一项是（　）", options: ["A．中央工艺美术学院的每一个大学生将来都希望自己能成为一个出色的美术家。", "B．新调来的刘老师不辞辛劳，从清早走宿舍，跑食堂，组织同学打扫教室，一直干到很晚才休息。", "C．这期研究班是全国职工教育管理委员会和国家经委于今年5月底联合举办的。", "D．迎面吹来的寒风不禁使我忍不住打了一个寒战。"], answer: 2, analysis: "A项中的状语\"将来\"位置不当，不是修饰\"希望\"，而是修饰\"成为\"。B项语序不当，\"从清早\"应放在\"一直\"前面作状语。D项\"不禁\"应移到\"打\"前面，且\"不禁\"和\"忍不住\"语意重复。", types: ["语序不当", "成分赘余"] },
+            { id: 3, question: "3．下列各句中，没有语病的一项是（　）", options: ["A．有些炎症，西药能治，中药照样能治；不仅中药能与一般抗菌素媲美，而且副作用小，成本也较低。", "B．我国经济发展已步入转型期，需要着力提高增长的质量和效益，把发展经济与改善民生更好地结合起来，使群众看得见、摸得着、得实惠。", "C．我们的祖国不再是一个任意被帝国主义列强侮辱和掠夺的国家了。", "D．这次会谈对伊拉克武器核查问题也交换了广泛的意见。"], answer: 1, analysis: "A项上下分句是同一主语，关联词\"不仅\"应放在主语\"中药\"后面。C项定语语序不当，\"任意\"移到\"列强\"后。D项语序不当，\"这次会谈\"移到\"问题\"后面。", types: ["语序不当"] },
+            { id: 4, question: "4．下列各句中，没有语病的一项是（　）", options: ["A．英国著名物理学家霍金通过自己杰出的大脑，倾尽毕生精力，以整个宇宙为研究对象，试图解开关于时空和存在的本质。", "B．中国人民的解放使民族关系起了基本的变化。", "C．许多附近的妇女、老人和孩子都跑来看他们。", "D．解放前，爸爸和哥哥两人挣来的钱还不够养活一家人的生活。"], answer: 1, analysis: "A项成分残缺，应改为\"解开关于时空和存在的本质的奥秘\"。C项定语修饰不当，\"附近的\"应移至句首。D项\"养活\"和\"一家人的生活\"搭配不当，应为\"养活一家人\"。", types: ["成分残缺", "语序不当", "搭配不当"] },
+            { id: 5, question: "5．下列各句中，没有语病的一项是（　）", options: ["A．屋里陈列着各种各样的烈士生前使用过的东西和杂物。", "B．夜深人静，想起今天一连串发生的事情，我怎么也睡不着。", "C．考试大约经过了半个小时，就有人陆续交卷了。", "D．该研究团队揭示了用化学方法制备干细胞的科学原理，开发了简单、高效制备干细胞的新技术，为优化制备途径提供了新的科学视角和解决方案。"], answer: 3, analysis: "A项定语语序不当，正确语序是\"烈士生前使用过的各式各样的\"。B项定语语序不当，正确语序是\"发生一连串的\"。C项状语位置不当，应该是\"陆续有人\"。", types: ["语序不当"] },
+            { id: 6, question: "6．下列各句中，没有语病的一项是（　）", options: ["A．生产救灾工作做得好不好，决定于干部是否深入群众。", "B．艺人们过去一贯遭白眼，如今却受到人们热切的青睐，就在这白眼和青睐之间，他们体味着人间的温暖。", "C．随着厂商陆续推出新车型，消费者再次将目光聚焦到新能源车上，不少新能源车的增长在15%到30%左右。", "D．为了培养学生关心他人的美德，我们学校决定组织开展义工服务活动，三个月内要求每名学生完成20个小时的义工服务。"], answer: 0, analysis: "B项一面与两面搭配不当，\"温暖\"改为\"冷暖\"。C项重复，\"15 % 到30 % 左右\"去掉\"左右\"。D项语序不当，改为\"要求每名学生三个月内完成……\"。", types: ["搭配不当", "成分赘余", "语序不当"] },
+            { id: 7, question: "7．下列各句中，没有语病的一项是（　）", options: ["A．这家公司虽然待遇一般，发展前景却非常好，许多同学都投了简历，但最后公司只录取了我们学校推荐的两个名额。", "B．今年我省大学招收的自费生，是自恢复高考制度以来最多的一年。", "C．每当回忆起和他朝夕相处的那段日子，他那循循善诱的教导和那么和蔼可亲的音容笑貌，又浮现在我眼前。", "D．他深刻论述了传统经营管理模式在高科技冲击下所发生的变化和高科技产业经营管理的基本原则。"], answer: 3, analysis: "A项搭配不当，\"录取\"\"名额\"不能搭配，可把\"名额\"改成\"同学\"。B项主宾不搭配。C项主谓不搭配。", types: ["搭配不当"] },
+            { id: 8, question: "8．下列各句中，没有语病的一项是（　）", options: ["A．由于她这样好的成绩，得到了老师和同学们的赞扬。", "B．我们要尽一切力量使我国农业走上机械化、集体化。", "C．为开阔学生视野，我们要开展丰富多彩的课余活动。", "D．我们要在思想上自觉地抵制不良的坏风气。"], answer: 2, analysis: "A项缺主语。B项缺宾语，\"走上……的道路\"。D项重复，\"不良\"与\"坏\"重复。", types: ["成分残缺", "成分赘余"] },
+            { id: 9, question: "9．下列各句中，没有语病的一项是（　）", options: ["A．取消农业税，有利于进一步提升农业的基础地位，提高农业综合生产能力和农产品的国际竞争力，促进农村经济健康发展。", "B．截至12月底，我院已经推出了40多次以声光电技术打造的主题鲜明的展览，是建院90年来展览次数最多的一年。", "C．《朗读者》开播后，许多广电名嘴、企业职工、机关干部、退休教师、留学生吟诵社等朗诵爱好者，纷纷加入文化经典诵读的行列。", "D．杭州市推进公立医院改革在管办分离、政事分开等方面取得了一定成效，有效地缓解了群众看病难、看病贵，但仍有一些实际问题亟待破解。"], answer: 0, analysis: "B项结构混乱，应在\"是建院90年来\"前面加上\"这一年\"。C项搭配不当，\"留学生吟诵社\"是团体名，\"朗诵爱好者\"指人。D项缺少宾语中心语，应改为\"缓解……的状况\"。", types: ["句式杂糅", "搭配不当", "成分残缺"] },
+            { id: 10, question: "10．下列各句中，没有语病的一项是（　）", options: ["A．李海峰教授的报告使我们更加坚定了实现社会主义现代化而努力攀登世界科学技术高峰。", "B．学校宿舍、教学楼等人群密集区，一旦发生火灾，后果不堪设想，因此学生掌握火灾中自救互救相当重要。", "C．今天参观的石窟造像群气势宏伟，内容丰富，堪称当时的石刻艺术之冠，被誉为中国古代雕刻艺术的宝库。", "D．目前，由于我国社会帮教体系尚不健全，学校实际上承担着预防未成年人犯罪。"], answer: 2, analysis: "A项缺宾语，句末加上\"的信心\"。B项成分残缺，应为\"掌握火灾中自救互救的方法\"。D项\"承担着\"缺宾语，在句末加上\"的任务\"。", types: ["成分残缺"] },
+            { id: 11, question: "11．下列各句中，没有语病的一句是（　）", options: ["A．\"双创特区\"以围绕聚集青年大学生、高校和科研院所科技人才、海外人才、企事业人员四类人才为重点，创新创业。", "B．在电视专题片《故宫》拍摄的过程中，摄制人员最难以忘怀的是文物专家们严谨的治学态度使人钦佩。", "C．学习打架子鼓，对于没有一点音乐基础的刘山来说，无疑不是一个大难题，每招每式都得从头练起。", "D．日前，来自全国的近千名鸟类摄影爱好者相聚在广州南沙湿地公园，在与可爱的飞翔精灵亲密接触并拍摄了大量照片的同时，还无形中上了一堂爱鸟护鸟知识课。"], answer: 3, analysis: "A项句式杂糅，\"以围绕……为重点\"杂糅。B项句式杂糅，删除\"使人钦佩\"。C项否定不当，删除\"不\"。", types: ["句式杂糅", "不合逻辑"] },
+            { id: 12, question: "12．下列各句中，没有语病的一项是（　）", options: ["A．本校师生员工出入校门一律凭工作证和学生证。", "B．当我看到你的神态是那样安详，精神是那样饱满，眉宇间是那样充满凛然正气的时候，使我满腹的疑虑消失了。", "C．这篇文章，抓住外婆的笑来反映党的英明政策给人民带来的幸福生活。", "D．本杂志的对象，主要是中小学语文教师及其他语文工作者。"], answer: 3, analysis: "A项连词\"和\"运用错误，应换成\"或\"，因为师生员工不可能同时具有两证。B项滥用介词造成没主语，应去掉\"使\"。C项缺宾语中心词。", types: ["表意不明", "成分残缺"] },
+            { id: 13, question: "13．下列各句中，没有语病的一项是（　）", options: ["A．她从《羊城晚报》上看到了南方医院采用新技术，为小儿麻痹后遗症、两腿长度不一的患者施行肌骨一次延长手术。", "B．英国皇家芭蕾舞团在首都剧场的演出，博得了全场观众的热烈掌声，对这次精彩的表演评价很高。", "C．为了适应工作重点的转移，我校建立和健全了必要的规章制度等一系列工作。", "D．从意外致残、生活无望到残奥会夺冠，并获得\"中国青年五四奖章\"，他走出了一条不平凡的人生道路。"], answer: 3, analysis: "A项缺宾语中心词，最后应加上\"的消息\"。B项最后一句缺主语，应改为\"观众对这次精彩的表演评价很高\"。C项句式杂糅。", types: ["成分残缺", "句式杂糅"] },
+            { id: 14, question: "14．下列各句中，没有语病的一句是（　）", options: ["A．国务院近日发布盐业体制改革方案，取消食盐批发企业只能在指定范围内销售，允许它们开展跨区域经营。", "B．在教育改革的大背景下，如果说社会主义核心价值体系是兴国之魂，那么立德树人作为教育的根本任务，就是深化教育领域综合改革之魂。", "C．今日，桂平市\"创先争优学雷锋暨千名干部下基层\"志愿服务系列活动启动仪式。", "D．《庄子》的出现，标志着我国在战国时代，哲学思想和文学语言已经发展到非常玄远、高深的程度，堪称我国古代典籍中的瑰宝。"], answer: 1, analysis: "A项成分残缺，\"取消\"后面缺少宾语，可在\"销售\"后加\"的政策\"。C项缺谓语动词，在\"桂平市\"后加\"举行\"。D项偷换主语。", types: ["成分残缺", "句式杂糅"] },
+            { id: 15, question: "15．下列各句中，没有语病的一项是（　）", options: ["A．我们不能把开会积极发言作为衡量一个人政治觉悟高低的标准。", "B．由于纺织工人努力提高产品质量，我国的出口棉布深受各国顾客的欢迎。", "C．一辆越野车像离弦的箭一样，在蜿蜒曲折的环山公路上疾驰。", "D．感冒退热冲剂的主要成分是大青叶、板蓝根、草河车配制而成的。"], answer: 1, analysis: "A项犯了\"一面对两面\"的逻辑错误。C项不合事理，蜿蜒曲折的公路上不可能像离弦的箭一样。D项杂糅，两种句式混用。", types: ["不合逻辑", "句式杂糅"] },
+            { id: 16, question: "16．下列各句中，没有语病的一项是（　）", options: ["A．在老师和同学们的耐心教育和帮助下，终于使他幡然醒悟了。", "B．面对突然发生的灾难，一个地方抗灾能力的强弱既取决于当地经济实力的雄厚，更取决于政府的应急机制和领导人的智慧。", "C．影片《生死抉择》是一部给人以强烈震撼和深刻警示的反腐倡廉的文艺作品，是党风廉政建设的生动教材和重要措施。", "D．职业教育的意义不仅在于传授技能，更在于育人，因此有意识地把工匠精神渗透进日常的技能教学中是职业教育改革的重要课题。"], answer: 3, analysis: "A项滥用介词造成没主语。B项一面对两面。C项主宾不搭配，影片是\"重要措施\"不通。", types: ["成分残缺", "搭配不当"] },
+            { id: 17, question: "17．下列各句中，没有语病的一项是（　）", options: ["A．最近几年，从中央到地方各级政府出台了一系列新能源汽车扶持政策，节能环保、经济实惠的新能源汽车逐渐进入老百姓的生活。", "B．我国重新修订《食品安全法》，目的是用更严格的监管、更严厉的处罚、更严肃的问责，切实保障\"舌尖上的安全\"，被称为\"最严食品安全法\"。", "C．有没有好的学习方法，是提高学习成绩的一个不可少的因素。", "D．高新科技园区以智力密集为依托，以开拓新产业和高科技成果为目标，不断促进科研教育与生产相结合。"], answer: 0, analysis: "B项前后主语不一致，在\"被称为\"前加上\"这部法律\"。C项犯了\"两面对一面\"的逻辑错误。D项动宾不搭配，开拓\"高科技成果\"不通。", types: ["句式杂糅", "不合逻辑", "搭配不当"] },
+            { id: 18, question: "18．下列各句中，没有语病的一项是（　）", options: ["A．工作之余，大家闲谈话题脱不开子女教育、住房大小、职务升迁，也照样脱不开为饭菜咸淡、暖气冷热、物价高低。", "B．我们这里的企业改制工作已经进入在充分调查的基础上，广泛征求意见，制订全面规划的阶段。", "C．自开展禁毒斗争以来，我国每年新发现的吸食海洛因人员增幅从2008年的13.7%降至2013年6.6%，近五年来戒毒三年以上人员已逾120万。", "D．今年郊区的水稻长势极好，郊区有关领导估计今年郊区水稻的总产量会超过历史水平。"], answer: 2, analysis: "A项成分残缺，\"脱不开\"后面少宾语的中心词。B项语序不当。D项有两处语病，一是重复，三次\"郊区\"；二是\"超过历史水平\"应为\"历史最高水平\"。", types: ["成分残缺", "语序不当", "成分赘余"] },
+            { id: 19, question: "19．下列各句中，没有语病的一句是（　）", options: ["A．21世纪的中国有没有希望，关键在于坚定地继承和发扬中华民族的优良传统并广泛地学习外国先进的科学文化。", "B．执法部门对向未成年人出售、出租或以其他方式传播淫秽、暴力、凶杀的图书报刊、音像制品，应依法从重处罚。", "C．今年5月国务院印发了《中国制造2025》，中国汽车产业未来将围绕以纯电驱动为中心，研发新能源汽车。", "D．在\"互联网＋\"\"大数据\"概念的推动下，腾讯、阿里、百度等相继进军电影领域，一批新的电影企业、电影基金成立，电影市场的蛋糕不断做大。"], answer: 3, analysis: "A项两面对一面，\"有没有\"是两面，\"关键在于\"是一面。B项成分残缺，应在\"音像制品\"后加\"的行为\"。C项\"围绕以……为中心\"句式杂糅。", types: ["不合逻辑", "成分残缺", "句式杂糅"] },
+            { id: 20, question: "20．下列各句中，没有语病的一项是（　）", options: ["A．现在住房虽然比过去只多了六平方米，老少三代可以不再挤在一个房间里，自己也可以有个读书写字的地方了。", "B．长江中的江豚被誉为\"水中大熊猫\"，是国家二级保护动物，也是《华盛顿公约》确定的全球濒危物种之一，再不加以保护，15年后将会灭绝。", "C．抗战前一年，住房和两亩地都给地主夺去了，为了无法维持生活，他就跑到太原去当兵。", "D．《教师法》规定，教师的工资不低于或高于国家公务员的工资。"], answer: 1, analysis: "A项关联词不搭配，应在\"老少三代\"前加\"但\"。C项\"无法\"是多余的。D项\"不低于\"和\"高于\"重复，应去掉\"或高于\"。", types: ["搭配不当", "成分赘余"] },
+            { id: 21, question: "21．下列各句中，没有语病的一项是（　）", options: ["A．首届跨境电商论坛近日在北京举行，来自各知名电商的数十名代表齐聚一堂，分析了电商企业面临的机遇和挑战。", "B．凡是在科学和学问研究上有成就的人，不少是在客观物质条件十分艰难的情况下，经过顽强刻苦的努力才获得成功的。", "C．从事业的发展上看，还缺乏各项科学专家和各项人才，今后，我们的工作就是大力培养、引进各项科学专家和各项人才。", "D．我国的改革在不断深化，那种什么事情都由政府包揽的现象正在改变，各种社会组织纷纷成立，这有利于社会矛盾和社会责任的分担。"], answer: 0, analysis: "B项\"凡是\"与\"不少\"自相矛盾。C项范围不清，各项人才包括科学家，不宜并列。D项成分残缺，应为\"社会矛盾的解决和社会责任的分担\"。", types: ["不合逻辑", "成分残缺"] },
+            { id: 22, question: "22．下列各句中，没有语病的一项是（　）", options: ["A．为了规范市场，维护生产企业和消费者的权益，国家有关部门制定了《关于打击以不正当价格行为牟取暴利的暂行规定》。", "B．究竟能否既提高教学质量，又减轻学生过重的课业负担，答案是无可讳言的。", "C．在线教师时薪过万的消息自从引发社会关注后，每一个教育工作者都应意识到，如何与力量巨大的互联网相处正成为教育不得不直面的问题。", "D．几年来，他无时无刻不忘收集、整理民歌，积累了大量的资料。"], answer: 0, analysis: "B项词义用错，\"无可讳言\"的意思是\"可以坦率地说\"。C项语序不当，\"自从\"应放到\"在线教师\"前面。D项否定失当，\"无时无刻不忘\"意为\"每时每刻都忘记\"，应将\"忘\"改为\"在\"。", types: ["不合逻辑", "语序不当"] },
+            { id: 23, question: "23．下列各句中，没有语病的一项是（　）", options: ["A．通过使用\"电子往来港澳通行证\"自助通关，使旅客大大缩短了排队等候过关的时间。", "B．日前，国土资源部公布了第二批通过规划审核的43个国家级经济技术开发区名单。", "C．城市的文明建设，靠的是专业的管理、高效的组织、科学的协调、连贯性的政策取得的，而非短时间的突击、会战，更不是将不好的东西遮掩藏匿。", "D．法律专家的看法是，消费者当众砸毁商品只是为了羞辱或者宣泄自己的不满。"], answer: 1, analysis: "A项主语缺失，去掉\"通过\"或\"使\"。C项句式杂糅，\"靠的是……\"和\"由……取得的\"两种句式杂糅。D项\"羞辱\"\"不满\"动宾搭配不当。", types: ["成分残缺", "句式杂糅", "搭配不当"] },
+            { id: 24, question: "24．下列各句中，没有语病的一项是（　）", options: ["A．只有当促进艺术电影繁荣成为社会共识，从源头的创作方到受众方的各环节都得到强有力的支持，艺术电影才能真正实现飞跃。", "B．据说当年徽州男人大多外出经商，家中皆是妇孺及孩童，为了安全，徽州的古村落老宅子大多为高墙深院、重门窄窗的建筑。", "C．卫生部今天就广东番禺发现一起非典疑似病例，向各地发出了紧急通知。", "D．这次去北京收获颇大，学习参观了工厂、机关、学校的改革经验，游览了万里长城。"], answer: 0, analysis: "B项\"妇孺及孩童\"语意重复，\"孺\"就是孩子的意思。C项成分残缺，\"病例\"后加\"的情况\"。D项\"参观了……经验\"搭配不当。", types: ["成分赘余", "成分残缺", "搭配不当"] },
+            { id: 25, question: "25．下列各句中，没有语病的一项是（　）", options: ["A．随着技术的进步和经验的积累，再加上政策的扶持，使得我国自主品牌汽车进入快速发展时期，各种创新产品层出不穷。", "B．在对如何使学生掌握现代化生活所必需的知识技能的问题上，该校的老师作过深入细致的研究。", "C．著名词曲作家付林创作《妈妈的吻》《小螺号》《故园之恋》等脍炙人口的歌曲而蜚声乐坛。", "D．载人航天技术，是我国高新科技水平显著提高的重要标志，也是我国综合国力显著提高的重要体现。"], answer: 3, analysis: "A项成分残缺，缺少主语，\"随着\"和\"使得\"只能保留一个。B项\"在对……的问题上\"去掉\"在……上\"。C项在\"创作\"前加\"因\"。", types: ["成分残缺"] },
+            { id: 26, question: "26．下列各句中，没有语病的一项是（　）", options: ["A．一项好的政策照理会带来好的效果，但在现阶段，必须强化阳光操作、民主监督等制约措施，因为好经也要提防不被念歪。", "B．三峡国际旅行社接待海内外游客数量保持持续增长的势头，2003年第一个季度接待的游客总数与去年同期相比，同比增长5.5%。", "C．瑞典和芬兰研究人员最近发现某些癌症存在\"基因开关\"，这一成果有助于未来的癌症防治，但距离相应药物的问世还需要很多年的深入研究。", "D．为了发展经济，我们共产党人难道还有什么个人利益不能抛弃的吗？"], answer: 3, analysis: "A项否定错误，\"好经也要提防不被念歪\"应去掉\"不\"。B项\"同期相比\"和\"同比\"重复。C项句式杂糅。", types: ["不合逻辑", "成分赘余", "句式杂糅"] },
+            { id: 27, question: "27．下列各句中，没有语病的一项是（　）", options: ["A．近年来，我国在海外开展了形式多样的汉语教学、汉语推广等文化交流活动，促进了汉语国际传播，在世界主要国家和城市越来越受欢迎。", "B．回国后，他们从大家的信赖和关怀中得到力量，树立起了信心，克服了困难。", "C．音乐比一切智慧、一切哲学都具有更高的启示，人的性格、思想、精神对于音乐确实是一种潜移默化的作用。", "D．预付费电度表又称智能电度表，使用这种电度表可以减少用电抄表等环节，还能解决防止偷电、杜绝拖欠电费等。"], answer: 1, analysis: "A项前后主语不一致。C项主客体颠倒，应改为\"音乐对于人的……\"。D项成分残缺，去掉\"解决\"或在\"等\"后加\"问题\"。", types: ["句式杂糅", "搭配不当", "成分残缺"] },
+            { id: 28, question: "28．下列各句中，没有语病的一项是（　）", options: ["A．在科学技术是第一生产力的观念深入人心的今天，谁能不信高科技会给人类带来福音？正因为这样，难怪骗子们也要浑水摸鱼，打出高科技的幌子了。", "B．《深化普通高中课程改革方案》要求推进普通高中多样化和特色化发展，为每个学生提供适合的教育，以满足不同潜质学生的发展。", "C．孩子们对\"动漫\"的情有独钟推动着\"动漫\"产业朝着高质量、高速度、高赢利发展，嗅觉灵敏的商家对此更是心知肚明。", "D．近年来，我国加快了高等教育事业发展的速度和规模，高校将进一步扩大招生，并重点建设一批高水平的大学和学科。"], answer: 0, analysis: "B项成分残缺，应在\"发展\"后加\"需要\"。C项缺宾语中心语，应是\"朝着……的方向发展\"。D项动宾搭配不当，可以\"加快速度\"，但不能\"加快规模\"。", types: ["成分残缺", "搭配不当"] },
+            { id: 29, question: "29．下列各句中，没有语病的一项是（　）", options: ["A．这个时候，人们已经从风华正茂才华横溢的朱自清身上看到了一个优秀的文学家，因此对他的诗作予以热情的评价。", "B．这家工厂的干部职工，在上级有关部门的大力帮助下，经营效益有了极大的改善，扭转了连年亏损的局面。", "C．年轻有为的高三学子们都希望自己将来成为对中华民族复兴有着较大贡献的人才。", "D．警方已经组织力量对现场进行了仔细分析、勘查取证，基本确定犯罪嫌疑人系该公司内部人员。"], answer: 2, analysis: "A项\"看到\"一词缺乏宾语中心，可在\"文学家\"后加上\"的品质\"。B项成分多余，删除\"的干部职工\"。D项语序不当，\"勘查取证\"应在\"仔细分析\"的前面。", types: ["成分残缺", "成分赘余", "语序不当"] },
+            { id: 30, question: "30．下列各句中，没有语病的一项是（　）", options: ["A．原来创作同摆渡一样，目的都是把人渡到前面的彼岸去。", "B．这本书精心选配的10多幅契合文意的图片与版式设计，为读者营造了一个极具文化魅力的立体阅读。", "C．实施以培养创新精神和实践能力为重点的素质教育，关键是改变以单纯传授知识为主的教学方式和被动接受知识的学习方式。", "D．以色列新政府成立以来，不仅未给业已艰难的中东和平进程带来一丝曙光，其强硬政策使中东地区陷入血腥和苦难。"], answer: 2, analysis: "A项\"前面的\"属多余。B项成分残缺，缺少和\"营造\"搭配的宾语，应在句末加上\"的氛围\"。D项\"不仅\"后面缺少相应的关联词。", types: ["成分赘余", "成分残缺", "搭配不当"] },
+            { id: 31, question: "31．下列句子中，没有语病的一句是（　）", options: ["A．第十八届全国书博会在郑州举行，广东参展的出版物至少有4500种以上，其中《王蒙自传》等一批精品备受读者青睐。", "B．最近，国家发改委下调了青霉素、罗红霉素等162个品种、近1300个剂型的药品，平均降幅是调整前规定价格的21%。", "C．如今，拉萨市堆龙德庆县\"高原无公害蔬菜生产基地\"出产的草莓、土豆、豌豆远销北京、上海、广州等地已经不是什么新鲜事了。", "D．我们必须实现人的全面发展为核心，坚持培养有理想、有道德、有文化、有纪律的公民，努力把广州建设成为和谐社会的首善之区。"], answer: 2, analysis: "A项不合逻辑，\"至少\"与\"以上\"矛盾。B项\"下调了\"缺乏宾语中心词，应在\"药品\"后添加\"价格\"。D项成分残缺，缺介词\"以\"。", types: ["不合逻辑", "成分残缺"] },
+            { id: 32, question: "32．下列各句中，没有语病的一项是（　）", options: ["A．福建土楼具有防匪防盗、防震防潮、冬暖夏凉、生活方便，虽经百年风雨或战争硝烟，至今仍巍然屹立，享有\"东方古城堡\"之美誉。", "B．\"耶路撒冷\"是和平之城的意思，却又是遭受劫难最多的城市，可是长期的冲突并没有使其失去迷人的魅力，也没有使旅游者望而却步。", "C．三聚氰胺分子中含有氮元素，如果添加到奶粉中，就可以提高奶粉中蛋白质的检测数值，这是许多不良厂家用以牟取暴利的罪魁祸首。", "D．要尽快培养出适应新世纪的人才，关键问题是先进的教育理念起着决定性的作用，它为我们指明了方向，引导学校教育不断向前发展。"], answer: 1, analysis: "A项成分残缺，缺少与\"具有\"搭配的宾语中心词，应加上\"的好处\"。C项不合逻辑，\"这\"不可能是\"罪魁祸首\"。D项句式杂糅。", types: ["成分残缺", "不合逻辑", "句式杂糅"] },
+            { id: 33, question: "33．下列各句中，没有语病的一句是（　）", options: ["A．推进社会主义新农村建设，必须站在落实科学发展观，构建和谐社会，全面实现小康，把农业放到国民经济大格局中统筹谋划。", "B．在共同应对金融危机的大背景下，俄罗斯不愿与美国发生新冷战和全面对抗，两国外交达成某种妥协的可能性不是不存在的。", "C．诚信教育已成为我国公民道德建设的重要内容迫在眉睫，它不仅体现了公民的基本道德素质，而且关系到国家的整体形象。", "D．市广电局宣布：未来三个月将在市区居民小区全面落实和推动市有线电视数字化会议精神，居民小区电视信号由模拟制转换为数字制。"], answer: 1, analysis: "A项\"站在\"缺少宾语中心语，应在\"小康\"后加\"的高度\"。C项句式杂糅，\"已成为\"与\"迫在眉睫\"矛盾。D项\"推动\"与\"精神\"搭配不当。", types: ["成分残缺", "句式杂糅", "搭配不当"] },
+            { id: 34, question: "34．下列各句中没有语病的一句是（　）", options: ["A．近视患者都应当接受专业医师的检查，选择合适的眼镜，切忌不要因为怕麻烦、爱漂亮而不戴眼镜。", "B．由于核废料衰变缓慢，所以一旦发生地质变动，或者因建筑、地铁建设等人为因素的影响，导致核废料泄露事件，那么后果将不堪设想。", "C．不论是褒是贬，都市的兴起和膨胀都称得上是一种奇迹，特别是在它经过了几十年的停滞甚至萎缩以后。", "D．村里发通知说，让大家在本月15日前去农村信用合作社领取农业补贴。"], answer: 2, analysis: "A项不合逻辑，\"切忌不要\"否定失当。B项成分赘余，\"事件\"多余。D项语句歧义，\"15日前去\"有两种理解。", types: ["不合逻辑", "成分赘余", "表意不明"] },
+            { id: 35, question: "35．下列各句中，语意明确、没有语病的一句是（　）", options: ["A．他背着家人和同学偷偷地把历年积存的200元压岁钱捐给了受灾严重的四川灾区。", "B．为加强国际交流，提高山东环保产业水平，省政府拟举办\"生态山东建设高层论坛\"暨第五届环保产业博览会。", "C．抗生素曾经是人类健康的福音，但是如果使用不合理，下药不对症，即使它是灵丹妙药，最终它给患者带来的也只能是超过疾病本身的伤害。", "D．教育部基础教育一司副司长王定华表示，教师正当使用的、恰如其分的惩戒不属于对学生的体罚，不提倡对学生的一切行为都给予包容甚至迁就的做法。"], answer: 1, analysis: "A项有歧义，可理解为自己一个人捐款，也可理解为和同学一起捐款。C项\"抗生素……是……福音\"主宾不搭配。D项不合逻辑，\"包容\"\"迁就\"应换位置。", types: ["表意不明", "搭配不当", "不合逻辑"] },
+            { id: 36, question: "36．下列各句中，没有语病的一句是（　）", options: ["A．对涉及百姓健康和公共利益的研发活动能否进行科学伦理的评价把关，是防止技术滥用、纠正科技应用偏差的重要保证。", "B．国防科工委副主任、国家航天局局长栾恩杰日前透露，继\"神舟六号\"载人航天飞船成功升空之后，中国航天事业的下一个目标是月球探测。", "C．现在人们认识到，一方面极光与地球高空大气和地磁场的大规模相互作用有关，另一方面又与太阳喷发出来的高速带电粒子流——通常称为太阳风——有关。", "D．外资的大量注入，在我国经济的增长，就业的扩大，税收的增加，先进管理理念与技术水平的提升等方面发挥了重要作用。"], answer: 1, analysis: "A项一面与两面搭配不当，\"能否……是\"，删去\"能否\"。C项语序不当，\"极光\"应放在\"一方面\"之前。D项搭配不当，应改为\"大量注入的外资……\"。", types: ["搭配不当", "语序不当"] },
+            { id: 37, question: "37．下列各项中，没有语病的一项是（　）", options: ["A．首赴亚丁湾、索马里海域执行护航任务的中国海军的三艘军舰和几十名特种兵，将进行登舰检查、与海盗火力对抗、保护相关海域通行船只的通行安全等活动。", "B．大型情景剧音舞诗画《天安门》，一开就采用\"幻影成像\"与舞台真人的互动，营造远古\"北京人\"穿越时空向人们跑来。", "C．科学发展观是在吸取人类社会发展的经验教训，包括发达国家在工业化、现代化过程中的经验教训，特别是总结我国改革开放30年实践经验的基础上提出来的。", "D．据悉，一种新型的袖珍电脑将亮相本届科博会，它采用语言输入、太阳能供电，具有高雅、时尚、方便的功能。"], answer: 2, analysis: "A项搭配不当，\"三艘军舰\"不能和\"进行登舰检查\"搭配。B项\"营造\"缺少宾语中心语。D项\"高雅、时尚、方便\"不属于\"功能\"，搭配不当。", types: ["搭配不当", "成分残缺"] },
+            { id: 38, question: "38．下列各句没有语病的一项是（　）", options: ["A．我父亲是建筑学家，许多人以为我母亲后来进入建筑领域，是受我父亲影响，其实不是这样的。", "B．这次招聘，一半以上的应聘者曾多年担任外资企业的中高层管理岗位，有较丰富的管理经验。", "C．熟悉他的人都知道，生活中的他不像在银幕上那样，是个性格开朗外向、不拘小节的人。", "D．近年来，随着房地产市场的发展和商品房价格的持续上涨，引起了有关部门的高度重视。"], answer: 0, analysis: "B项搭配不当，\"担任……岗位\"应是\"担任……职务\"。C项表意不明，\"性格开朗外向\"指的是谁不明确。D项成分残缺，缺少主语，可去掉\"随着\"。", types: ["搭配不当", "表意不明", "成分残缺"] }
+        ];
+
+        // ==================== 导航切换 ====================
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function () {
+                const sectionId = this.dataset.section;
+
+                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                this.classList.add('active');
+
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                document.getElementById(sectionId).classList.add('active');
+
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        // ==================== 知识面板切换 ====================
+        document.querySelectorAll('.knowledge-tab').forEach(tab => {
+            tab.addEventListener('click', function () {
+                const panelId = this.dataset.panel;
+
+                document.querySelectorAll('.knowledge-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+
+                document.querySelectorAll('.knowledge-panel').forEach(p => p.classList.remove('active'));
+                document.getElementById('panel-' + panelId).classList.add('active');
+            });
+        });
+
+        function showKnowledge(panelId) {
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.querySelector('[data-section="knowledge"]').classList.add('active');
+
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById('knowledge').classList.add('active');
+
+            document.querySelectorAll('.knowledge-tab').forEach(t => t.classList.remove('active'));
+            document.querySelector(`[data-panel="${panelId}"]`).classList.add('active');
+
+            document.querySelectorAll('.knowledge-panel').forEach(p => p.classList.remove('active'));
+            document.getElementById('panel-' + panelId).classList.add('active');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ==================== 题库浏览 ====================
+        function renderQuestionList(filter = 'all') {
+            const container = document.getElementById('questionList');
+            container.innerHTML = '';
+
+            const filtered = filter === 'all' ? questions : questions.filter(q => q.types.includes(filter));
+
+            filtered.forEach(q => {
+                const answerLetter = ['A', 'B', 'C', 'D'][q.answer];
+                const div = document.createElement('div');
+                div.className = 'accordion-item';
+                div.innerHTML = `
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <div style="display:flex;align-items:center;flex:1">
+                    <span class="q-num">${q.id}</span>
+                    <span style="font-size:14px;color:var(--gray)">答案：<strong style="color:var(--secondary)">${answerLetter}</strong>
+                    &nbsp;&nbsp;${q.types.map(t => `<span style="font-size:11px;background:var(--light);padding:2px 8px;border-radius:10px;margin-left:4px">${t}</span>`).join('')}
+                    </span>
+                </div>
+                <span class="arrow">▼</span>
+            </div>
+            <div class="accordion-body">
+                <div class="accordion-content">
+                    <p style="font-weight:600;margin-bottom:12px;font-size:15px">${q.question}</p>
+                    ${q.options.map((opt, i) => `
+                        <div class="option-text ${i === q.answer ? 'is-answer' : ''}">${opt}</div>
+                    `).join('')}
+                    <div class="analysis-text">
+                        <strong>【解析】</strong>${q.analysis}
+                    </div>
+                </div>
+            </div>
+        `;
+                container.appendChild(div);
+            });
+        }
+
+        function toggleAccordion(header) {
+            const body = header.nextElementSibling;
+            header.classList.toggle('open');
+            body.classList.toggle('open');
+        }
+
+        // Filter tags
+        document.querySelectorAll('.filter-tag').forEach(tag => {
+            tag.addEventListener('click', function () {
+                document.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                renderQuestionList(this.dataset.filter);
+            });
+        });
+
+        renderQuestionList();
+
+        // ==================== 在线练习 ====================
+        let currentQuestion = 0;
+        let selectedOption = -1;
+        let correctAnswers = 0;
+        let answeredQuestions = 0;
+        let shuffledQuestions = [];
+        let answered = new Set();
+
+        function shuffleArray(arr) {
+            const newArr = [...arr];
+            for (let i = newArr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
+            }
+            return newArr;
+        }
+
+        function initQuiz() {
+            shuffledQuestions = shuffleArray(questions);
+            currentQuestion = 0;
+            selectedOption = -1;
+            correctAnswers = 0;
+            answeredQuestions = 0;
+            answered = new Set();
+
+            document.getElementById('quizContent').style.display = 'block';
+            document.getElementById('quizResult').style.display = 'none';
+
+            loadQuestion();
+            updateStats(); // 确保重新开始时，总览页面的正确数与正确率也重置为 0
+        }
+
+        function loadQuestion() {
+            const q = shuffledQuestions[currentQuestion];
+            selectedOption = -1;
+
+            document.getElementById('questionText').textContent = q.question;
+
+            const optionsHtml = q.options.map((opt, i) => `
+        <div class="option" onclick="selectOption(${i})" id="option-${i}">
+            <span class="option-label">${['A', 'B', 'C', 'D'][i]}.</span>
+            ${opt.substring(2)}
+        </div>
+    `).join('');
+
+            document.getElementById('optionsList').innerHTML = optionsHtml;
+
+            document.getElementById('analysisPanel').classList.remove('show');
+            document.getElementById('analysisPanel').className = 'analysis-panel';
+            document.getElementById('submitBtn').style.display = 'inline-flex';
+            document.getElementById('nextBtn').style.display = 'none';
+
+            updateProgress();
+        }
+
+        function selectOption(index) {
+            if (answered.has(currentQuestion)) return;
+
+            selectedOption = index;
+            document.getElementById('optionsList').querySelectorAll('.option').forEach((opt, i) => {
+                opt.classList.remove('selected');
+                if (i === index) opt.classList.add('selected');
+            });
+        }
+
+        function submitAnswer() {
+            if (selectedOption === -1) {
+                alert('请先选择一个选项！');
+                return;
+            }
+            if (answered.has(currentQuestion)) return;
+
+            answered.add(currentQuestion);
+            answeredQuestions++;
+
+            const q = shuffledQuestions[currentQuestion];
+            const isCorrect = selectedOption === q.answer;
+
+            if (isCorrect) correctAnswers++;
+
+            // Show result
+            document.getElementById('optionsList').querySelectorAll('.option').forEach((opt, i) => {
+                opt.classList.remove('selected');
+                if (i === q.answer) opt.classList.add('correct-answer');
+                if (i === selectedOption && !isCorrect) opt.classList.add('wrong-answer');
+            });
+
+            const panel = document.getElementById('analysisPanel');
+            panel.className = `analysis-panel show ${isCorrect ? 'correct-panel' : 'wrong-panel'}`;
+            document.getElementById('analysisTitle').textContent = isCorrect ? '✅ 回答正确！' : '❌ 回答错误';
+            document.getElementById('analysisText').textContent = q.analysis;
+
+            document.getElementById('submitBtn').style.display = 'none';
+            document.getElementById('nextBtn').style.display = 'inline-flex';
+
+            updateStats();
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < shuffledQuestions.length - 1) {
+                currentQuestion++;
+                loadQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            document.getElementById('quizContent').style.display = 'none';
+            document.getElementById('quizResult').style.display = 'block';
+
+            const percentage = Math.round((correctAnswers / shuffledQuestions.length) * 100);
+            document.getElementById('finalScore').textContent = percentage + '%';
+
+            const circle = document.getElementById('scoreCircle');
+            circle.style.setProperty('--score-deg', (percentage * 3.6) + 'deg');
+
+            let msg = '';
+            if (percentage >= 90) msg = '🌟 太棒了！你已经很好地掌握了病句辨析的知识！';
+            else if (percentage >= 70) msg = '👍 不错！继续加油，再巩固一下薄弱环节！';
+            else if (percentage >= 50) msg = '💪 还需要多加练习，建议重新学习知识精讲部分。';
+            else msg = '📚 建议先仔细学习知识精讲，再来挑战练习！';
+
+            document.getElementById('resultMsg').textContent = `正确 ${correctAnswers} 题，共 ${shuffledQuestions.length} 题。${msg}`;
+        }
+
+        function resetQuiz() {
+            initQuiz();
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion) / shuffledQuestions.length) * 100;
+            document.getElementById('quizProgress').style.width = progress + '%';
+            document.getElementById('quizProgressText').textContent = `${currentQuestion + 1}/${shuffledQuestions.length}`;
+        }
+
+        function updateStats() {
+            document.getElementById('correctCount').textContent = correctAnswers;
+            const rate = answeredQuestions > 0 ? Math.round((correctAnswers / answeredQuestions) * 100) : 0;
+            document.getElementById('accuracyRate').textContent = rate + '%';
+        }
+
+        // Initialize quiz
+        initQuiz();
+
+        // ==================== 回到顶部 ====================
+        window.addEventListener('scroll', function () {
+            const btn = document.getElementById('backToTop');
+            if (window.scrollY > 300) {
+                btn.classList.add('show');
+            } else {
+                btn.classList.remove('show');
+            }
+        });
+    </script>
+
+</body>
+
+</html>
