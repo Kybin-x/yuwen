@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>正确使用成语（包括熟语）- 学习页面</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+    background: linear-gradient(135deg, #0c1445 0%, #1a1a5e 50%, #2d1b69 100%);
+    color: #e0e0e0;
+    min-height: 100vh;
+  }
+
+  .header {
+    background: linear-gradient(90deg, #1a0a3e, #2d1b69, #1a0a3e);
+    padding: 30px 20px;
+    text-align: center;
+    border-bottom: 3px solid #7c4dff;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before, .header::after {
+    content: '';
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    animation: twinkle 2s infinite;
+  }
+  .header::before { top: 20%; left: 10%; background: #ff6b6b; }
+  .header::after { top: 60%; right: 15%; background: #4ecdc4; animation-delay: 1s; }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 1; transform: scale(2); }
+  }
+  .header h1 {
+    font-size: 28px;
+    color: #fff;
+    text-shadow: 0 0 20px rgba(124,77,255,0.5);
+  }
+  .header .subtitle {
+    font-size: 16px;
+    color: #b39ddb;
+    margin-top: 8px;
+  }
+  .header .badge {
+    display: inline-block;
+    background: #7c4dff;
+    color: #fff;
+    padding: 4px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    margin-top: 10px;
+  }
+
+  .nav-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 16px 20px;
+    background: rgba(0,0,0,0.3);
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+  }
+  .nav-tab {
+    padding: 10px 24px;
+    border: 2px solid rgba(124,77,255,0.3);
+    border-radius: 25px;
+    background: transparent;
+    color: #b39ddb;
+    cursor: pointer;
+    font-size: 15px;
+    transition: all 0.3s;
+    font-family: inherit;
+  }
+  .nav-tab:hover { border-color: #7c4dff; color: #fff; }
+  .nav-tab.active {
+    background: linear-gradient(135deg, #7c4dff, #536dfe);
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 4px 15px rgba(124,77,255,0.4);
+  }
+
+  .container { max-width: 960px; margin: 0 auto; padding: 20px; }
+  .tab-content { display: none; animation: fadeIn 0.4s; }
+  .tab-content.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  .card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(124,77,255,0.2);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(5px);
+    transition: transform 0.2s;
+  }
+  .card:hover { transform: translateY(-2px); }
+  .card h2 {
+    color: #b388ff;
+    font-size: 20px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card h3 { color: #80cbc4; font-size: 17px; margin: 16px 0 10px; }
+  .card p, .card li { line-height: 1.8; font-size: 15px; color: #ccc; }
+  .card ul { padding-left: 20px; }
+  .card li { margin-bottom: 6px; }
+
+  .error-type {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .error-item {
+    background: rgba(124,77,255,0.08);
+    border: 1px solid rgba(124,77,255,0.15);
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.3s;
+  }
+  .error-item:hover {
+    background: rgba(124,77,255,0.15);
+    border-color: rgba(124,77,255,0.4);
+  }
+  .error-item .icon { font-size: 28px; margin-bottom: 8px; }
+  .error-item h4 { color: #b388ff; margin-bottom: 8px; font-size: 16px; }
+  .error-item p { font-size: 14px; color: #aaa; }
+  .error-item .example {
+    margin-top: 10px;
+    padding: 10px;
+    background: rgba(0,0,0,0.2);
+    border-radius: 8px;
+    font-size: 13px;
+    color: #ef9a9a;
+    border-left: 3px solid #ef5350;
+  }
+
+  /* Dictionary */
+  .search-box {
+    width: 100%;
+    padding: 14px 20px;
+    border: 2px solid rgba(124,77,255,0.3);
+    border-radius: 12px;
+    background: rgba(0,0,0,0.3);
+    color: #fff;
+    font-size: 16px;
+    font-family: inherit;
+    margin-bottom: 20px;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  .search-box:focus { border-color: #7c4dff; }
+  .search-box::placeholder { color: #666; }
+
+  .dict-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+  }
+  .dict-item {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .dict-item:hover {
+    background: rgba(124,77,255,0.12);
+    border-color: rgba(124,77,255,0.3);
+  }
+  .dict-item .idiom-name {
+    font-size: 17px;
+    font-weight: bold;
+    color: #b388ff;
+    margin-bottom: 6px;
+  }
+  .dict-item .idiom-def { font-size: 13px; color: #999; line-height: 1.6; }
+  .dict-item .idiom-tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    margin-top: 6px;
+  }
+  .tag-derog { background: rgba(239,83,80,0.2); color: #ef5350; }
+  .tag-commend { background: rgba(76,175,80,0.2); color: #66bb6a; }
+  .tag-neutral { background: rgba(158,158,158,0.2); color: #9e9e9e; }
+  .tag-caution { background: rgba(255,167,38,0.2); color: #ffa726; }
+  .dict-count { color: #7c4dff; font-size: 14px; margin-bottom: 16px; }
+
+  /* Quiz */
+  .quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .quiz-progress {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .progress-bar {
+    width: 200px;
+    height: 8px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #7c4dff, #536dfe);
+    border-radius: 4px;
+    transition: width 0.5s;
+  }
+  .score-display {
+    background: rgba(124,77,255,0.15);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    color: #b388ff;
+  }
+
+  .question-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(124,77,255,0.2);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 20px;
+  }
+  .q-number {
+    display: inline-block;
+    background: #7c4dff;
+    color: #fff;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 32px;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 12px;
+  }
+  .q-text { font-size: 16px; line-height: 1.8; margin-bottom: 16px; color: #e0e0e0; }
+  .q-text .highlight { color: #ff8a80; font-weight: bold; }
+
+  .options { display: flex; flex-direction: column; gap: 10px; }
+  .option-btn {
+    padding: 14px 18px;
+    border: 2px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+    background: rgba(255,255,255,0.03);
+    color: #ccc;
+    cursor: pointer;
+    font-size: 15px;
+    text-align: left;
+    transition: all 0.3s;
+    font-family: inherit;
+    line-height: 1.6;
+  }
+  .option-btn:hover:not(.disabled) {
+    border-color: #7c4dff;
+    background: rgba(124,77,255,0.1);
+    color: #fff;
+  }
+  .option-btn.correct {
+    border-color: #4caf50;
+    background: rgba(76,175,80,0.15);
+    color: #81c784;
+  }
+  .option-btn.wrong {
+    border-color: #ef5350;
+    background: rgba(239,83,80,0.15);
+    color: #ef9a9a;
+  }
+  .option-btn.disabled { cursor: default; opacity: 0.7; }
+  .option-btn.show-correct {
+    border-color: #4caf50;
+    background: rgba(76,175,80,0.1);
+  }
+
+  .explanation {
+    margin-top: 16px;
+    padding: 16px;
+    background: rgba(33,150,243,0.08);
+    border-left: 4px solid #42a5f5;
+    border-radius: 0 10px 10px 0;
+    display: none;
+    animation: fadeIn 0.3s;
+  }
+  .explanation.show { display: block; }
+  .explanation h4 { color: #42a5f5; margin-bottom: 8px; }
+  .explanation p { font-size: 14px; line-height: 1.8; color: #b0bec5; }
+
+  .quiz-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+  }
+  .btn {
+    padding: 10px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    font-family: inherit;
+    transition: all 0.3s;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #7c4dff, #536dfe);
+    color: #fff;
+  }
+  .btn-primary:hover { box-shadow: 0 4px 15px rgba(124,77,255,0.4); transform: translateY(-1px); }
+  .btn-outline {
+    background: transparent;
+    color: #b39ddb;
+    border: 2px solid rgba(124,77,255,0.3);
+  }
+  .btn-outline:hover { border-color: #7c4dff; color: #fff; }
+  .btn:disabled { opacity: 0.4; cursor: default; }
+
+  .q-nav-dots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  .q-dot {
+    width: 30px;
+    height: 30px;
+    border-radius: 6px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.03);
+    color: #888;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+  .q-dot:hover { border-color: #7c4dff; }
+  .q-dot.current { border-color: #7c4dff; background: rgba(124,77,255,0.2); color: #fff; }
+  .q-dot.answered-correct { background: rgba(76,175,80,0.3); border-color: #4caf50; color: #81c784; }
+  .q-dot.answered-wrong { background: rgba(239,83,80,0.3); border-color: #ef5350; color: #ef9a9a; }
+
+  /* Stats */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .stat-card {
+    background: rgba(124,77,255,0.08);
+    border: 1px solid rgba(124,77,255,0.15);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+  }
+  .stat-card .stat-num { font-size: 36px; font-weight: bold; color: #b388ff; }
+  .stat-card .stat-label { font-size: 14px; color: #888; margin-top: 4px; }
+
+  .reset-btn {
+    display: block;
+    margin: 20px auto;
+    padding: 12px 32px;
+    background: rgba(239,83,80,0.2);
+    border: 2px solid #ef5350;
+    color: #ef9a9a;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 15px;
+    font-family: inherit;
+    transition: all 0.3s;
+  }
+  .reset-btn:hover { background: rgba(239,83,80,0.3); }
+
+  .footer {
+    text-align: center;
+    padding: 30px 20px;
+    color: #555;
+    font-size: 13px;
+  }
+
+  @media (max-width: 600px) {
+    .header h1 { font-size: 22px; }
+    .nav-tab { padding: 8px 16px; font-size: 13px; }
+    .card { padding: 16px; }
+    .question-card { padding: 18px; }
+    .progress-bar { width: 120px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>📘 正确使用成语（包括熟语）</h1>
+  <div class="subtitle">第一章 语言知识和语言表达 · 第五节</div>
+  <div class="badge">高职高考语文专题训练</div>
+</div>
+
+<div class="nav-tabs">
+  <button class="nav-tab active" onclick="switchTab('overview')">📚 知识概览</button>
+  <button class="nav-tab" onclick="switchTab('dictionary')">📖 成语词典</button>
+  <button class="nav-tab" onclick="switchTab('quiz')">✏️ 练习测试</button>
+  <button class="nav-tab" onclick="switchTab('stats')">📊 学习统计</button>
+</div>
+
+<div class="container">
+
+  <!-- 知识概览 -->
+  <div id="tab-overview" class="tab-content active">
+    <div class="card">
+      <h2>🎯 成语使用常见错误类型</h2>
+      <p>成语使用题是高考语文的重点考查内容。掌握以下六种常见错误类型，可以帮助你快速辨析成语的正误。</p>
+    </div>
+
+    <div class="error-type">
+      <div class="error-item">
+        <div class="icon">🔤</div>
+        <h4>一、望文生义</h4>
+        <p>仅从字面意思理解成语，忽略其真正的含义。</p>
+        <div class="example">
+          <strong>例：</strong>"别无长物"不是"别无长处"，而是"形容家贫，一无所有"。"明日黄花"不是"明天的花朵"，而是"比喻已失去应时作用的事物"。
+        </div>
+      </div>
+
+      <div class="error-item">
+        <div class="icon">😊😡</div>
+        <h4>二、感情色彩不当</h4>
+        <p>褒义词用于贬义场合，或贬义词用于褒义场合。</p>
+        <div class="example">
+          <strong>例：</strong>"无所不为"是贬义词（什么坏事都干），不能用于形容父母费心培养孩子。"蔚然成风"是褒义词，不能形容"追星"等不良现象。
+        </div>
+      </div>
+
+      <div class="error-item">
+        <div class="icon">🎯</div>
+        <h4>三、适用对象错误</h4>
+        <p>成语使用在了不恰当的对象上。</p>
+        <div class="example">
+          <strong>例：</strong>"相敬如宾"只用于夫妻之间。"鬼斧神工"形容人的制作技艺，不能用于自然景观。"面面相觑"用于人与人之间，不能用于人与物。
+        </div>
+      </div>
+
+      <div class="error-item">
+        <div class="icon">📝</div>
+        <h4>四、语境不符</h4>
+        <p>成语的含义与句子的语境不匹配。</p>
+        <div class="example">
+          <strong>例：</strong>"涣然冰释"比喻疑虑、误会消除，不能用于烦恼。"行云流水"比喻文章自然流畅，不能形容时间流逝。
+        </div>
+      </div>
+
+      <div class="error-item">
+        <div class="icon">👥</div>
+        <h4>五、用错范围</h4>
+        <p>成语适用的范围被扩大或缩小。</p>
+        <div class="example">
+          <strong>例：</strong>"鳞次栉比"多用于形容房屋排列，不能形容山。"鼎足而立"比喻三方面对立，不能用于两方。"绘声绘色"形容叙述描写，不能形容节目制作。
+        </div>
+      </div>
+
+      <div class="error-item">
+        <div class="icon">🔄</div>
+        <h4>六、近义混淆</h4>
+        <p>混淆了含义相近但用法不同的成语。</p>
+        <div class="example">
+          <strong>例：</strong>"情不自禁"指抑制不住感情，"不由自主"指控制不住自己。"不以为然"指不认为对，"不以为意"指不放在心上。"不胫而走"指消息传播快，"不翼而飞"指东西丢失。
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:20px">
+      <h2>💡 解题技巧</h2>
+      <h3>第一步：理解成语本义</h3>
+      <p>先明确成语的准确含义，特别注意那些容易望文生义的成语。</p>
+      <h3>第二步：判断感情色彩</h3>
+      <p>确认成语是褒义、贬义还是中性，与句子感情基调是否一致。</p>
+      <h3>第三步：核对适用对象</h3>
+      <p>有些成语只能用于特定的人或事物，注意使用范围。</p>
+      <h3>第四步：验证语境搭配</h3>
+      <p>将成语放入句中通读，确认与上下文逻辑是否一致。</p>
+    </div>
+  </div>
+
+  <!-- 成语词典 -->
+  <div id="tab-dictionary" class="tab-content">
+    <input type="text" class="search-box" id="searchInput" placeholder="🔍 输入成语或拼音首字母搜索..." oninput="filterDict()">
+    <div class="dict-count" id="dictCount"></div>
+    <div class="dict-grid" id="dictGrid"></div>
+  </div>
+
+  <!-- 练习测试 -->
+  <div id="tab-quiz" class="tab-content">
+    <div class="quiz-header">
+      <div class="quiz-progress">
+        <span id="quizProgressText">第 1/40 题</span>
+        <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:2.5%"></div></div>
+      </div>
+      <div class="score-display">✅ <span id="correctCount">0</span> / ❌ <span id="wrongCount">0</span></div>
+    </div>
+    <div class="q-nav-dots" id="qNavDots"></div>
+    <div id="quizContainer"></div>
+    <div class="quiz-nav">
+      <button class="btn btn-outline" id="prevBtn" onclick="navigateQ(-1)" disabled>← 上一题</button>
+      <button class="btn btn-primary" id="nextBtn" onclick="navigateQ(1)">下一题 →</button>
+    </div>
+  </div>
+
+  <!-- 学习统计 -->
+  <div id="tab-stats" class="tab-content">
+    <div class="card">
+      <h2>📊 答题统计</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-num" id="statTotal">0</div>
+          <div class="stat-label">已答题数</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="statCorrect" style="color:#81c784">0</div>
+          <div class="stat-label">回答正确</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="statWrong" style="color:#ef9a9a">0</div>
+          <div class="stat-label">回答错误</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="statRate">0%</div>
+          <div class="stat-label">正确率</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>📝 错题回顾</h2>
+      <div id="wrongList"><p style="color:#888;">暂无错题记录。完成练习后，错题将显示在这里。</p></div>
+    </div>
+
+    <button class="reset-btn" onclick="resetQuiz()">🔄 重置所有答题记录</button>
+  </div>
+
+</div>
+
+<div class="footer">
+  高职高考语文专题训练 · 正确使用成语（包括熟语）
+</div>
+
+<script>
+// ============ DATA ============
+const idioms = [
+  {name:"大快人心",def:"坏人受到惩罚或打击，使大家非常痛快。",tag:"commend"},
+  {name:"量入为出",def:"根据收入情况确定支出限度。",tag:"neutral"},
+  {name:"萍水相逢",def:"比喻素不相识的人偶然相遇。不能用于老朋友。",tag:"caution"},
+  {name:"出人意表",def:"出乎人们意料之外。",tag:"neutral"},
+  {name:"无伤大雅",def:"对事物的主要方面没有损害。",tag:"neutral"},
+  {name:"情有独钟",def:"因对某人或某事物特别喜爱而感情专注。",tag:"commend"},
+  {name:"各尽所能",def:"各人把自己的能力施展出来。注意：不能形容收费方式多样。",tag:"caution"},
+  {name:"伯仲之间",def:"比喻不相上下，难分高低。",tag:"neutral"},
+  {name:"五花八门",def:"比喻花样繁多，变化多端。",tag:"neutral"},
+  {name:"相映成趣",def:"相互对照，映衬着就显得更有趣味，更有意思。",tag:"commend"},
+  {name:"全神贯注",def:"全部精神都集中投入，指注意力高度集中。不能用于聊天等轻松场合。",tag:"caution"},
+  {name:"物尽其用",def:"各种事物都充分发挥它的作用。",tag:"commend"},
+  {name:"束之高阁",def:"把东西捆绑起来放在高架上，比喻扔在一边不用或不管。",tag:"derog"},
+  {name:"渔翁得利",def:"比喻两者争持不下，让第三者从中得利。",tag:"neutral"},
+  {name:"竭泽而渔",def:"比喻取之不留余地，只顾眼前利益，不顾长远利益。贬义，不能中性描述资源状况。",tag:"derog"},
+  {name:"杞人忧天",def:"比喻完全没必要的或没有根据的忧虑和担心。",tag:"derog"},
+  {name:"煞有介事",def:"装模作样，好像真有这么回事似的。",tag:"derog"},
+  {name:"随心所欲",def:"一切都由着自己的心意，想怎么做就怎么做。",tag:"neutral"},
+  {name:"口耳相传",def:"口说耳听地往下传。注意：强调传承方式，不同于'奔走相告'。",tag:"caution"},
+  {name:"寥若晨星",def:"稀少得好像早晨的星星。形容非常稀少。",tag:"neutral"},
+  {name:"跋山涉水",def:"翻越山岭，蹚过河水，形容旅途艰苦。",tag:"neutral"},
+  {name:"无所不为",def:"没有不干的事情，指什么坏事都干。贬义词。",tag:"derog"},
+  {name:"安土重迁",def:"留恋故土，不肯轻易迁移。注意：不是喜欢搬迁的意思。",tag:"caution"},
+  {name:"淋漓尽致",def:"形容文章或说话表达得非常充分、透彻。",tag:"commend"},
+  {name:"不耻下问",def:"不以向地位比自己低、学识比自己差的人请教为耻。对象必须是比自己地位低的人。",tag:"caution"},
+  {name:"鱼龙混杂",def:"比喻坏人和好人或凡人与圣人混成一起，好坏难分。用于人，不用于事物。",tag:"caution"},
+  {name:"金科玉律",def:"比喻不能变更的信条或法律条文。多含贬义。",tag:"derog"},
+  {name:"弹冠相庆",def:"指即将做官而相互庆贺。多用于贬义。",tag:"derog"},
+  {name:"丢三落四",def:"形容做事马虎粗心，不是丢了这个就是忘了那个。",tag:"derog"},
+  {name:"行云流水",def:"比喻自然不拘束，多指文章、歌唱等。不能形容时间流逝。",tag:"caution"},
+  {name:"骇人听闻",def:"使人听了非常吃惊，多指社会上发生的坏事。",tag:"derog"},
+  {name:"实至名归",def:"有了真正的学识、本领或业绩，相应的声誉自然就随之而来。",tag:"commend"},
+  {name:"叹为观止",def:"赞美看到的事物好到极点。褒义，不能用于不好的事物。",tag:"caution"},
+  {name:"情不自禁",def:"抑制不住自己的感情。用于感情，不用于身体动作。",tag:"caution"},
+  {name:"不由自主",def:"由不得自己，控制不住自己。可用于身体动作。",tag:"neutral"},
+  {name:"胸无城府",def:"形容待人接物坦率真诚，心口如一。褒义。",tag:"commend"},
+  {name:"耿耿于怀",def:"事情（多为令人牵挂的或不愉快的）在心里，难以排解。",tag:"neutral"},
+  {name:"轻描淡写",def:"原指用浅淡的颜色描画，今多指说话、作文时将某些事情轻轻带过。",tag:"neutral"},
+  {name:"喜闻乐见",def:"喜欢听，乐意看。指很受欢迎。",tag:"commend"},
+  {name:"涣然冰释",def:"比喻疑虑、误会等一下子完全消除。不能用于烦恼消除。",tag:"caution"},
+  {name:"另起炉灶",def:"比喻重新做或独立另做。",tag:"neutral"},
+  {name:"饱经风霜",def:"经历过许多艰难困苦。",tag:"commend"},
+  {name:"蔚然成风",def:"多指某件有意义的事情，形成社会上的一种风尚。褒义词。",tag:"commend"},
+  {name:"飞黄腾达",def:"指官职地位上升得很快。含贬义，不能用于褒义语境。",tag:"derog"},
+  {name:"面面相觑",def:"你看我，我看你。形容大家因惊惧或不知所措而互相望着。只用于人与人之间。",tag:"caution"},
+  {name:"长此以往",def:"长期如此。贬义词，通常指未来的不好结果，不能追述过去。",tag:"derog"},
+  {name:"参差不齐",def:"指长短、高低、大小不齐。不能用于成熟期等时间概念。",tag:"caution"},
+  {name:"司空见惯",def:"指某事常见，不足为奇。",tag:"neutral"},
+  {name:"首尾相接",def:"事物的头和尾连接到一起。不能形容人排队。",tag:"caution"},
+  {name:"相敬如宾",def:"形容夫妻互相尊敬，像对待宾客一样。只用于夫妻之间。",tag:"caution"},
+  {name:"侃侃而谈",def:"指人理直气壮、从容不迫地说话。褒义。",tag:"commend"},
+  {name:"改头换面",def:"比喻只换形式，不变内容。贬义，不能用于真正的改变。",tag:"derog"},
+  {name:"狗尾续貂",def:"比喻拿不好的东西接到好的东西后面，显得好坏不相称。",tag:"derog"},
+  {name:"无动于衷",def:"心里一点不受感动，一点也不动心。注意与'心不在焉'区别。",tag:"caution"},
+  {name:"走投无路",def:"无路可走，比喻处境极端困难，找不到出路。",tag:"neutral"},
+  {name:"胸有成竹",def:"比喻做事之前已经有了成熟的打算和把握。注意与'心中有数'区别。",tag:"caution"},
+  {name:"洞若观火",def:"清楚得就像看火一样，形容看得非常清楚。多用于对形势的分析。",tag:"caution"},
+  {name:"苦口婆心",def:"比喻善意而又耐心地劝导，强调反复劝说。注意与'语重心长'区别。",tag:"caution"},
+  {name:"汹涌澎湃",def:"形容水势浩大，波浪猛烈。也比喻声势浩大。",tag:"neutral"},
+  {name:"见异思迁",def:"看见不同的事物就改变主意。指对工作意志不坚定，喜爱不专一。不等于'犹豫不决'。",tag:"derog"},
+  {name:"川流不息",def:"行人、车马等像水流一样连续不断。",tag:"neutral"},
+  {name:"不胫而走",def:"没有腿却能跑。比喻消息传播很快。不同于'不翼而飞'（指东西丢失）。",tag:"caution"},
+  {name:"鳞次栉比",def:"多用于形容房屋或船只等排列得很密很整齐。不能形容群山。",tag:"caution"},
+  {name:"望洋兴叹",def:"比喻做一件事力量不够，感到无可奈何。",tag:"neutral"},
+  {name:"不期而遇",def:"没有约定而意外地相遇。用于人，不能用于灾祸。",tag:"caution"},
+  {name:"休戚相关",def:"彼此间祸福互相关联。主语应为人物双方，不能用于物与人。",tag:"caution"},
+  {name:"地老天荒",def:"指经过的时间很久。不指贫瘠荒凉。",tag:"caution"},
+  {name:"洛阳纸贵",def:"比喻著作广为流传，风行一时。不能表示纸张涨价。",tag:"caution"},
+  {name:"噤若寒蝉",def:"像寒冬的蝉一样不敢发声。形容不敢作声。不是形容寒冷发抖。",tag:"caution"},
+  {name:"不以为然",def:"不认为是对的。不同于'不以为意'（不放在心上）。",tag:"caution"},
+  {name:"趋之若鹜",def:"像鸭子一样成群跑过去。比喻人们成群地争着前去。含贬义。",tag:"derog"},
+  {name:"首当其冲",def:"比喻最先受到攻击或遭受灾难。不是'冲在最前面'的意思。",tag:"caution"},
+  {name:"不可理喻",def:"形容人蛮横不讲道理。不是'无法理解'的意思。",tag:"caution"},
+  {name:"一箭双雕",def:"比喻做一件事达到两个目的。",tag:"commend"},
+  {name:"不孚众望",def:"不合于众人的期望。注意与'不负众望'（不辜负期望）的区别。",tag:"caution"},
+  {name:"始作俑者",def:"比喻恶劣风气的创始者。贬义词。",tag:"derog"},
+  {name:"任重道远",def:"担子很重，路程又长。比喻责任重大。用于人，不用于事情。",tag:"caution"},
+  {name:"一蹴而就",def:"踏一步就能成功。形容事情轻而易举，一下子就能完成。",tag:"neutral"},
+  {name:"绘声绘色",def:"形容叙述、描写生动逼真。不能形容节目办得好。",tag:"caution"},
+  {name:"流连忘返",def:"留恋不舍得离去。",tag:"commend"},
+  {name:"卓尔不群",def:"指才德超出寻常，与众不同。不是'孤傲自处'的意思。",tag:"caution"},
+  {name:"改弦更张",def:"比喻改革制度或变更方法。不是改变局面。",tag:"caution"},
+  {name:"轩然大波",def:"比喻大的纠纷或风潮。",tag:"neutral"},
+  {name:"空穴来风",def:"有了洞穴才有风进来。比喻消息和传说不是完全没有原因的。",tag:"caution"},
+  {name:"明日黄花",def:"比喻失去新闻价值的报道或已失去应时作用的事物。不是'明天的花朵'。",tag:"caution"},
+  {name:"不假思索",def:"用不着想，形容说话做事敏捷。与'深思熟虑'含义相反。",tag:"neutral"},
+  {name:"玩火自焚",def:"比喻干冒险或害人的勾当，最后受害的还是自己。",tag:"derog"},
+  {name:"娓娓动听",def:"形容善于讲话，使人喜欢听。",tag:"commend"},
+  {name:"自作自受",def:"自己做了错事，自己承受不好的后果。贬义。",tag:"derog"},
+  {name:"瓜田李下",def:"比喻容易引起嫌疑的场合。",tag:"neutral"},
+  {name:"浮光掠影",def:"比喻观察不细，印象不深。",tag:"derog"},
+  {name:"置之度外",def:"不把生死、利害等放在心上。有特定使用范围。",tag:"caution"},
+  {name:"沧海一粟",def:"大海里的一粒谷子。比喻非常渺小。",tag:"neutral"},
+  {name:"危言危行",def:"危：正直。说正直的话，做正直的事。褒义。",tag:"commend"},
+  {name:"细大不捐",def:"小的大的都不舍弃。包罗一切，没有选择。捐：舍弃，非捐献。",tag:"caution"},
+  {name:"望尘莫及",def:"比喻远远落后。不同于'鞭长莫及'（力量达不到）。",tag:"caution"},
+  {name:"不忍卒读",def:"形容文章内容悲惨动人，不忍心读完。不是说文章写得不好。",tag:"caution"},
+  {name:"鬼斧神工",def:"形容人的制作技艺高超，不能用于形容自然景观。",tag:"caution"},
+  {name:"风姿绰约",def:"形容女子风韵姿态柔美动人。",tag:"commend"},
+  {name:"分庭抗礼",def:"原指宾主相见行礼。现比喻平起平坐，彼此对等。",tag:"neutral"},
+  {name:"差强人意",def:"大体上还能使人满意。不是'不能让人满意'。",tag:"caution"},
+  {name:"侧目而视",def:"不敢从正面看，斜着眼睛看。形容畏惧而又愤恨。含贬义。",tag:"derog"},
+  {name:"天花乱坠",def:"形容说话有声有色，极其动听。多指夸张而不符合事实。",tag:"derog"},
+  {name:"如坐春风",def:"好像置身于和暖的春风里。形容受到良师的教诲、熏陶。不是形容心情愉悦。",tag:"caution"},
+  {name:"鼎足而立",def:"比喻三方面对立的局势。不能用于两方。",tag:"caution"},
+  {name:"有口皆碑",def:"所有人的嘴都是活的记功碑。比喻人人称赞。",tag:"commend"},
+  {name:"敬而远之",def:"表示尊敬却有所顾虑不愿接近。",tag:"neutral"},
+  {name:"上行下效",def:"上面的人怎么做，下面的人就跟着做。多指不好的事情。贬义。",tag:"derog"},
+  {name:"朝秦暮楚",def:"比喻人反复无常，立场不坚定。",tag:"derog"},
+  {name:"处心积虑",def:"经过长时间的考虑。形容蓄谋已久。贬义。",tag:"derog"},
+  {name:"求全责备",def:"对人或对人做的事情要求十全十美。指苛责别人。贬义。",tag:"derog"},
+  {name:"出神入化",def:"形容技艺达到了绝妙的境界。",tag:"commend"},
+  {name:"历历在目",def:"远方的景物或过去的事情清清楚楚地重现在眼前。用于具体事物，不用于抽象情感。",tag:"caution"},
+  {name:"独树一帜",def:"单独树立一面旗帜。比喻与众不同，自成一家。",tag:"commend"},
+  {name:"倾巢出动",def:"全部出动。多含贬义。",tag:"derog"},
+  {name:"蝇营狗苟",def:"比喻为了追逐名利，不择手段。",tag:"derog"},
+  {name:"长篇大论",def:"指滔滔不绝的言论或篇幅冗长的文章。",tag:"derog"},
+  {name:"犯而不校",def:"受到别人的触犯或无礼也不计较。校：计较。",tag:"caution"},
+  {name:"久假不归",def:"原指假借仁义的名义而不真正实行。后指长期借用而不归还。假：借，非假期。",tag:"caution"},
+  {name:"春风化雨",def:"适宜于草木生长的风雨。比喻良好的熏陶和教育。",tag:"commend"},
+  {name:"安之若素",def:"安然相处，和往常一样。指身在逆境或遇到困难能泰然处之。",tag:"commend"},
+  {name:"变幻莫测",def:"变化很多，不能预料。",tag:"neutral"},
+  {name:"阳春白雪",def:"原指战国时楚国较高级的歌曲。比喻高深的不通俗的文学艺术。不是形容景色。",tag:"caution"},
+  {name:"咄咄逼人",def:"形容气势汹汹，盛气凌人。",tag:"derog"},
+  {name:"敬谢不敏",def:"恭敬地表示能力不够或不能接受。多作推辞做某事的婉辞。",tag:"neutral"},
+  {name:"笑里藏刀",def:"形容对人外表和气，却阴险毒辣。",tag:"derog"},
+  {name:"漠不关心",def:"态度冷淡，毫不关心。",tag:"derog"},
+  {name:"无坚不摧",def:"形容力量非常强大，没有什么坚固的东西不能摧毁。注意与'坚不可摧'区别。",tag:"caution"},
+  {name:"自以为是",def:"自己总认为自己是对的。形容主观不虚心。",tag:"derog"}
+];
+
+const quizData = [
+  {q:"下列各句中，加点的成语使用<b>不恰当</b>的一项是",
+   opts:[
+    "A．美国欲以"安全问题"抹黑华为，中国外交部直面反击，真是<span class='highlight'>大快人心</span>。",
+    "B．我们要靠自己的收入，维持自己的生存，所以仍然要严格遵守<span class='highlight'>量入为出</span>的原则。",
+    "C．回到家乡，我一路上遇到<span class='highlight'>萍水相逢</span>的老朋友。",
+    "D．这一<span class='highlight'>出人意表</span>的奇景却是第一次见到。"
+   ],ans:2,
+   exp:""萍水相逢"是指第一次见面的陌生人，不能用于"老朋友"。A"大快人心"指坏人受到惩罚使大家痛快。B"量入为出"根据收入确定支出。D"出人意表"出乎意料。"},
+
+  {q:"下列各句中，加点的成语使用<b>不恰当</b>的一项是",
+   opts:[
+    "A．只有谭校长有时还会跟他开点<span class='highlight'>无伤大雅</span>的玩笑。",
+    "B．人们对俄罗斯芭蕾舞团的《天鹅湖》还是<span class='highlight'>情有独钟</span>，屡看不厌。",
+    "C．美国博物馆的收费可谓<span class='highlight'>各尽所能</span>。",
+    "D．水平都在<span class='highlight'>伯仲之间</span>，谁能胜出，就要看竞技状态和心理素质了。"
+   ],ans:2,
+   exp:""各尽所能"指各人施展自己的能力，不能形容收费方式多样，应改为"五花八门"。"},
+
+  {q:"下列各句中，加点的词语使用<b>不恰当</b>的一项是",
+   opts:[
+    "A．鸽子能利用地球磁场来导向，<span class='highlight'>相映成趣</span>的是，研究人员发现一种细菌也能感应地球磁场。",
+    "B．张阿姨便拉着小王的手<span class='highlight'>全神贯注</span>地跟她拉起了家常。",
+    "C．使家里的每件物品都<span class='highlight'>物尽其用</span>，就可将垃圾量降低25%。",
+    "D．这些优秀作品在获奖后并没有被<span class='highlight'>束之高阁</span>。"
+   ],ans:1,
+   exp:""全神贯注"指注意力高度集中，用于聊家常不合适。A"相映成趣"使用正确。C"物尽其用"使用正确。D"束之高阁"使用正确。"},
+
+  {q:"下列各句中，加点的成语使用<b>不恰当</b>的一项是",
+   opts:[
+    "A．可谓两败俱伤，而让他们强大的对手谷歌<span class='highlight'>渔翁得利</span>。",
+    "B．渔业资源已经到了<span class='highlight'>竭泽而渔</span>的地步。",
+    "C．如果学生满足于网上搜索素材，这并非<span class='highlight'>杞人忧天</span>。",
+    "D．有的同学还用军事望远镜<span class='highlight'>煞有介事</span>地东张西望。"
+   ],ans:1,
+   exp:""竭泽而渔"比喻只顾眼前不顾长远，是贬义，用在描写渔业资源状况，感情色彩和对象都不对。"},
+
+  {q:"下列各句中，加点的词语使用<b>不恰当</b>的一项是",
+   opts:[
+    "A．不少人都能<span class='highlight'>随心所欲</span>地使用几种语言。",
+    "B．社区居民<span class='highlight'>口耳相传</span>。",
+    "C．今天能见到的也是<span class='highlight'>寥若晨星</span>。",
+    "D．地震救援人员冒着大雨，<span class='highlight'>跋山涉水</span>。"
+   ],ans:1,
+   exp:""口耳相传"指口说耳听地往下传，强调传承方式。此处语境是居民之间传播消息，应用"奔走相告"等。"},
+
+  {q:"下列各句中，加点的成语使用<b>恰当</b>的一项是",
+   opts:[
+    "A．年轻的父母们真是费尽心思，<span class='highlight'>无所不为</span>。",
+    "B．<span class='highlight'>安土重迁</span>的观念越来越深入人心，即使是富庶地区的人们也乐意告别家乡。",
+    "C．将汉字之美表现得<span class='highlight'>淋漓尽致</span>。",
+    "D．遇到问题，总是<span class='highlight'>不耻下问</span>，及时向同事、亲朋好友甚至左邻右舍请教。"
+   ],ans:2,
+   exp:"C正确。A"无所不为"是贬义（什么坏事都干）。B"安土重迁"指留恋故土不肯迁移，与语境矛盾。D"不耻下问"指向地位低的人请教，对象不对。"},
+
+  {q:"下列各句中，加点的成语使用<b>恰当</b>的一项是",
+   opts:[
+    "A．各种各样的网络教育机构可谓<span class='highlight'>鱼龙混杂</span>。",
+    "B．她把她家里那种种可笑规矩看成圣贤的<span class='highlight'>金科玉律</span>。",
+    "C．广大用户对此<span class='highlight'>弹冠相庆</span>。",
+    "D．在防守上往往<span class='highlight'>丢三落四</span>，实力明显削弱。"
+   ],ans:1,
+   exp:"B"金科玉律"比喻不能变更的信条，多含贬义，此处使用恰当。A"鱼龙混杂"用于人不用于机构。C"弹冠相庆"贬义。D"丢三落四"形容做事马虎，用于防守不当。"},
+
+  {q:"下列各句中，加点的成语使用<b>恰当</b>的一项是",
+   opts:[
+    "A．时间真如<span class='highlight'>行云流水</span>。",
+    "B．故意编造一些<span class='highlight'>骇人听闻</span>的消息。",
+    "C．真可谓<span class='highlight'>实至名归</span>。",
+    "D．涨跌幅度之大令人<span class='highlight'>叹为观止</span>。"
+   ],ans:2,
+   exp:"C"实至名归"指有了真正的学识业绩，声誉自然随之而来。A"行云流水"形容文章自然，不形容时间。B"骇人听闻"使人吃惊（多指坏事），此处用法正确但语境偏。D"叹为观止"褒义，不能用于不好的事。"},
+
+  {q:"下列各句中，加点的词语使用<b>不恰当</b>的一项是",
+   opts:[
+    "A．双手也<span class='highlight'>情不自禁</span>地颤抖起来。",
+    "B．成功地扮演了<span class='highlight'>胸无城府</span>、朴实憨厚的傻根。",
+    "C．<span class='highlight'>公然宣称</span>注射他的免疫球蛋白即可预防EV71疫病。",
+    "D．绝不能因一点小事就<span class='highlight'>耿耿于怀</span>。"
+   ],ans:0,
+   exp:""情不自禁"指抑制不住感情，用于身体颤抖不当，应用"不由自主"。B"胸无城府"形容坦率真诚，正确。"},
+
+  {q:"下列各句中，加点的成语使用<b>不恰当</b>的一项是",
+   opts:[
+    "A．一边<span class='highlight'>轻描淡写</span>地说几句。",
+    "B．人民大众<span class='highlight'>喜闻乐见</span>的艺术形式。",
+    "C．可以使人世间所有的烦恼都<span class='highlight'>涣然冰释</span>。",
+    "D．并不是要抛开先哲时贤的成果<span class='highlight'>另起炉灶</span>。"
+   ],ans:2,
+   exp:""涣然冰释"比喻疑虑、误会等一下子完全消除，不能用于"烦恼"。"},
+
+  {q:"下列各句中，加点的成语使用<b>恰当</b>的一项是",
+   opts:[
+    "A．一看就使人感到这是个<span class='highlight'>饱经风霜</span>的老人。",
+    "B．目前中学生中"追星"现象已经<span class='highlight'>蔚然成风</span>。",
+    "C．农村的发展变化更加<span class='highlight'>飞黄腾达</span>。",
+    "D．我把你赠送的电子台历摆在了天天<span class='highlight'>面面相觑</span>的写字台上。"
+   ],ans:0,
+   exp:"A正确。B"蔚然成风"是褒义，不能形容"追星"。C"飞黄腾达"指官职上升，不能形容农村变化。D"面面相觑"用于人与人之间。"},
+
+  {q:"下列各句中，加点的成语使用<b>恰当</b>的一项是",
+   opts:[
+    "A．有时候上课也禁不住翻两页，<span class='highlight'>长此以往</span>，我们的成绩都开始退步。",
+    "B．金穗高粱成熟期<span class='highlight'>参差不齐</span>。",
+    "C．人们<span class='highlight'>首尾相接</span>出来接财神。",
+    "D．有些人对资源上的浪费损失已经<span class='highlight'>司空见惯</span>。"
+   ],ans:3,
+   exp:"D"司空见惯"指某事常见，不足为奇，使用正确。A"长此以往"通常指未来不好的结果，不能追述过去。B"参差不齐"指长短高低不齐。C"首尾相接"不能形容人。"},
+
+  {q:"下列各句中，加点的成语使用<b>恰当</b>的一项是",
+   opts:[
+    "A．对待每一位宾客都要<span class='highlight'>相敬如宾</span>。",
+    "B．那些口才好的大学生在自我推销时能够<span class='highlight'>侃侃而谈</span>。",
+    "C．非要对现有的政府机构进行彻底的<span class='highlight'>改头换面</span>不可。",
+    "D．却每每给观众以<span class='highlight'>狗尾续貂</span>之感。"
+   ],ans:1,
+   exp:"B"侃侃而谈"指从容不迫地说话，褒义，此处正确。A"相敬如宾"只用于夫妻。C"改头换面"贬义，只改形式不改内容。D"狗尾续貂"比喻以次充好。"},
+
+  {q:"下列各句中，加点的成语使用<b>恰当</b>的一项是",
+   opts:[
+    "A．读书又<span class='highlight'>无动于衷</span>。",
+    "B．要叫这样的人改邪归正，那真是<span class='highlight'>煞费苦心</span>。",
+    "C．被地主老财逼得<span class='highlight'>走投无路</span>。",
+    "D．使大家进一步明确政策，做到<span class='highlight'>胸有成竹</span>。"
+   ],ans:2,
+   exp:"C正确。A应改为"心不在焉"。B应改为"枉费心机"。D应改为"心中有数"。"},
+
+  {q:"下列各句中，加点的成语使用<b>恰当</b>的一项是",
+   opts:[
+    "A．这个英明论断是<span class='highlight'>牢不可破</span>的。",
+    "B．师傅有几个孩子，他都<span class='highlight'>洞若观火</span>。",
+    "C．读着读着我似乎感到有一股<span class='highlight'>汹涌澎湃</span>的激情在胸中激荡。",
+    "D．班主任老师<span class='highlight'>苦口婆心</span>地嘱咐我。"
+   ],ans:2,
+   exp:"C正确。A应改为"无懈可击"。B应改为"一清二楚"。D"苦口婆心"指反复劝说，应改为"语重心长"。"},
+
+  {q:"下列各句中，加点的成语使用<b>恰当</b>的一项是",
+   opts:[
+    "A．真是令人<span class='highlight'>叹为观止</span>。",
+    "B．我们爬过<span class='highlight'>高山流水</span>。",
+    "C．他除了会写诗之外<span class='highlight'>别无长物</span>。",
+    "D．居民们纷纷<span class='highlight'>安土重迁</span>，住进了新房子。"
+   ],ans:0,
+   exp:"A正确。B"高山流水"比喻知音或知己。C"别无长物"不是"别无长处"，而是形容一无所有。D"安土重迁"指不愿迁移。"},
+
+  {q:"下列各句中，加点的成语使用<b>恰当</b>的一项是",
+   opts:[
+    "A．总是<span class='highlight'>见异思迁</span>，半天拿不定主意。",
+    "B．行人和车辆<span class='highlight'>川流不息</span>，好一派热闹景象。",
+    "C．名草名花<span class='highlight'>不胫而走</span>。",
+    "D．起伏的群山座座相连，<span class='highlight'>鳞次栉比</span>。"
+   ],ans:1,
+   exp:"B正确。A"见异思迁"指对工作喜爱不专一，此处应为"犹豫不决"。C"不胫而走"指消息传播快，应用"不翼而飞"。D"鳞次栉比"多用于房屋，不能形容山。"},
+
+  {q:"下列各句中，加点的成语使用<b>恰当</b>的一项是",
+   opts:[
+    "A．面对浩如烟海的外国科技资料，只能<span class='highlight'>望洋兴叹</span>。",
+    "B．却能在灾祸<span class='highlight'>不期而遇</span>时。",
+    "C．产品质量与群众的利益<span class='highlight'>休戚相关</span>。",
+    "D．寸草不生，<span class='highlight'>地老天荒</span>。"
+   ],ans:0,
+   exp:"A正确。B"不期而遇"用于人的相遇，不用于灾祸。C"休戚相关"主语应为人物双方。D"地老天荒"指经过时间很久，不指贫瘠。"},
+
+  {q:"下列各句中，加点的成语使用<b>恰当</b>的一项是",
+   opts:[
+    "A．一时间，<span class='highlight'>洛阳纸贵</span>，用纸大户纷纷抢购。",
+    "B．她浑身发抖，<span class='highlight'>噤若寒蝉</span>。",
+    "C．许多家长<span class='highlight'>不以为然</span>。",
+    "D．欧洲人便<span class='highlight'>趋之若鹜</span>，来到美洲以圆发财之梦。"
+   ],ans:3,
+   exp:"D正确，"趋之若鹜"比喻人们成群地争着前去，含贬义，此处用于批评淘金热恰当。A"洛阳纸贵"比喻著作风行。B"噤若寒蝉"形容不敢作声。C应为"不以为意"。"},
+
+  {q:"下列各句中，加点的成语使用<b>恰当</b>的一项是",
+   opts:[
+    "A．消防员<span class='highlight'>首当其冲</span>地冲向了火场。",
+    "B．在内容与表达方面<span class='highlight'>不可理喻</span>的作品。",
+    "C．捐血真是"<span class='highlight'>一箭双雕</span>"啊！",
+    "D．他果然<span class='highlight'>不孚众望</span>，一举夺得两枚金牌。"
+   ],ans:2,
+   exp:"C正确。A"首当其冲"比喻最先受到攻击或遭受灾难。B"不可理喻"形容人不讲道理，不是无法理解。D"不孚众望"指不合于众人期望，应为"不负众望"。"},
+
+  {q:"下列各句中，加点的成语使用<b>不恰当</b>的一项是",
+   opts:[
+    "A．青年肩负着国家和人民的希望，<span class='highlight'>任重道远</span>。",
+    "B．春天百花绽放的景色，使人<span class='highlight'>眼花缭乱</span>。",
+    "C．谭嗣同愿作为变法牺牲的<span class='highlight'>始作俑者</span>。",
+    "D．学好一门学问，不是<span class='highlight'>一蹴而就</span>的。"
+   ],ans:2,
+   exp:""始作俑者"比喻恶劣风气的创始者，是贬义词，用于谭嗣同不当。"},
+
+  {q:"下列各句中，加点的成语使用<b>恰当</b>的一项是",
+   opts:[
+    "A．几个经济类节目都办得<span class='highlight'>绘声绘色</span>。",
+    "B．桂林山水令人陶醉，令人<span class='highlight'>流连忘返</span>。",
+    "C．索洛对待他人<span class='highlight'>卓尔不群</span>。",
+    "D．以前那种不正常的师生关系也应该<span class='highlight'>改弦更张</span>了。"
+   ],ans:1,
+   exp:"B正确。A"绘声绘色"形容叙述描写生动，用错范围。C"卓尔不群"指才德超出寻常。D"改弦更张"比喻改革制度或方法。"},
+
+  {q:"下列各句中，加点的成语使用<b>恰当</b>的一项是",
+   opts:[
+    "A．这在我国信息产业界掀起了<span class='highlight'>轩然大波</span>。",
+    "B．绝不是<span class='highlight'>空穴来风</span>。",
+    "C．你们是<span class='highlight'>明日黄花</span>，是祖国的未来和希望。",
+    "D．他这个人办事向来深思熟虑，<span class='highlight'>不假思索</span>。"
+   ],ans:0,
+   exp:"A正确。B"空穴来风"指消息不是没有原因，加"绝不是"变成绝无原因，与前文矛盾。C"明日黄花"比喻过时的事物。D"不假思索"与"深思熟虑"矛盾。"},
+
+  {q:"下列各句中，加点的成语使用<b>不恰当</b>的一项是",
+   opts:[
+    "A．最后必定会<span class='highlight'>玩火自焚</span>。",
+    "B．声调优美，<span class='highlight'>娓娓动听</span>。",
+    "C．简直就是自找苦吃，<span class='highlight'>自作自受</span>。",
+    "D．避免<span class='highlight'>瓜田李下</span>之嫌。"
+   ],ans:2,
+   exp:""自作自受"指自己做了错事自己承受不好的后果，贬义。此处党员到农村锻炼是正面行为，不当。"},
+
+  {q:"下列各句中，加点的成语使用<b>恰当</b>的一项是",
+   opts:[
+    "A．对开发区的印象终究是<span class='highlight'>浮光掠影</span>，但考察者坚定了信心。",
+    "B．对中国政府的声明<span class='highlight'>置之度外</span>。",
+    "C．总是<span class='highlight'>见异思迁</span>。",
+    "D．任何个人的成就都不过是<span class='highlight'>沧海一粟</span>。"
+   ],ans:3,
+   exp:"D正确。A"浮光掠影"与后面"坚定了信心"矛盾。B"置之度外"应改为"置若罔闻"。C应为"犹豫不决"。"},
+
+  {q:"下列各句中，画线熟语使用<b>不正确</b>的一项是",
+   opts:[
+    "A．"<span class='highlight'>到什么山唱什么歌</span>"。",
+    "B．外来劳动力吃上"<span class='highlight'>定心丸</span>"。",
+    "C．"<span class='highlight'>一个巴掌拍不响</span>"，一个人再聪明能干，离开了人民群众的支持也终将一事无成。",
+    "D．从源头上消灭"<span class='highlight'>豆腐渣</span>"工程。"
+   ],ans:2,
+   exp:""一个巴掌拍不响"比喻矛盾或纠纷不是单方面引起的，此处语境应改用"孤掌难鸣"。"},
+
+  {q:"下列各句中，画线熟语使用<b>不正确</b>的一项是",
+   opts:[
+    "A．到了<span class='highlight'>一发而不可收拾</span>的地步。",
+    "B．出人意外地<span class='highlight'>打圆场</span>。",
+    "C．不得不<span class='highlight'>拆东墙补西墙</span>。",
+    "D．完全可以"<span class='highlight'>东方不亮西方亮</span>"。"
+   ],ans:0,
+   exp:""一发而不可收拾"指事情坏到无法挽回，含贬义。此处形容集邮兴趣，应改为"一发而不可收"。"},
+
+  {q:"下列各句中，画线熟语使用<b>不正确</b>的一项是",
+   opts:[
+    "A．盗版是把<span class='highlight'>双刃剑</span>。",
+    "B．老百姓称美国人是"<span class='highlight'>高射炮打蚊子</span>"。",
+    "C．这些人<span class='highlight'>成事不足，败事有余</span>。",
+    "D．我让他<span class='highlight'>吃不了兜着走</span>。"
+   ],ans:0,
+   exp:""双刃剑"指事物有正、反两方面的作用。而句中只说了一个方面（负面），故错。"},
+
+  {q:"下列各句中，画线的熟语使用<b>不正确</b>的一项是",
+   opts:[
+    "A．<span class='highlight'>无巧不成书</span>。",
+    "B．随时存在着被<span class='highlight'>炒鱿鱼</span>的危险。",
+    "C．请来了不少港台明星<span class='highlight'>撑场面</span>。",
+    "D．陈水扁<span class='highlight'>唱双簧</span>，搞欺骗。"
+   ],ans:3,
+   exp:""唱双簧"比喻两人勾结配合做坏事，这里只说一个人的行为，不当。"},
+
+  {q:"下列各句中，画线的熟语使用<b>不正确</b>的一项是",
+   opts:[
+    "A．就连和东方文化<span class='highlight'>八竿子打不着</span>的情人节。",
+    "B．但每次总是"<span class='highlight'>好了伤疤忘了疼</span>"。",
+    "C．或者是他们<span class='highlight'>饱汉不知饿汉饥</span>。",
+    "D．"<span class='highlight'>不管白猫黑猫，能捉老鼠就是好猫</span>"。"
+   ],ans:1,
+   exp:""好了伤疤忘了疼"比喻过上好日子就忘了过去的苦日子。此处语境是查处后又犯，应改用"干打雷不下雨"。"},
+
+  {q:"下列各句中，加点的成语使用<b>不恰当</b>的一项是",
+   opts:[
+    "A．夏天的天气是<span class='highlight'>变幻莫测</span>的。",
+    "B．看着这<span class='highlight'>阳春白雪</span>的景色。",
+    "C．她总是<span class='highlight'>咄咄逼人</span>地对我张牙舞爪。",
+    "D．我不在行，只有<span class='highlight'>敬谢不敏</span>。"
+   ],ans:1,
+   exp:""阳春白雪"比喻高深的不通俗的文学艺术，不能形容景色。"},
+
+  {q:"下列各句中，加点的成语使用<b>不恰当</b>的一项是",
+   opts:[
+    "A．对于那些违法的人，<span class='highlight'>犯而不校</span>是不对的。",
+    "B．图书馆对于借了图书<span class='highlight'>久假不归</span>者。",
+    "C．最好的服务，应该像<span class='highlight'>春风化雨</span>一样。",
+    "D．在任何地方都能自得其乐，<span class='highlight'>安之若素</span>。"
+   ],ans:0,
+   exp:""犯而不校"是指受到别人触犯或无礼也不计较。此处说的是对违法者，用"犯而不校"不恰当。"},
+
+  {q:"下列各句中，加点的成语运用<b>正确</b>的一项是",
+   opts:[
+    "A．依然有些官员能<span class='highlight'>危言危行</span>，真是难能可贵。",
+    "B．也有人声明自己将<span class='highlight'>细大不捐</span>。",
+    "C．由于<span class='highlight'>望尘莫及</span>，往往对孩子的生活状况无法掌握。",
+    "D．其中也有一些作品粗制滥造，令人<span class='highlight'>不忍卒读</span>。"
+   ],ans:0,
+   exp:"A正确，"危言危行"指说正直的话做正直的事。B"细大不捐"指包罗一切，望文生义。C应改为"鞭长莫及"。D"不忍卒读"形容文章悲惨动人，不是写得差。"},
+
+  {q:"下列各句中，加点的成语使用<b>恰当</b>的一项是",
+   opts:[
+    "A．五花海可谓<span class='highlight'>鬼斧神工</span>。",
+    "B．梅兰芳先生在舞台上<span class='highlight'>风姿绰约</span>。",
+    "C．目前只剩下五六家<span class='highlight'>分庭抗礼</span>。",
+    "D．结果只能<span class='highlight'>差强人意</span>。"
+   ],ans:1,
+   exp:"B正确，"风姿绰约"形容女子风韵姿态柔美，梅兰芳在舞台上扮演旦角符合语境。A"鬼斧神工"形容人的技艺，不能形容自然景观。C"分庭抗礼"不适合五六家企业。D"差强人意"指大体能让人满意，与"成绩大跌"矛盾。"},
+
+  {q:"下列各句中，加点成语使用<b>正确</b>的一项是",
+   opts:[
+    "A．引来许多行人<span class='highlight'>侧目而视</span>。",
+    "B．有些推销员把保健品的功效说得<span class='highlight'>天花乱坠</span>。",
+    "C．喜悦的心情总让他<span class='highlight'>如坐春风</span>。",
+    "D．此前中国航空西南分公司一直与四川航空公司<span class='highlight'>鼎足而立</span>。"
+   ],ans:1,
+   exp:"B正确。A"侧目而视"形容畏惧愤恨，感情色彩不当。C"如坐春风"形容受到良师教诲。D"鼎足而立"比喻三方面对立，只有两方不对。"},
+
+  {q:"下面语句加点的成语和熟语，<b>不恰当</b>的一组是",
+   opts:[
+    "A．在当地老百姓中是<span class='highlight'>有口皆碑</span>的。",
+    "B．大家对他<span class='highlight'>敬而远之</span>。",
+    "C．"<span class='highlight'>八仙过海，各显神通</span>"。",
+    "D．老百姓纷纷<span class='highlight'>上行下效</span>地戴上了口罩。"
+   ],ans:3,
+   exp:""上行下效"指上面的人怎么做下面的人就跟着做，多指不好的事情，贬义，用于戴口罩不当。"},
+
+  {q:"下列加点的成语，<b>不恰当</b>的一项是",
+   opts:[
+    "A．仍有许多些人<span class='highlight'>漠不关心</span>。",
+    "B．基层党组织就是一个<span class='highlight'>无坚不摧</span>的战斗堡垒。",
+    "C．<span class='highlight'>自以为是</span>，可以让我们前进时栽跟斗。",
+    "D．<span class='highlight'>笑里藏刀</span>多有人在。"
+   ],ans:1,
+   exp:""无坚不摧"形容力量强大，没有什么不能摧毁。此处形容战斗堡垒的坚固，应用"坚不可摧"。"},
+
+  {q:"下列各句中，加点的成语和熟语使用<b>恰当</b>的一项是",
+   opts:[
+    "A．<span class='highlight'>朝秦暮楚</span>，频于跳槽。",
+    "B．说谎仿佛"<span class='highlight'>闭着眼睛捉麻雀</span>"。",
+    "C．他决定<span class='highlight'>改头换面</span>，重新做人。",
+    "D．他们可谓<span class='highlight'>一丘之貉</span>。"
+   ],ans:0,
+   exp:"A正确，"朝秦暮楚"比喻人反复无常，用于频繁跳槽恰当。B"闭着眼睛捉麻雀"指盲目行事。C"改头换面"贬义，只改形式不改内容。D"一丘之貉"贬义。"},
+
+  {q:"下列各句中，加点的成语使用<b>恰当</b>的一项是",
+   opts:[
+    "A．温馨和美的亲情<span class='highlight'>历历在目</span>。",
+    "B．在营销策略的制订上可谓<span class='highlight'>处心积虑</span>。",
+    "C．并不断<span class='highlight'>求全责备</span>，他才戒掉了网瘾。",
+    "D．他在晚会上<span class='highlight'>出神入化</span>的近景魔术表演。"
+   ],ans:3,
+   exp:"D正确。A"历历在目"用于具体事物，不用于抽象情感。B"处心积虑"贬义。C"求全责备"贬义，指苛责别人。"},
+
+  {q:"下列句子中，加点成语使用<b>不正确</b>的一项是",
+   opts:[
+    "A．特别喜欢连篇累牍、<span class='highlight'>长篇大论</span>。",
+    "B．全国各地的医务人员<span class='highlight'>倾巢出动</span>支援武汉。",
+    "C．而变成<span class='highlight'>蝇营狗苟</span>的功利主义者。",
+    "D．他的创作可谓<span class='highlight'>独树一帜</span>。"
+   ],ans:1,
+   exp:""倾巢出动"指全部出动，多含贬义，用于医务人员支援武汉不当。"}
+];
+
+// ============ STATE ============
+let currentQ = 0;
+let answers = new Array(quizData.length).fill(null);
+let correctTotal = 0;
+let wrongTotal = 0;
+
+// Load state
+try {
+  const saved = JSON.parse(localStorage.getItem('idiomQuizState'));
+  if (saved) { answers = saved.answers; correctTotal = saved.correct; wrongTotal = saved.wrong; currentQ = saved.currentQ || 0; }
+} catch(e) {}
+
+// ============ FUNCTIONS ============
+function switchTab(tab) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  event.target.classList.add('active');
+  if (tab === 'stats') updateStats();
+  if (tab === 'quiz') renderQuiz();
+  if (tab === 'dictionary') renderDict();
+}
+
+function renderDict() {
+  filterDict();
+}
+
+function filterDict() {
+  const query = document.getElementById('searchInput').value.toLowerCase();
+  const filtered = idioms.filter(i => i.name.includes(query) || i.def.includes(query));
+  const grid = document.getElementById('dictGrid');
+  document.getElementById('dictCount').textContent = `共收录 ${filtered.length} 个成语/熟语`;
+  grid.innerHTML = filtered.map(i => {
+    const tagClass = i.tag === 'derog' ? 'tag-derog' : i.tag === 'commend' ? 'tag-commend' : i.tag === 'caution' ? 'tag-caution' : 'tag-neutral';
+    const tagText = i.tag === 'derog' ? '⚠ 贬义' : i.tag === 'commend' ? '✓ 褒义' : i.tag === 'caution' ? '⚡ 易错' : '○ 中性';
+    return `<div class="dict-item">
+      <div class="idiom-name">${i.name}</div>
+      <div class="idiom-def">${i.def}</div>
+      <span class="idiom-tag ${tagClass}">${tagText}</span>
+    </div>`;
+  }).join('');
+}
+
+function renderQuiz() {
+  renderQDots();
+  renderQuestion();
+  updateProgress();
+}
+
+function renderQDots() {
+  const dots = document.getElementById('qNavDots');
+  dots.innerHTML = quizData.map((_, i) => {
+    let cls = 'q-dot';
+    if (i === currentQ) cls += ' current';
+    if (answers[i] !== null) cls += answers[i] === quizData[i].ans ? ' answered-correct' : ' answered-wrong';
+    return `<div class="${cls}" onclick="jumpToQ(${i})">${i+1}</div>`;
+  }).join('');
+}
+
+function renderQuestion() {
+  const q = quizData[currentQ];
+  const answered = answers[currentQ] !== null;
+  const container = document.getElementById('quizContainer');
+  
+  container.innerHTML = `
+    <div class="question-card">
+      <div class="q-number">${currentQ + 1}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="options">
+        ${q.opts.map((opt, i) => {
+          let cls = 'option-btn';
+          if (answered) {
+            cls += ' disabled';
+            if (i === q.ans) cls += ' correct';
+            if (i === answers[currentQ] && i !== q.ans) cls += ' wrong';
+          }
+          return `<button class="${cls}" onclick="selectAnswer(${i})">${opt}</button>`;
+        }).join('')}
+      </div>
+      <div class="explanation ${answered ? 'show' : ''}">
+        <h4>📝 解析</h4>
+        <p>${q.exp}</p>
+      </div>
+    </div>`;
+
+  document.getElementById('prevBtn').disabled = currentQ === 0;
+  document.getElementById('nextBtn').textContent = currentQ === quizData.length - 1 ? '查看统计 →' : '下一题 →';
+}
+
+function selectAnswer(idx) {
+  if (answers[currentQ] !== null) return;
+  answers[currentQ] = idx;
+  if (idx === quizData[currentQ].ans) correctTotal++; else wrongTotal++;
+  saveState();
+  renderQuestion();
+  renderQDots();
+  updateProgress();
+}
+
+function navigateQ(dir) {
+  if (dir === 1 && currentQ === quizData.length - 1) { switchTabByName('stats'); return; }
+  currentQ = Math.max(0, Math.min(quizData.length - 1, currentQ + dir));
+  saveState();
+  renderQuiz();
+}
+
+function jumpToQ(idx) {
+  currentQ = idx;
+  saveState();
+  renderQuiz();
+}
+
+function switchTabByName(name) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  document.querySelectorAll('.nav-tab').forEach(t => { if (t.textContent.includes(name === 'stats' ? '统计' : '')) t.classList.add('active'); });
+  if (name === 'stats') updateStats();
+}
+
+function updateProgress() {
+  const answered = answers.filter(a => a !== null).length;
+  document.getElementById('quizProgressText').textContent = `第 ${currentQ+1}/${quizData.length} 题`;
+  document.getElementById('progressFill').style.width = (answered / quizData.length * 100) + '%';
+  document.getElementById('correctCount').textContent = correctTotal;
+  document.getElementById('wrongCount').textContent = wrongTotal;
+}
+
+function updateStats() {
+  const total = correctTotal + wrongTotal;
+  document.getElementById('statTotal').textContent = total;
+  document.getElementById('statCorrect').textContent = correctTotal;
+  document.getElementById('statWrong').textContent = wrongTotal;
+  document.getElementById('statRate').textContent = total ? Math.round(correctTotal / total * 100) + '%' : '0%';
+
+  const wrongList = document.getElementById('wrongList');
+  const wrongs = [];
+  answers.forEach((a, i) => { if (a !== null && a !== quizData[i].ans) wrongs.push(i); });
+  if (wrongs.length === 0) {
+    wrongList.innerHTML = '<p style="color:#888;">暂无错题记录。' + (correctTotal > 0 ? '🎉 太棒了！全部正确！' : '完成练习后，错题将显示在这里。') + '</p>';
+  } else {
+    wrongList.innerHTML = wrongs.map(i => {
+      const q = quizData[i];
+      return `<div style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.05);">
+        <p style="color:#ef9a9a;font-size:14px;margin-bottom:6px;">❌ 第${i+1}题 — 你选了${String.fromCharCode(65+answers[i])}，正确答案是${String.fromCharCode(65+q.ans)}</p>
+        <p style="font-size:13px;color:#90a4ae;">${q.exp}</p>
+      </div>`;
+    }).join('');
+  }
+}
+
+function resetQuiz() {
+  if (!confirm('确定要重置所有答题记录吗？')) return;
+  answers = new Array(quizData.length).fill(null);
+  correctTotal = 0;
+  wrongTotal = 0;
+  currentQ = 0;
+  saveState();
+  updateStats();
+  renderQuiz();
+}
+
+function saveState() {
+  localStorage.setItem('idiomQuizState', JSON.stringify({ answers, correct: correctTotal, wrong: wrongTotal, currentQ }));
+}
+
+// Init
+renderQuiz();
+renderDict();
+</script>
+</body>
+</html>
