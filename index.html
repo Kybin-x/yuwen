@@ -1,84 +1,1135 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>语文对口升学核心速记</title>
-  <link rel="stylesheet" href="assets/css/main.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>语文高职高考基础复习</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #4f46e5;
+            --primary-light: #818cf8;
+            --primary-dark: #3730a3;
+            --accent: #f59e0b;
+            --accent-light: #fbbf24;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --success: #10b981;
+            --danger: #ef4444;
+            --info: #3b82f6;
+            --shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
+            --radius: 16px;
+            --radius-sm: 10px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #a855f7 100%);
+            padding: 0;
+            overflow: hidden;
+            min-height: 420px;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 80%, rgba(255,255,255,0.05) 0%, transparent 40%);
+            animation: heroFloat 20s ease-in-out infinite;
+        }
+
+        @keyframes heroFloat {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -30px) rotate(1deg); }
+            66% { transform: translate(-20px, 20px) rotate(-1deg); }
+        }
+
+        .hero-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            animation: particleFloat 8s ease-in-out infinite;
+        }
+
+        .particle:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; animation-duration: 7s; }
+        .particle:nth-child(2) { top: 60%; left: 20%; animation-delay: 1s; animation-duration: 9s; width: 4px; height: 4px; }
+        .particle:nth-child(3) { top: 30%; left: 70%; animation-delay: 2s; animation-duration: 6s; width: 8px; height: 8px; }
+        .particle:nth-child(4) { top: 70%; left: 80%; animation-delay: 3s; animation-duration: 10s; }
+        .particle:nth-child(5) { top: 40%; left: 50%; animation-delay: 4s; animation-duration: 8s; width: 5px; height: 5px; }
+        .particle:nth-child(6) { top: 80%; left: 40%; animation-delay: 2s; animation-duration: 11s; width: 3px; height: 3px; }
+        .particle:nth-child(7) { top: 15%; left: 85%; animation-delay: 5s; animation-duration: 7s; width: 7px; height: 7px; }
+        .particle:nth-child(8) { top: 55%; left: 60%; animation-delay: 1.5s; animation-duration: 9s; }
+
+        @keyframes particleFloat {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0.3; }
+            25% { transform: translateY(-20px) translateX(10px); opacity: 0.6; }
+            50% { transform: translateY(-40px) translateX(-10px); opacity: 0.3; }
+            75% { transform: translateY(-20px) translateX(15px); opacity: 0.5; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 24px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 8px 20px;
+            border-radius: 50px;
+            color: #fff;
+            font-size: 14px;
+            margin-bottom: 24px;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .hero-badge .dot {
+            width: 8px;
+            height: 8px;
+            background: #34d399;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.5); }
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 16px;
+            letter-spacing: 2px;
+            animation: fadeInDown 0.8s ease 0.1s both;
+        }
+
+        .hero h1 .highlight {
+            background: linear-gradient(120deg, #fbbf24, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            color: rgba(255,255,255,0.85);
+            max-width: 600px;
+            margin: 0 auto 32px;
+            animation: fadeInDown 0.8s ease 0.2s both;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease 0.3s both;
+        }
+
+        .hero-stat {
+            text-align: center;
+            color: #fff;
+        }
+
+        .hero-stat .num {
+            font-size: 36px;
+            font-weight: 800;
+            display: block;
+            line-height: 1.2;
+        }
+
+        .hero-stat .label {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Wave Divider */
+        .wave-divider {
+            position: relative;
+            margin-top: -2px;
+            line-height: 0;
+        }
+
+        .wave-divider svg {
+            display: block;
+            width: 100%;
+            height: 60px;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Section Title */
+        .section-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .section-header .tag {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: #fff;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            letter-spacing: 1px;
+        }
+
+        .section-header h2 {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 12px;
+        }
+
+        .section-header p {
+            font-size: 16px;
+            color: var(--text-light);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* Knowledge Cards Grid */
+        .modules-section {
+            padding: 80px 0 60px;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .knowledge-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 32px 24px;
+            text-decoration: none;
+            color: var(--text);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .knowledge-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--card-accent);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .knowledge-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+            border-color: transparent;
+        }
+
+        .knowledge-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .knowledge-card:hover .card-icon {
+            transform: scale(1.1) rotate(-5deg);
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-title .badge {
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 50px;
+            font-weight: 600;
+        }
+
+        .badge-hot {
+            background: #fef2f2;
+            color: #ef4444;
+        }
+
+        .badge-new {
+            background: #f0fdf4;
+            color: #16a34a;
+        }
+
+        .badge-key {
+            background: #fefce8;
+            color: #ca8a04;
+        }
+
+        .card-desc {
+            font-size: 14px;
+            color: var(--text-light);
+            line-height: 1.7;
+            flex: 1;
+            margin-bottom: 16px;
+        }
+
+        .card-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+
+        .card-count {
+            font-size: 13px;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .card-arrow {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .knowledge-card:hover .card-arrow {
+            transform: translateX(4px);
+        }
+
+        /* Card Color Themes */
+        .card-biaodian { --card-accent: #6366f1; }
+        .card-biaodian .card-icon { background: #eef2ff; color: #6366f1; }
+        .card-biaodian .card-arrow { background: #eef2ff; color: #6366f1; }
+
+        .card-cuobiezi { --card-accent: #ec4899; }
+        .card-cuobiezi .card-icon { background: #fdf2f8; color: #ec4899; }
+        .card-cuobiezi .card-arrow { background: #fdf2f8; color: #ec4899; }
+
+        .card-bingju { --card-accent: #f59e0b; }
+        .card-bingju .card-icon { background: #fffbeb; color: #f59e0b; }
+        .card-bingju .card-arrow { background: #fffbeb; color: #f59e0b; }
+
+        .card-chengyu { --card-accent: #10b981; }
+        .card-chengyu .card-icon { background: #ecfdf5; color: #10b981; }
+        .card-chengyu .card-arrow { background: #ecfdf5; color: #10b981; }
+
+        .card-jinyici { --card-accent: #3b82f6; }
+        .card-jinyici .card-icon { background: #eff6ff; color: #3b82f6; }
+        .card-jinyici .card-arrow { background: #eff6ff; color: #3b82f6; }
+
+        .card-xiushi { --card-accent: #8b5cf6; }
+        .card-xiushi .card-icon { background: #f5f3ff; color: #8b5cf6; }
+        .card-xiushi .card-arrow { background: #f5f3ff; color: #8b5cf6; }
+
+        .card-ziyin { --card-accent: #ef4444; }
+        .card-ziyin .card-icon { background: #fef2f2; color: #ef4444; }
+        .card-ziyin .card-arrow { background: #fef2f2; color: #ef4444; }
+
+        .card-biaoda { --card-accent: #14b8a6; }
+        .card-biaoda .card-icon { background: #f0fdfa; color: #14b8a6; }
+        .card-biaoda .card-arrow { background: #f0fdfa; color: #14b8a6; }
+
+        /* Tips Section */
+        .tips-section {
+            padding: 60px 0 80px;
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .tip-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 32px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .tip-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-4px);
+        }
+
+        .tip-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .tip-card:nth-child(1) .tip-icon { background: #dbeafe; }
+        .tip-card:nth-child(2) .tip-icon { background: #fef3c7; }
+        .tip-card:nth-child(3) .tip-icon { background: #d1fae5; }
+
+        .tip-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .tip-card p {
+            font-size: 14px;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        /* Study Path */
+        .path-section {
+            padding: 60px 0 80px;
+            background: linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
+        }
+
+        .path-container {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            overflow-x: auto;
+            padding: 20px 0;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .path-step {
+            flex: 0 0 auto;
+            text-align: center;
+            position: relative;
+        }
+
+        .path-node {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin: 0 auto 12px;
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .path-step:hover .path-node {
+            transform: scale(1.15);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .path-num {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            width: 22px;
+            height: 22px;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 50%;
+            font-size: 11px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #fff;
+        }
+
+        .path-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text);
+            white-space: nowrap;
+        }
+
+        .path-arrow {
+            flex: 0 0 auto;
+            display: flex;
+            align-items: center;
+            padding-top: 20px;
+            color: var(--primary-light);
+            font-size: 20px;
+        }
+
+        /* Hotspot Section */
+        .hotspot-section {
+            padding: 60px 0 80px;
+        }
+
+        .hotspot-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .hotspot-item {
+            background: var(--card-bg);
+            border-radius: var(--radius-sm);
+            padding: 24px;
+            border: 1px solid var(--border);
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            transition: all 0.3s ease;
+        }
+
+        .hotspot-item:hover {
+            box-shadow: var(--shadow);
+            border-color: var(--primary-light);
+        }
+
+        .hotspot-tag {
+            flex: 0 0 auto;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .tag-biaodian { background: #eef2ff; color: #6366f1; }
+        .tag-chengyu { background: #ecfdf5; color: #10b981; }
+        .tag-bingju { background: #fffbeb; color: #f59e0b; }
+        .tag-xiushi { background: #f5f3ff; color: #8b5cf6; }
+
+        .hotspot-content h4 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .hotspot-content p {
+            font-size: 13px;
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        .hotspot-stars {
+            margin-left: auto;
+            flex: 0 0 auto;
+            color: #f59e0b;
+            font-size: 12px;
+            letter-spacing: 2px;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: rgba(255,255,255,0.7);
+            padding: 48px 24px 32px;
+            text-align: center;
+        }
+
+        .footer-motto {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .footer-motto .emoji {
+            font-size: 24px;
+        }
+
+        .footer-sub {
+            font-size: 14px;
+            margin-bottom: 32px;
+            opacity: 0.7;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            flex-wrap: wrap;
+            margin-bottom: 32px;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #fff;
+        }
+
+        .footer-copy {
+            font-size: 13px;
+            opacity: 0.5;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Scroll Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .hero h1 {
+                font-size: 36px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 28px;
+            }
+            .hero-subtitle {
+                font-size: 15px;
+            }
+            .hero-stats {
+                gap: 24px;
+            }
+            .hero-stat .num {
+                font-size: 28px;
+            }
+            .cards-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            .tips-grid {
+                grid-template-columns: 1fr;
+            }
+            .hotspot-list {
+                grid-template-columns: 1fr;
+            }
+            .section-header h2 {
+                font-size: 24px;
+            }
+            .path-container {
+                justify-content: flex-start;
+                padding-bottom: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content {
+                padding: 40px 16px;
+            }
+            .hero h1 {
+                font-size: 24px;
+            }
+            .knowledge-card {
+                padding: 24px 20px;
+            }
+            .hero-stats {
+                gap: 16px;
+            }
+        }
+    </style>
 </head>
-<body class="light-mode">
-  <header class="site-header">
-    <div class="container">
-      <h1>语文对口升学核心速记</h1>
-      <p class="slogan">中职语文 · 语言知识速记 + 巩固练习</p>
-      <nav class="top-nav">
-        <ul>
-          <li><a href="index.html" class="active">首页</a></li>
-          <li><a href="chapters/language/index.html">语言知识</a></li>
-          <li><a href="#">写作专题</a></li>
-          <li><a href="about.html">关于</a></li>
-        </ul>
-      </nav>
-      <div class="theme-toggle">
-        <button id="toggle-theme">🌙 暗色模式</button>
-      </div>
+<body>
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
     </div>
-  </header>
-
-  <main class="container main-content">
-    <section class="hero">
-      <h2>欢迎来到语文考点记忆中心</h2>
-      <p>本平台专为中职对口升学考生设计，聚焦核心基础考点，支持边学边练、标记掌握、错题回顾。</p>
-      <div class="cta-grid">
-        <a href="chapters/language/index.html" class="btn primary">进入【语言知识】章节</a>
-        <a href="#" class="btn secondary">快速搜索 →</a>
-      </div>
-    </section>
-
-    <section class="featured-chapters">
-      <h3>近期重点模块</h3>
-      <div class="chapter-cards">
-        <div class="card">
-          <h4>📌 字音辨析</h4>
-          <p>多音字、形声字、易错读音速记表</p>
-          <a href="chapters/language/pinyin.html" class="card-link">→ 学习</a>
+    <div class="hero-content">
+        <div class="hero-badge">
+            <span class="dot"></span>
+            依据《广东省高职高考语文考试大纲》编写
         </div>
-        <div class="card">
-          <h4>📌 字形辨析</h4>
-          <p>形近字、同音字、常见错别字对比</p>
-          <a href="chapters/language/font.html" class="card-link">→ 学习</a>
+        <h1>语文高职高考<span class="highlight">基础复习</span></h1>
+        <p class="hero-subtitle">聚焦高频考点 · 精讲易错难点 · 配套实战训练<br>系统掌握八大核心模块，稳拿基础分</p>
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <span class="num" id="stat1">8</span>
+                <span class="label">核心模块</span>
+            </div>
+            <div class="hero-stat">
+                <span class="num" id="stat2">200+</span>
+                <span class="label">精选真题</span>
+            </div>
+            <div class="hero-stat">
+                <span class="num" id="stat3">65</span>
+                <span class="label">多音字收录</span>
+            </div>
+            <div class="hero-stat">
+                <span class="num" id="stat4">100+</span>
+                <span class="label">成语/近义词</span>
+            </div>
         </div>
-        <div class="card">
-          <h4>📌 标点符号</h4>
-          <p>作用、规范用法与典型错误解析</p>
-          <a href="chapters/language/punctuation.html" class="card-link">→ 学习</a>
-        </div>
-        <div class="card">
-          <h4>📌 病句修改</h4>
-          <p>6大类型 + 典型例句 + 改错练习</p>
-          <a href="chapters/language/sick-sentence.html" class="card-link">→ 学习</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="features">
-      <h3>学习功能亮点</h3>
-      <ul class="feature-list">
-        <li>✅ <strong>卡片式记忆</strong>：点击翻转查看“易错点”或“记忆口诀”</li>
-        <li>✅ <strong>即时练习</strong>：每章配套选择/填空/改错题，提交即反馈</li>
-        <li>✅ <strong>收藏标记</strong>：一键标记“已掌握”或“需复习”</li>
-        <li>✅ <strong>全局搜索</strong>：支持关键词检索所有考点（即将上线）</li>
-      </ul>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="container">
-      <p>&copy; 2025 语文对口升学核心速记 | XSimple 开发</p>
-      <p>本资料依据《中职生对口升学考试辅导用书·语文》整理</p>
     </div>
-  </footer>
+</section>
 
-  <script src="assets/js/main.js"></script>
+<!-- Wave Divider -->
+<div class="wave-divider">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+        <path d="M0,0 C360,60 1080,60 1440,0 L1440,60 L0,60 Z" fill="#f8fafc"/>
+    </svg>
+</div>
+
+<!-- Knowledge Modules -->
+<section class="modules-section">
+    <div class="container">
+        <div class="section-header fade-in">
+            <span class="tag">📚 知识模块</span>
+            <h2>八大核心考点</h2>
+            <p>点击卡片进入对应模块，开始系统学习</p>
+        </div>
+
+        <div class="cards-grid">
+            <!-- 标点符号 -->
+            <a href="https://yuwen.kybin.top/biaodian/" class="knowledge-card card-biaodian fade-in" target="_blank">
+                <div class="card-icon">✏️</div>
+                <div class="card-title">标点符号 <span class="badge badge-hot">高频</span></div>
+                <div class="card-desc">掌握16种标点符号的用法，重点辨析问号、顿号、引号、冒号、省略号等高频易错考点。</div>
+                <div class="card-meta">
+                    <span class="card-count">📝 24道真题</span>
+                    <span class="card-arrow">→</span>
+                </div>
+            </a>
+
+            <!-- 错别字 -->
+            <a href="https://yuwen.kybin.top/cuobiezi" class="knowledge-card card-cuobiezi fade-in" target="_blank">
+                <div class="card-icon">🔤</div>
+                <div class="card-title">错别字辨析 <span class="badge badge-hot">高频</span></div>
+                <div class="card-desc">30组高频易错字词精讲，涵盖"严惩不贷""甘拜下风""鞠躬尽瘁"等常考词语。</div>
+                <div class="card-meta">
+                    <span class="card-count">📝 30道真题</span>
+                    <span class="card-arrow">→</span>
+                </div>
+            </a>
+
+            <!-- 病句 -->
+            <a href="https://yuwen.kybin.top/bingju" class="knowledge-card card-bingju fade-in" target="_blank">
+                <div class="card-icon">🩺</div>
+                <div class="card-title">病句修改 <span class="badge badge-key">重点</span></div>
+                <div class="card-desc">系统讲解搭配不当、成分残缺、语序不当、句式杂糅等12类语病，配合25道真题实战。</div>
+                <div class="card-meta">
+                    <span class="card-count">📝 25道真题</span>
+                    <span class="card-arrow">→</span>
+                </div>
+            </a>
+
+            <!-- 成语 -->
+            <a href="https://yuwen.kybin.top/chengyu" class="knowledge-card card-chengyu fade-in" target="_blank">
+                <div class="card-icon">📖</div>
+                <div class="card-title">成语运用 <span class="badge badge-key">重点</span></div>
+                <div class="card-desc">80+高频成语详解，标注褒贬色彩与易错点，重点辨析"不孚众望""差强人意"等。</div>
+                <div class="card-meta">
+                    <span class="card-count">📖 80+成语</span>
+                    <span class="card-arrow">→</span>
+                </div>
+            </a>
+<!-- 近义词 -->
+            <a href="https://yuwen.kybin.top/jinyici" class="knowledge-card card-jinyici fade-in" target="_blank">
+                <div class="card-icon">🔍</div>
+                <div class="card-title">近义词辨析 <span class="badge badge-new">必考</span></div>
+                <div class="card-desc">50+组近义词精析，从词义、感情色彩、搭配用法、范围程度四维度辨析，如"授权/受权""品位/品味"。</div>
+                <div class="card-meta">
+                    <span class="card-count">📖 50+组词</span>
+                    <span class="card-arrow">→</span>
+                </div>
+            </a>
+
+            <!-- 修辞手法 -->
+            <a href="https://yuwen.kybin.top/xiushi" class="knowledge-card card-xiushi fade-in" target="_blank">
+                <div class="card-icon">🎨</div>
+                <div class="card-title">修辞手法 <span class="badge badge-key">重点</span></div>
+                <div class="card-desc">12种修辞手法全覆盖：比喻、拟人、借代、夸张、排比、对偶、设问、反问等，含易混辨析。</div>
+                <div class="card-meta">
+                    <span class="card-count">📝 23道真题</span>
+                    <span class="card-arrow">→</span>
+                </div>
+            </a>
+
+            <!-- 字音 -->
+            <a href="https://yuwen.kybin.top/ziyin" class="knowledge-card card-ziyin fade-in" target="_blank">
+                <div class="card-icon">🎤</div>
+                <div class="card-title">字音辨析 <span class="badge badge-hot">高频</span></div>
+                <div class="card-desc">65个多音字系统收录（"和""着""差""塞"等），配合形近字辨析与30道专项训练。</div>
+                <div class="card-meta">
+                    <span class="card-count">📝 30道真题</span>
+                    <span class="card-arrow">→</span>
+                </div>
+            </a>
+
+            <!-- 语言表达 -->
+            <a href="https://yuwen.kybin.top/biaoda" class="knowledge-card card-biaoda fade-in" target="_blank">
+                <div class="card-icon">💬</div>
+                <div class="card-title">语言表达 <span class="badge badge-new">必考</span></div>
+                <div class="card-desc">语句连贯排序五大技法 + 谦敬辞使用规范，牢记"家大舍小令外人"口诀，稳拿得体题。</div>
+                <div class="card-meta">
+                    <span class="card-count">📝 19道真题</span>
+                    <span class="card-arrow">→</span>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Study Path -->
+<section class="path-section">
+    <div class="container">
+        <div class="section-header fade-in">
+            <span class="tag">🗺️ 学习路径</span>
+            <h2>推荐复习顺序</h2>
+            <p>由基础到综合，循序渐进，高效备考</p>
+        </div>
+
+        <div class="path-container fade-in">
+            <div class="path-step" onclick="window.open('https://yuwen.kybin.top/ziyin','_blank')">
+                <div class="path-node" style="background:#fef2f2;">
+                    <span class="path-num">1</span>🎤
+                </div>
+                <div class="path-label">字音辨析</div>
+            </div>
+            <div class="path-arrow">➜</div>
+            <div class="path-step" onclick="window.open('https://yuwen.kybin.top/cuobiezi','_blank')">
+                <div class="path-node" style="background:#fdf2f8;">
+                    <span class="path-num">2</span>🔤
+                </div>
+                <div class="path-label">错别字</div>
+            </div>
+            <div class="path-arrow">➜</div>
+            <div class="path-step" onclick="window.open('https://yuwen.kybin.top/biaodian/','_blank')">
+                <div class="path-node" style="background:#eef2ff;">
+                    <span class="path-num">3</span>✏️
+                </div>
+                <div class="path-label">标点符号</div>
+            </div>
+            <div class="path-arrow">➜</div>
+            <div class="path-step" onclick="window.open('https://yuwen.kybin.top/jinyici','_blank')">
+                <div class="path-node" style="background:#eff6ff;">
+                    <span class="path-num">4</span>🔍
+                </div>
+                <div class="path-label">近义词</div>
+            </div>
+            <div class="path-arrow">➜</div>
+            <div class="path-step" onclick="window.open('https://yuwen.kybin.top/chengyu','_blank')">
+                <div class="path-node" style="background:#ecfdf5;">
+                    <span class="path-num">5</span>📖
+                </div>
+                <div class="path-label">成语运用</div>
+            </div>
+            <div class="path-arrow">➜</div>
+            <div class="path-step" onclick="window.open('https://yuwen.kybin.top/bingju','_blank')">
+                <div class="path-node" style="background:#fffbeb;">
+                    <span class="path-num">6</span>🩺
+                </div>
+                <div class="path-label">病句修改</div>
+            </div>
+            <div class="path-arrow">➜</div>
+            <div class="path-step" onclick="window.open('https://yuwen.kybin.top/xiushi','_blank')">
+                <div class="path-node" style="background:#f5f3ff;">
+                    <span class="path-num">7</span>🎨
+                </div>
+                <div class="path-label">修辞手法</div>
+            </div>
+            <div class="path-arrow">➜</div>
+            <div class="path-step" onclick="window.open('https://yuwen.kybin.top/biaoda','_blank')">
+                <div class="path-node" style="background:#f0fdfa;">
+                    <span class="path-num">8</span>💬
+                </div>
+                <div class="path-label">语言表达</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Hotspot Section -->
+<section class="hotspot-section">
+    <div class="container">
+        <div class="section-header fade-in">
+            <span class="tag">🔥 高频必练</span>
+            <h2>今日重点推荐</h2>
+            <p>精选各模块最高频考点，考前必看</p>
+        </div>
+
+        <div class="hotspot-list">
+            <div class="hotspot-item fade-in">
+                <span class="hotspot-tag tag-biaodian">标点</span>
+                <div class="hotspot-content">
+                    <h4>选择问句只用一个问号</h4>
+                    <p>✅ 你是参加，还是不参加？<br>❌ 你是参加？还是不参加？</p>
+                </div>
+                <span class="hotspot-stars">⭐⭐⭐⭐⭐</span>
+            </div>
+            <div class="hotspot-item fade-in">
+                <span class="hotspot-tag tag-chengyu">成语</span>
+                <div class="hotspot-content">
+                    <h4>"不孚众望" ≠ "不负众望"</h4>
+                    <p>不孚众望 = 不合期望（贬义）<br>不负众望 = 不辜负期望（褒义）</p>
+                </div>
+                <span class="hotspot-stars">⭐⭐⭐⭐⭐</span>
+            </div>
+            <div class="hotspot-item fade-in">
+                <span class="hotspot-tag tag-bingju">病句</span>
+                <div class="hotspot-content">
+                    <h4>"一面与两面"搭配不当</h4>
+                    <p>❌ 有没有好的方法，是提高成绩的因素。<br>（"有没有"两面 vs "是"一面）</p>
+                </div>
+                <span class="hotspot-stars">⭐⭐⭐⭐</span>
+            </div>
+            <div class="hotspot-item fade-in">
+                <span class="hotspot-tag tag-xiushi">修辞</span>
+                <div class="hotspot-content">
+                    <h4>设问 vs 反问</h4>
+                    <p>设问 = 自问自答，问后有答案<br>反问 = 只问不答，答案隐含其中</p>
+                </div>
+                <span class="hotspot-stars">⭐⭐⭐⭐</span>
+            </div>
+            <div class="hotspot-item fade-in">
+                <span class="hotspot-tag tag-biaodian">标点</span>
+                <div class="hotspot-content">
+                    <h4>省略号与"等"不能同时使用</h4>
+                    <p>✅ 有迎春、月季、桂花等<br>❌ 有迎春、月季、桂花……等</p>
+                </div>
+                <span class="hotspot-stars">⭐⭐⭐⭐⭐</span>
+            </div>
+            <div class="hotspot-item fade-in">
+                <span class="hotspot-tag tag-chengyu">成语</span>
+                <div class="hotspot-content">
+                    <h4>"首当其冲"不是冲在前面</h4>
+                    <p>正确含义：最先受到攻击或遭受灾难<br>❌ 他首当其冲，带领大家冲锋</p>
+                </div>
+                <span class="hotspot-stars">⭐⭐⭐⭐</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Tips Section -->
+<section class="tips-section" style="background:#f8fafc;">
+    <div class="container">
+        <div class="section-header fade-in">
+            <span class="tag">💡 备考锦囊</span>
+            <h2>高效复习策略</h2>
+            <p>掌握方法，事半功倍</p>
+        </div>
+
+        <div class="tips-grid">
+            <div class="tip-card fade-in">
+                <div class="tip-icon">🧠</div>
+                <h3>口诀速记法</h3>
+                <p>标点口诀："点号七兄弟，停顿各不同"<br>谦敬口诀："家大舍小令外人"<br>将抽象知识转化为朗朗上口的口诀，记忆效率翻倍。</p>
+            </div>
+            <div class="tip-card fade-in">
+                <div class="tip-icon">📋</div>
+                <h3>错题回顾法</h3>
+                <p>每次练习后，将做错的题目记录下来，标注错因。考前重点回顾错题本，避免重复犯错，精准查漏补缺。</p>
+            </div>
+            <div class="tip-card fade-in">
+                <div class="tip-icon">⏰</div>
+                <h3>每日30分钟</h3>
+                <p>每天固定30分钟专项训练，按推荐路径逐模块推进。坚持打卡，积少成多，基础题稳拿满分。</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-motto">
+            <span class="emoji">🌟</span> 坚持每天30分钟，基础题稳拿满分！
+        </div>
+        <p class="footer-sub">语文高职高考基础复习平台 · 助力每一位考生金榜题名</p>
+        <div class="footer-links">
+            <a href="https://yuwen.kybin.top/biaodian/">标点符号</a>
+            <a href="https://yuwen.kybin.top/cuobiezi">错别字</a>
+            <a href="https://yuwen.kybin.top/bingju">病句修改</a>
+            <a href="https://yuwen.kybin.top/chengyu">成语运用</a>
+            <a href="https://yuwen.kybin.top/jinyici">近义词</a>
+            <a href="https://yuwen.kybin.top/xiushi">修辞手法</a>
+            <a href="https://yuwen.kybin.top/ziyin">字音辨析</a>
+            <a href="https://yuwen.kybin.top/biaoda">语言表达</a>
+        </div>
+        <p class="footer-copy">© 2025 语文高职高考基础复习 · yuwen.kybin.top</p>
+    </div>
+</footer>
+
+<script>
+    // Scroll Animation
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.classList.add('visible');
+                }, index * 80);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Number Counter Animation
+    function animateCounter(el, target, suffix = '') {
+        const isNumber = !isNaN(target);
+        if (!isNumber) {
+            el.textContent = target;
+            return;
+        }
+        let current = 0;
+        const step = Math.ceil(target / 40);
+        const timer = setInterval(() => {
+            current += step;
+            if (current >= target) {
+                current = target;
+                clearInterval(timer);
+            }
+            el.textContent = current + suffix;
+        }, 30);
+    }
+
+    // Trigger counter on page load
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            animateCounter(document.getElementById('stat1'), 8, '');
+            animateCounter(document.getElementById('stat2'), 200, '+');
+            animateCounter(document.getElementById('stat3'), 65, '');
+            animateCounter(document.getElementById('stat4'), 100, '+');
+        }, 500);
+    });
+
+    // Card hover sound effect (subtle)
+    document.querySelectorAll('.knowledge-card').forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            card.style.willChange = 'transform, box-shadow';
+        });
+        card.addEventListener('mouseleave', () => {
+            card.style.willChange = 'auto';
+        });
+    });
+
+    // Smooth scroll for internal links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+
+    // Path step hover tooltip
+    document.querySelectorAll('.path-step').forEach(step => {
+        step.style.cursor = 'pointer';
+    });
+</script>
+
 </body>
 </html>
